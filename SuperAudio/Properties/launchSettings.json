@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SuperAudio (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SuperAudio (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
