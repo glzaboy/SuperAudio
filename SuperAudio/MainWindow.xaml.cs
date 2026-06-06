@@ -1,7 +1,9 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using SuperAudio.Helps;
+using SuperAudio.Pages;
 using System;
 using System.Threading.Tasks;
 
@@ -16,6 +18,10 @@ namespace SuperAudio
     public sealed partial class MainWindow : Window
     {
         public Action? NavigationViewLoaded { get; set; }
+        public NavigationView NavigationView
+        {
+            get { return NavigationViewControl; }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -69,9 +75,42 @@ namespace SuperAudio
 
             UIHelper.AnnounceActionForAccessibility(navigationView, announcementText, "NavigationViewPaneIsOpenChangeNotificationId");
         }
+        // Wraps a call to rootFrame.Navigate to give the Page a way to know which NavigationRootPage is navigating.
+        // Please call this function rather than rootFrame.Navigate to navigate the rootFrame.
+        public void Navigate(Type pageType, object? targetPageArguments = null, NavigationTransitionInfo? navigationTransitionInfo = null)
+        {
+            rootFrame.Navigate(pageType, targetPageArguments, navigationTransitionInfo);
+
+            // Ensure the NavigationView selection is set to the correct item to mark the sample's page as visited
+            //if (pageType.Equals(typeof(ItemPage)) && targetPageArguments != null)
+            //{
+            // Mark the item sample's page visited
+            //SettingsHelper.Current.UpdateRecentlyVisited(items => items.AddAsFirst(targetPageArguments.ToString() ?? "", SettingsHelper.MaxRecentlyVisitedSamples));
+            //}
+        }
         private void OnNavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-
+            if (args.IsSettingsSelected)
+            {
+                if (rootFrame.CurrentSourcePageType != typeof(SettingsPage))
+                {
+                    Navigate(typeof(SettingsPage));
+                }
+            }
+            else
+            {
+                var selectItem = args.SelectedItemContainer;
+                if (selectItem.Tag is string tag)
+                {
+                    if (tag == nameof(HomePage)) // 或者 "HomePage"
+                    {
+                        if (rootFrame.CurrentSourcePageType != typeof(HomePage))
+                        {
+                            Navigate(typeof(HomePage));
+                        }
+                    }
+                }
+            }
         }
         private void TitleBar_BackRequested(TitleBar sender, object args)
         {

@@ -68,10 +68,11 @@
                 Navigating="OnRootFrameNavigating" />
             <NavigationView.MenuItems>
                 <NavigationViewItem
-            x:Name="Home"
-            AutomationProperties.AutomationId="Home"
-            Content="Home"
-            Icon="Home" />
+                    x:Name="Home"
+                    AutomationProperties.AutomationId="Home"
+                    Content="Home"
+                    Tag="HomePage"
+                    Icon="Home" />
                 <NavigationViewItem
             x:Name="FundamentalsItem"
             AutomationProperties.AutomationId="FundamentalsItem"

@@ -1,20 +1,11 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.Windows.AppLifecycle;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
+using SuperAudio.Pages;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,7 +17,7 @@ namespace SuperAudio
     /// </summary>
     public partial class App : Application
     {
-        private Window? _window;
+        internal static MainWindow MainWindow { get; private set; } = null!;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -35,6 +26,7 @@ namespace SuperAudio
         public App()
         {
             InitializeComponent();
+            UnhandledException += HandleExceptions;
         }
 
         /// <summary>
@@ -43,8 +35,86 @@ namespace SuperAudio
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new MainWindow();
-            _window.Activate();
+            MainWindow = new();
+            EnsureWindow();
+        }
+        private async void EnsureWindow()
+        {
+           // await ControlInfoDataSource.Instance.GetGroupsAsync();
+            //await IconsDataSource.Instance.LoadIcons();
+
+            //MainWindow.AddNavigationMenuItems();
+
+            //ThemeHelper.Initialize();
+
+            var targetPageType = typeof(HomePage);
+            var targetPageArguments = string.Empty;
+            AppActivationArguments eventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            if (eventArgs != null &&
+                eventArgs.Kind == ExtendedActivationKind.Protocol &&
+                eventArgs.Data is ProtocolActivatedEventArgs protocolArgs)
+            {
+                string uri = protocolArgs.Uri.LocalPath.Replace("/", "");
+                targetPageArguments = uri;
+
+                if (uri == "Settings")
+                {
+                    targetPageType = typeof(SettingsPage);
+                }
+                else if (uri == "Home")
+                {
+                    targetPageType = typeof(HomePage);
+                }
+            }
+            // Handle JumpList launch arguments (passed as command-line args)
+            else if (eventArgs != null &&
+                eventArgs.Kind == ExtendedActivationKind.Launch &&
+                eventArgs.Data is ILaunchActivatedEventArgs launchArgs &&
+                !string.IsNullOrEmpty(launchArgs.Arguments))
+            {
+                string arg = launchArgs.Arguments.Trim();
+                targetPageArguments = arg;
+
+                
+            }
+
+            MainWindow.Navigate(targetPageType, targetPageArguments);
+
+            if (targetPageType == typeof(HomePage))
+            {
+                var navItem = (NavigationViewItem)MainWindow.NavigationView.MenuItems[0];
+                navItem.IsSelected = true;
+            }
+
+            // Initialize the taskbar JumpList with fixed tasks and favorites.
+            //await JumpListHelper.UpdateJumpListAsync();
+
+            // Activate the startup window.
+            MainWindow.Activate();
+        }
+        /// <summary>
+        /// Prevents the app from crashing when a exception gets thrown and notifies the user.
+        /// </summary>
+        /// <param name="sender">The app as an object.</param>
+        /// <param name="e">Details about the exception.</param>
+        private void HandleExceptions(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            bool isPackaged = Windows.ApplicationModel.Package.Current != null;
+            if (isPackaged)
+            {
+                e.Handled = true; //Don't crash the app.
+
+                //Create the notification.
+                var notification = new AppNotificationBuilder()
+                    .AddText("An exception was thrown.")
+                    .AddText($"Type: {e.Exception.GetType()}")
+                    .AddText($"Message: {e.Message}\r\n" +
+                             $"HResult: {e.Exception.HResult}")
+                    .BuildNotification();
+
+                //Show the notification
+                AppNotificationManager.Default.Show(notification);
+            }
         }
     }
 }
