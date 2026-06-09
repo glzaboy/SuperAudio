@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Media;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SuperAudio.Helps;
+namespace SuperAudio.Helpers;
 
 public static partial class UIHelper
 {

@@ -74,10 +74,10 @@
                     Tag="HomePage"
                     Icon="Home" />
                 <NavigationViewItem
-            x:Name="FundamentalsItem"
-            AutomationProperties.AutomationId="FundamentalsItem"
-            Content="Fundamentals"
-            Tag="Fundamentals">
+                x:Name="FundamentalsItem"
+                AutomationProperties.AutomationId="FundamentalsItem"
+                Content="Fundamentals"
+                Tag="Fundamentals">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE8F1;" />
                     </NavigationViewItem.Icon>

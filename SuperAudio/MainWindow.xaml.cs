@@ -2,9 +2,10 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
-using SuperAudio.Helps;
+using SuperAudio.Helpers;
 using SuperAudio.Pages;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -18,6 +19,10 @@ namespace SuperAudio
     public sealed partial class MainWindow : Window
     {
         public Action? NavigationViewLoaded { get; set; }
+        /// <summary>
+        /// 防止循环的标志位
+        /// </summary>
+        private bool _isUpdatingSelection = false;
         public NavigationView NavigationView
         {
             get { return NavigationViewControl; }
@@ -36,9 +41,48 @@ namespace SuperAudio
         {
             NavigationViewControl.IsPaneOpen = !NavigationViewControl.IsPaneOpen;
         }
-        private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
+        async private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
         {
-            //TestContentLoadedCheckBox.IsChecked = true;
+            UpdateNavigationViewSelection();
+        }
+        // 同步菜单高亮的方法
+        async private void UpdateNavigationViewSelection()
+        {
+            if (!_isUpdatingSelection) {
+                return;
+            }
+            Type currentPageType = rootFrame.CurrentSourcePageType;
+            
+            if (currentPageType == null) return;
+
+            if (IsSettingPageTag(currentPageType.Name))
+            {
+                _isUpdatingSelection = true;
+                NavigationViewControl.SelectedItem = NavigationViewControl.SettingsItem;
+                _isUpdatingSelection = false;
+                return;
+            }
+
+            // 根据当前页面类型找到对应的菜单项（遍历所有一级菜单及子菜单）
+            NavigationViewItem targetItem = FindMenuItemByTag(currentPageType.Name);
+
+            if (targetItem != null && NavigationViewControl.SelectedItem.Equals(targetItem))
+            {
+                _isUpdatingSelection = true;
+                NavigationViewControl.SelectedItem = targetItem;
+                _isUpdatingSelection = false;
+            }
+        }
+        // 递归查找 NavigationViewItem（支持嵌套菜单）
+        private NavigationViewItem FindMenuItemByTag(string tag)
+        {
+            var menuitems = NavigationViewControl.MenuItems.OfType<NavigationViewItem>();
+            var MenuItem = menuitems.Where(menuItem => tag.Equals(menuItem.Tag?.ToString())).ToList();
+            return MenuItem.First();
+        }
+        private bool IsSettingPageTag(string tag)
+        {
+            return tag.Equals(nameof(SettingsPage));
         }
 
         private void OnRootFrameNavigating(object sender, NavigatingCancelEventArgs e)
@@ -90,6 +134,7 @@ namespace SuperAudio
         }
         private void OnNavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
+            if (_isUpdatingSelection) return;
             if (args.IsSettingsSelected)
             {
                 if (rootFrame.CurrentSourcePageType != typeof(SettingsPage))
@@ -116,6 +161,7 @@ namespace SuperAudio
         {
             if (this.rootFrame.CanGoBack)
             {
+                _isUpdatingSelection= true;
                 this.rootFrame.GoBack();
             }
         }

@@ -4,7 +4,6 @@ using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
 using SuperAudio.Pages;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 
 // To learn more about WinUI, the WinUI project structure,
