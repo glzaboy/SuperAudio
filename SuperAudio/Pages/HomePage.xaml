@@ -5,11 +5,55 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SuperAudio.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enumeration="using:Windows.Devices.Enumeration"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Grid x:Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-    <Grid>
-        <TextBlock>Home</TextBlock>
-        
+        <TextBlock
+    x:Name="PageHeader"
+    MaxWidth="1064"
+    Margin="36,24,36,0"
+    AutomationProperties.HeadingLevel="Level1"
+    Style="{StaticResource TitleTextBlockStyle}"
+    Text="Settings" />
+        <ScrollViewer
+            Grid.Row="1"
+            Padding="36,0,36,0"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Auto">
+            <Grid x:Name="MainGrid" Loaded="MainGrid_Loaded">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Connection state: "/>
+                    <TextBlock x:Name="ConnectionState" Grid.Row="0" Text="Disconnected."/>
+                </StackPanel>
+                <ListView x:Name="DeviceListView" ItemsSource="{x:Bind devices}" Grid.Row="1">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="enumeration:DeviceInformation">
+                            <StackPanel Orientation="Horizontal" Margin="6">
+                                <SymbolIcon Symbol="Audio" Margin="0,0,12,0"/>
+                                <StackPanel>
+                                    <TextBlock Text="{x:Bind Name}" FontWeight="Bold"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackPanel Orientation="Vertical" Grid.Row="2">
+                    <Button x:Name="EnableAudioPlaybackConnectionButton" Content="Enable Audio Playback Connection" Click="EnableAudioPlaybackConnectionButton_Click"/>
+                    <Button x:Name="ReleaseAudioPlaybackConnectionButton" Content="Release Audio Playback Connection" Click="ReleaseAudioPlaybackConnectionButton_Click"/>
+                    <Button x:Name="OpenAudioPlaybackConnectionButtonButton" Content="Open Connection" Click="OpenAudioPlaybackConnectionButtonButton_Click" IsEnabled="False"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

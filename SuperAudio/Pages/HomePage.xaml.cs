@@ -1,17 +1,10 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Collections.ObjectModel;
+using Windows.Devices.Enumeration;
+using Windows.Media.Audio;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,9 +16,137 @@ namespace SuperAudio.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
+        private Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections=[];
+        private ObservableCollection<Windows.Devices.Enumeration.DeviceInformation> devices =[];
         public HomePage()
         {
             InitializeComponent();
+        }
+        private void MainGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            //audioPlaybackConnections = new Dictionary<string, AudioPlaybackConnection>();
+
+            // Start watching for paired Bluetooth devices. 
+            var deviceWatcher = DeviceInformation.CreateWatcher(AudioPlaybackConnection.GetDeviceSelector());
+
+            // Register event handlers before starting the watcher. 
+            deviceWatcher.Added += DeviceWatcher_Added;
+            deviceWatcher.Removed += DeviceWatcher_Removed;
+
+            deviceWatcher.Start();
+        }
+        private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
+        {
+            // Collections bound to the UI are updated in the UI thread. 
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                this.devices.Add(args);
+            });
+        }
+        private void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args)
+        {
+            // Collections bound to the UI are updated in the UI thread. 
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                // Find the device for the given id and remove it from the list. 
+                foreach (DeviceInformation device in this.devices)
+                {
+                    if (device.Id == args.Id)
+                    {
+                        devices.Remove(device);
+                        break;
+                    }
+                }
+
+                if (audioPlaybackConnections.ContainsKey(args.Id))
+                {
+                    AudioPlaybackConnection connectionToRemove = audioPlaybackConnections[args.Id];
+                    connectionToRemove.Dispose();
+                    audioPlaybackConnections.Remove(args.Id);
+                }
+            });
+        }
+        private async void OpenAudioPlaybackConnectionButtonButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedDevice = (DeviceListView.SelectedItem as DeviceInformation).Id;
+            AudioPlaybackConnection selectedConnection;
+
+            if (this.audioPlaybackConnections.TryGetValue(selectedDevice, out selectedConnection))
+            {
+                if ((await selectedConnection.OpenAsync()).Status == AudioPlaybackConnectionOpenResultStatus.Success)
+                {
+                    // Notify that the AudioPlaybackConnection is connected. 
+                    ConnectionState.Text = "Connected";
+                }
+                else
+                {
+                    // Notify that the connection attempt did not succeed. 
+                    ConnectionState.Text = "Disconnected (attempt failed)";
+                }
+            }
+        }
+        private async void EnableAudioPlaybackConnectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DeviceListView.SelectedItem is not null)
+            {
+                var selectedDeviceId = (DeviceListView.SelectedItem as DeviceInformation).Id;
+                if (!audioPlaybackConnections.ContainsKey(selectedDeviceId))
+                {
+                    // Create the audio playback connection from the selected device id and add it to the dictionary. 
+                    // This will result in allowing incoming connections from the remote device. 
+                    var playbackConnection = AudioPlaybackConnection.TryCreateFromId(selectedDeviceId);
+
+                    if (playbackConnection != null)
+                    {
+                        // The device has an available audio playback connection. 
+                        playbackConnection.StateChanged += PlaybackConnection_StateChanged; ;
+                        audioPlaybackConnections.Add(selectedDeviceId, playbackConnection);
+                        await playbackConnection.StartAsync();
+                        OpenAudioPlaybackConnectionButtonButton.IsEnabled = true;
+                    }
+                }
+            }
+        }
+        private void ReleaseAudioPlaybackConnectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DeviceListView.SelectedItem is not DeviceInformation selectedDevice)
+            {
+                ConnectionState.Text = "No device selected to release.";
+                return;
+            }
+
+            string deviceId = selectedDevice.Id;
+            if (audioPlaybackConnections.TryGetValue(deviceId, out var connection))
+            {
+                // 关闭并释放连接
+                connection.StateChanged -= PlaybackConnection_StateChanged;
+                connection.Dispose();
+                audioPlaybackConnections.Remove(deviceId);
+                ConnectionState.Text = "Connection released.";
+                OpenAudioPlaybackConnectionButtonButton.IsEnabled = false;
+            }
+            else
+            {
+                ConnectionState.Text = "No active connection for this device.";
+            }
+        }
+        private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                if (sender.State == AudioPlaybackConnectionState.Closed)
+                {
+                    ConnectionState.Text = "Disconnected";
+                }
+                else if (sender.State == AudioPlaybackConnectionState.Opened)
+                {
+                    ConnectionState.Text = "Connected";
+                }
+                else
+                {
+                    ConnectionState.Text = "Unknown";
+                }
+            });
         }
     }
 }

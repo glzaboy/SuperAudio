@@ -37,6 +37,8 @@
             <TitleBar.Content>
                 <AutoSuggestBox MaxWidth="580"
                     HorizontalAlignment="Stretch"
+                    PlaceholderText="Search controls and samples..."
+                    QueryIcon="Find"
                     VerticalAlignment="Center" >
                 </AutoSuggestBox>
             </TitleBar.Content>

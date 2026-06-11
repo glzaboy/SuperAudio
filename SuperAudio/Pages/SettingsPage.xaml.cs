@@ -1,20 +1,9 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using SuperAudio.Helpers;
 using SuperAudio.Helpers.SettingsHelper;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -31,10 +20,44 @@ namespace SuperAudio.Pages
         public SettingsPage()
         {
             InitializeComponent();
+            Loaded += OnSettingsPageLoaded;
+        }
+        private void OnSettingsPageLoaded(object sender, RoutedEventArgs e)
+        {
+            CheckRecentAndFavoriteButtonStates();
+            var currentTheme = ThemeHelper.RootTheme;
+            switch (currentTheme)
+            {
+                case ElementTheme.Light:
+                    themeMode.SelectedIndex = 0;
+                    break;
+                case ElementTheme.Dark:
+                    themeMode.SelectedIndex = 1;
+                    break;
+                case ElementTheme.Default:
+                    themeMode.SelectedIndex = 2;
+                    break;
+            }
+
+            if (App.MainWindow.NavigationView.PaneDisplayMode == NavigationViewPaneDisplayMode.Auto)
+            {
+                navigationLocation.SelectedIndex = 0;
+            }
+            else
+            {
+                navigationLocation.SelectedIndex = 1;
+            }
+
+            lastNavigationSelectionMode = navigationLocation.SelectedIndex;
+
+            if (ElementSoundPlayer.State == ElementSoundPlayerState.On)
+                soundToggle.IsOn = true;
+            if (ElementSoundPlayer.SpatialAudioMode == ElementSpatialAudioMode.On)
+                spatialSoundBox.IsOn = true;
         }
         private async void bugRequestCard_Click(object sender, RoutedEventArgs e)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/WinUI-Gallery/issues/new/choose"));
+            await Launcher.LaunchUriAsync(new Uri("https://steamsda.com/"));
 
         }
         private void toCloneRepoCard_Click(object sender, RoutedEventArgs e)

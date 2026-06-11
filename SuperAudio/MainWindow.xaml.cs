@@ -35,7 +35,7 @@ namespace SuperAudio
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
             // We need to set the minimum size here because the XamlRoot is not available in the constructor.
-
+            NavigationOrientationHelper.UpdateNavigationViewForElement(NavigationOrientationHelper.IsLeftMode());
         }
         private void TitleBar_PaneToggleRequested(TitleBar sender, object args)
         {

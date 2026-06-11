@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
+using SuperAudio.Helpers;
 using SuperAudio.Pages;
 using Windows.ApplicationModel.Activation;
 
@@ -35,6 +36,7 @@ namespace SuperAudio
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             MainWindow = new();
+            WindowHelper.TrackWindow(MainWindow);
             EnsureWindow();
         }
         private async void EnsureWindow()
@@ -44,7 +46,7 @@ namespace SuperAudio
 
             //MainWindow.AddNavigationMenuItems();
 
-            //ThemeHelper.Initialize();
+            ThemeHelper.Initialize();
 
             var targetPageType = typeof(HomePage);
             var targetPageArguments = string.Empty;
@@ -98,8 +100,7 @@ namespace SuperAudio
         /// <param name="e">Details about the exception.</param>
         private void HandleExceptions(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            bool isPackaged = Windows.ApplicationModel.Package.Current != null;
-            if (isPackaged)
+            if (NativeMethods.IsAppPackaged)
             {
                 e.Handled = true; //Don't crash the app.
 

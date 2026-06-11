@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.UI.Xaml;
-using SuperAudio.Helpers.SettingsHelper;
 
 namespace SuperAudio.Helpers;
 
