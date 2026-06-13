@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using SuperAudio.Helpers;
 using SuperAudio.Pages;
+using SuperAudio.ViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace SuperAudio
         /// 防止循环的标志位
         /// </summary>
         private bool _isUpdatingSelection = false;
+        public MainWindowViewModel ViewModel { get; }
         public NavigationView NavigationView
         {
             get { return NavigationViewControl; }
@@ -30,6 +32,8 @@ namespace SuperAudio
         public MainWindow()
         {
             InitializeComponent();
+            this.ViewModel = new MainWindowViewModel();
+            this.RootGrid.DataContext = ViewModel;
             this.ExtendsContentIntoTitleBar = true;
         }
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)

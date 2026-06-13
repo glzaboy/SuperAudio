@@ -4,11 +4,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SuperAudio.Pages"
+    xmlns:viewModel="using:SuperAudio.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enumeration="using:Windows.Devices.Enumeration"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" d:DataContext="{d:DesignInstance Type=viewModel:HomePageViewModel, IsDesignTimeCreatable=True}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -20,7 +21,7 @@
     Margin="36,24,36,0"
     AutomationProperties.HeadingLevel="Level1"
     Style="{StaticResource TitleTextBlockStyle}"
-    Text="Settings" />
+    Text="{Binding Title}" />
         <ScrollViewer
             Grid.Row="1"
             Padding="36,0,36,0"

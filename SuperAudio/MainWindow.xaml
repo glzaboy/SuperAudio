@@ -4,23 +4,24 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SuperAudio"
+    xmlns:viewModels="using:SuperAudio.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="SuperAudio abcde">
+    Title="SuperAudio">
 
     <Window.SystemBackdrop>
         <MicaBackdrop/>
 
     </Window.SystemBackdrop>
-    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded">
+    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=True}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TitleBar
             x:Name="titleBar"
-            Title="Super Audio Player"
+            Title="{Binding Title}"
             IsPaneToggleButtonVisible="True"
             BackRequested="TitleBar_BackRequested"
             IsBackButtonVisible="{x:Bind rootFrame.CanGoBack, Mode=OneWay}"
@@ -72,7 +73,7 @@
                 <NavigationViewItem
                     x:Name="Home"
                     AutomationProperties.AutomationId="Home"
-                    Content="Home"
+                    Content="播放"
                     Tag="HomePage"
                     Icon="Home" />
                 <NavigationViewItem

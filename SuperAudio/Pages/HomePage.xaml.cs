@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using SuperAudio.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,11 +17,13 @@ namespace SuperAudio.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
+        public HomePageViewModel ViewModel { get; } = new();
         private Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections=[];
         private ObservableCollection<Windows.Devices.Enumeration.DeviceInformation> devices =[];
         public HomePage()
         {
             InitializeComponent();
+            this.DataContext = ViewModel;
         }
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
         {
