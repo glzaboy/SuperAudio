@@ -46,35 +46,48 @@ namespace SuperAudio
         {
             NavigationViewControl.IsPaneOpen = !NavigationViewControl.IsPaneOpen;
         }
-        async private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
+        private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
         {
             UpdateNavigationViewSelection();
         }
         // 同步菜单高亮的方法
-        async private void UpdateNavigationViewSelection()
+        private void UpdateNavigationViewSelection()
         {
-            if (!_isUpdatingSelection) {
+            if (_isUpdatingSelection) {
                 return;
             }
-            Type currentPageType = rootFrame.CurrentSourcePageType;
-            
-            if (currentPageType == null) return;
-
-            if (IsSettingPageTag(currentPageType.Name))
+            _isUpdatingSelection = true;
+            try
             {
-                _isUpdatingSelection = true;
-                NavigationViewControl.SelectedItem = NavigationViewControl.SettingsItem;
-                _isUpdatingSelection = false;
-                return;
+                Type currentPageType = rootFrame.CurrentSourcePageType;
+
+                if (currentPageType == null) return;
+
+                if (IsSettingPageTag(currentPageType.Name))
+                {
+                    NavigationViewControl.SelectedItem = NavigationViewControl.SettingsItem;
+                    return;
+                }
+
+                // 根据当前页面类型找到对应的菜单项（遍历所有一级菜单及子菜单）
+                NavigationViewItem targetItem = FindMenuItemByTag(currentPageType.Name);
+                if (targetItem != null)
+                {
+                    if (NavigationViewControl.SelectedItem == null)
+                    {
+                        NavigationViewControl.SelectedItem = targetItem;
+                    }
+                    else
+                    {
+                        if (!NavigationViewControl.SelectedItem.Equals(targetItem))
+                        {
+                            NavigationViewControl.SelectedItem = targetItem;
+                        }
+                    }
+                }
             }
-
-            // 根据当前页面类型找到对应的菜单项（遍历所有一级菜单及子菜单）
-            NavigationViewItem targetItem = FindMenuItemByTag(currentPageType.Name);
-
-            if (targetItem != null && NavigationViewControl.SelectedItem.Equals(targetItem))
+            finally
             {
-                _isUpdatingSelection = true;
-                NavigationViewControl.SelectedItem = targetItem;
                 _isUpdatingSelection = false;
             }
         }
@@ -98,11 +111,11 @@ namespace SuperAudio
         {
             if (sender.PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
             {
-                titleBar.IsPaneToggleButtonVisible = false;
+                ViewModel.IsPaneToggleButtonVisible = false;
             }
             else
             {
-                titleBar.IsPaneToggleButtonVisible = true;
+                ViewModel.IsPaneToggleButtonVisible = true;
             }
         }
         private void OnNavigationViewControlLoaded(object sender, RoutedEventArgs e)
@@ -166,7 +179,6 @@ namespace SuperAudio
         {
             if (this.rootFrame.CanGoBack)
             {
-                _isUpdatingSelection= true;
                 this.rootFrame.GoBack();
             }
         }

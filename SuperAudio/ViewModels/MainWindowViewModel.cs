@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 
 namespace SuperAudio.ViewModels
 {
@@ -7,11 +8,10 @@ namespace SuperAudio.ViewModels
     {
         [ObservableProperty]
         public partial string? Title { get; set; } = "超级蓝牙播放器";
+        [ObservableProperty]
 
-        [RelayCommand]
-        private void Test()
-        {
+        public partial bool IsPaneToggleButtonVisible { get; set; } = true;
 
-        }
+        
     }
 }

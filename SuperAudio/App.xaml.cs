@@ -7,6 +7,7 @@ using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
 using SuperAudio.Helpers;
 using SuperAudio.Pages;
+using SuperAudio.Services;
 using SuperAudio.ViewModels;
 using System;
 using Windows.ApplicationModel.Activation;
@@ -76,7 +77,7 @@ namespace SuperAudio
 
             var targetPageType = typeof(HomePage);
             var targetPageArguments = string.Empty;
-            AppActivationArguments eventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            AppActivationArguments eventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
             if (eventArgs != null &&
                 eventArgs.Kind == ExtendedActivationKind.Protocol &&
                 eventArgs.Data is ProtocolActivatedEventArgs protocolArgs)

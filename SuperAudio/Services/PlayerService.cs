@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SuperAudio.Helpers
+namespace SuperAudio.Services
 {
-    internal sealed class PlayerService:IDisposable
+    internal sealed partial class PlayerService:IDisposable
     {
         public PlayerService() { 
         }
