@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SuperAudio.ViewModels;
@@ -17,12 +18,13 @@ namespace SuperAudio.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
-        public HomePageViewModel ViewModel { get; } = new();
+        public HomePageViewModel ViewModel { get; }
         private Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections=[];
         private ObservableCollection<Windows.Devices.Enumeration.DeviceInformation> devices =[];
         public HomePage()
         {
             InitializeComponent();
+            ViewModel = App.Host.Services.GetRequiredService<HomePageViewModel>();
             this.DataContext = ViewModel;
         }
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
@@ -41,7 +43,7 @@ namespace SuperAudio.Pages
         private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
         {
             // Collections bound to the UI are updated in the UI thread. 
-            DispatcherQueue.TryEnqueue(() =>
+            this.DispatcherQueue.TryEnqueue(() =>
             {
                 this.devices.Add(args);
             });

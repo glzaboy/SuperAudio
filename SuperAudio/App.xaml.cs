@@ -1,10 +1,14 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
 using SuperAudio.Helpers;
 using SuperAudio.Pages;
+using SuperAudio.ViewModels;
+using System;
 using Windows.ApplicationModel.Activation;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -18,6 +22,7 @@ namespace SuperAudio
     public partial class App : Application
     {
         internal static MainWindow MainWindow { get; private set; } = null!;
+        internal static IHost Host { get; private set; }=null!;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -35,7 +40,28 @@ namespace SuperAudio
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            MainWindow = new();
+            HostApplicationBuilder hostApplicationBuilder = new HostApplicationBuilder();
+            hostApplicationBuilder.Services.AddSingleton<MainWindow>();
+            hostApplicationBuilder.Services.AddSingleton<MainWindowViewModel>();
+            hostApplicationBuilder.Services.AddSingleton<HomePageViewModel>();
+            hostApplicationBuilder.Services.AddSingleton<PlayerService>();
+            Host = hostApplicationBuilder.Build();
+            Host.Start();
+            MainWindow = Host.Services.GetRequiredService<MainWindow>();
+            MainWindow.Closed += async (s, e) =>
+            {
+                if (Host!=null)
+                {
+                    try
+                    {
+                        await Host.StopAsync(TimeSpan.FromSeconds(10));
+                    }
+                    catch (OperationCanceledException ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Host shutdown timed out ex {ex}.");
+                    }
+                }
+            };
             WindowHelper.TrackWindow(MainWindow);
             EnsureWindow();
         }

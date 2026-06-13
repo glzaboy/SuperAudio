@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -24,7 +25,7 @@ namespace SuperAudio
         /// 防止循环的标志位
         /// </summary>
         private bool _isUpdatingSelection = false;
-        public MainWindowViewModel ViewModel { get; }
+        public MainWindowViewModel ViewModel { get; private set; }
         public NavigationView NavigationView
         {
             get { return NavigationViewControl; }
@@ -32,7 +33,7 @@ namespace SuperAudio
         public MainWindow()
         {
             InitializeComponent();
-            this.ViewModel = new MainWindowViewModel();
+            this.ViewModel = App.Host.Services.GetRequiredService<MainWindowViewModel>();
             this.RootGrid.DataContext = ViewModel;
             this.ExtendsContentIntoTitleBar = true;
         }
