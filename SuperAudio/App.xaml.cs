@@ -39,8 +39,20 @@ namespace SuperAudio
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected async override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            var mainInstance = AppInstance.FindOrRegisterForKey("main");
+
+            if (!mainInstance.IsCurrent)
+            {
+                // Redirect the activation (and args) to the "main" instance, and exit.
+                var activatedEventArgs =AppInstance.GetCurrent().GetActivatedEventArgs();
+                await mainInstance.RedirectActivationToAsync(activatedEventArgs);
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+                return;
+            }
+
+
             HostApplicationBuilder hostApplicationBuilder = new HostApplicationBuilder();
             hostApplicationBuilder.Services.AddSingleton<MainWindow>();
             hostApplicationBuilder.Services.AddSingleton<MainWindowViewModel>();

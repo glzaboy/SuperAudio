@@ -4,7 +4,6 @@ using Microsoft.UI.Xaml.Controls;
 using SuperAudio.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Windows.Devices.Enumeration;
 using Windows.Media.Audio;
 
@@ -20,56 +19,16 @@ namespace SuperAudio.Pages
     {
         public HomePageViewModel ViewModel { get; }
         private Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections=[];
-        private ObservableCollection<Windows.Devices.Enumeration.DeviceInformation> devices =[];
         public HomePage()
         {
             InitializeComponent();
             ViewModel = App.Host.Services.GetRequiredService<HomePageViewModel>();
+            
             this.DataContext = ViewModel;
         }
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            //audioPlaybackConnections = new Dictionary<string, AudioPlaybackConnection>();
-
-            // Start watching for paired Bluetooth devices. 
-            var deviceWatcher = DeviceInformation.CreateWatcher(AudioPlaybackConnection.GetDeviceSelector());
-
-            // Register event handlers before starting the watcher. 
-            deviceWatcher.Added += DeviceWatcher_Added;
-            deviceWatcher.Removed += DeviceWatcher_Removed;
-
-            deviceWatcher.Start();
-        }
-        private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
-        {
-            // Collections bound to the UI are updated in the UI thread. 
-            this.DispatcherQueue.TryEnqueue(() =>
-            {
-                this.devices.Add(args);
-            });
-        }
-        private void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args)
-        {
-            // Collections bound to the UI are updated in the UI thread. 
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                // Find the device for the given id and remove it from the list. 
-                foreach (DeviceInformation device in this.devices)
-                {
-                    if (device.Id == args.Id)
-                    {
-                        devices.Remove(device);
-                        break;
-                    }
-                }
-
-                if (audioPlaybackConnections.ContainsKey(args.Id))
-                {
-                    AudioPlaybackConnection connectionToRemove = audioPlaybackConnections[args.Id];
-                    connectionToRemove.Dispose();
-                    audioPlaybackConnections.Remove(args.Id);
-                }
-            });
+            ViewModel.InitCommand.Execute(this);
         }
         private async void OpenAudioPlaybackConnectionButtonButton_Click(object sender, RoutedEventArgs e)
         {

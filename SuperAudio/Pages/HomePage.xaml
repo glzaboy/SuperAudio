@@ -16,12 +16,12 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-    x:Name="PageHeader"
-    MaxWidth="1064"
-    Margin="36,24,36,0"
-    AutomationProperties.HeadingLevel="Level1"
-    Style="{StaticResource TitleTextBlockStyle}"
-    Text="{Binding Title}" />
+            x:Name="PageHeader"
+            MaxWidth="1064"
+            Margin="36,24,36,0"
+            AutomationProperties.HeadingLevel="Level1"
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="{Binding Title}" />
         <ScrollViewer
             Grid.Row="1"
             Padding="36,0,36,0"
@@ -37,7 +37,7 @@
                     <TextBlock Text="Connection state: "/>
                     <TextBlock x:Name="ConnectionState" Grid.Row="0" Text="Disconnected."/>
                 </StackPanel>
-                <ListView x:Name="DeviceListView" ItemsSource="{x:Bind devices}" Grid.Row="1">
+                <ListView x:Name="DeviceListView" ItemsSource="{x:Bind ViewModel.Devices,Mode=TwoWay}" Grid.Row="1">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="enumeration:DeviceInformation">
                             <StackPanel Orientation="Horizontal" Margin="6">
