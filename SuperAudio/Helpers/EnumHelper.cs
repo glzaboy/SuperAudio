@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 
 namespace SuperAudio.Helpers;
+
 internal static partial class EnumHelper
 {
     /// <summary>

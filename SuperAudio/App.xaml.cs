@@ -23,7 +23,7 @@ namespace SuperAudio
     public partial class App : Application
     {
         internal static MainWindow MainWindow { get; private set; } = null!;
-        internal static IHost Host { get; private set; }=null!;
+        internal static IHost Host { get; private set; } = null!;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -46,14 +46,14 @@ namespace SuperAudio
             if (!mainInstance.IsCurrent)
             {
                 // Redirect the activation (and args) to the "main" instance, and exit.
-                var activatedEventArgs =AppInstance.GetCurrent().GetActivatedEventArgs();
+                var activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
                 await mainInstance.RedirectActivationToAsync(activatedEventArgs);
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
                 return;
             }
 
 
-            HostApplicationBuilder hostApplicationBuilder = new HostApplicationBuilder();
+            HostApplicationBuilder hostApplicationBuilder = new();
             hostApplicationBuilder.Services.AddSingleton<MainWindow>();
             hostApplicationBuilder.Services.AddSingleton<MainWindowViewModel>();
             hostApplicationBuilder.Services.AddSingleton<HomePageViewModel>();
@@ -63,7 +63,7 @@ namespace SuperAudio
             MainWindow = Host.Services.GetRequiredService<MainWindow>();
             MainWindow.Closed += async (s, e) =>
             {
-                if (Host!=null)
+                if (Host != null)
                 {
                     try
                     {
@@ -80,7 +80,7 @@ namespace SuperAudio
         }
         private async void EnsureWindow()
         {
-           // await ControlInfoDataSource.Instance.GetGroupsAsync();
+            // await ControlInfoDataSource.Instance.GetGroupsAsync();
             //await IconsDataSource.Instance.LoadIcons();
 
             //MainWindow.AddNavigationMenuItems();
@@ -115,7 +115,7 @@ namespace SuperAudio
                 string arg = launchArgs.Arguments.Trim();
                 targetPageArguments = arg;
 
-                
+
             }
 
             MainWindow.Navigate(targetPageType, targetPageArguments);

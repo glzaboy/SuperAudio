@@ -7,13 +7,13 @@ using Windows.Media.Audio;
 
 namespace SuperAudio.Services
 {
-    public sealed partial class PlayerService:IDisposable
+    public sealed partial class PlayerService : IDisposable
     {
         public ObservableCollection<DeviceInformation> Devices { get; set; } = [];
         private readonly Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections = [];
         private DeviceWatcher? DeviceWatcher { get; set; }
         private bool Inited { get; set; } = false;
-      
+
         public event TypedEventHandler<DeviceWatcher, DeviceInformation> Added;
         public event TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> Removed;
 
@@ -25,14 +25,14 @@ namespace SuperAudio.Services
             DeviceWatcher.Added += DeviceWatcher_Added;
             DeviceWatcher.Removed += DeviceWatcher_Removed;
             DeviceWatcher.Start();
-            
+
         }
         private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
         {
             Devices.Add(args);
             Added.Invoke(sender, args);
         }
-        public void EnableAudioPlaybackConnection(string deviceId)
+        public async void EnableAudioPlaybackConnection(string deviceId)
         {
             if (!audioPlaybackConnections.ContainsKey(deviceId))
             {
@@ -45,7 +45,8 @@ namespace SuperAudio.Services
                     // The device has an available audio playback connection. 
                     playbackConnection.StateChanged += PlaybackConnection_StateChanged; ;
                     audioPlaybackConnections.Add(deviceId, playbackConnection);
-                    /*await playbackConnection.StartAsync();
+                    await playbackConnection.StartAsync();
+                    /*
                     OpenAudioPlaybackConnectionButtonButton.IsEnabled = true;*/
                 }
             }
@@ -63,7 +64,7 @@ namespace SuperAudio.Services
             }
             else
             {
-               // ConnectionState.Text = "No active connection for this device.";
+                // ConnectionState.Text = "No active connection for this device.";
             }
         }
 
@@ -72,11 +73,12 @@ namespace SuperAudio.Services
             throw new NotImplementedException();
         }
 
-        public async void Start(string deviceId)
+        public async void OpenAudio(string deviceId)
         {
-            if (this.audioPlaybackConnections.TryGetValue(deviceId, out var selectedConnection))
+            if (audioPlaybackConnections.TryGetValue(deviceId, out var selectedConnection))
             {
-                if ((await selectedConnection.OpenAsync()).Status == AudioPlaybackConnectionOpenResultStatus.Success)
+                var openConnection = await selectedConnection.OpenAsync();
+                if ((openConnection.Status == AudioPlaybackConnectionOpenResultStatus.Success))
                 {
                     // Notify that the AudioPlaybackConnection is connected. 
                     //ConnectionState.Text = "Connected";
@@ -90,7 +92,7 @@ namespace SuperAudio.Services
         }
         private void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args)
         {
-            
+
             // Find the device for the given id and remove it from the list. 
             foreach (DeviceInformation device in Devices)
             {
@@ -101,9 +103,8 @@ namespace SuperAudio.Services
                 }
             }
 
-            if (audioPlaybackConnections.ContainsKey(args.Id))
+            if (audioPlaybackConnections.TryGetValue(args.Id, out AudioPlaybackConnection? connectionToRemove))
             {
-                AudioPlaybackConnection connectionToRemove = audioPlaybackConnections[args.Id];
                 connectionToRemove.Dispose();
                 _ = audioPlaybackConnections.Remove(args.Id);
             }
@@ -116,7 +117,7 @@ namespace SuperAudio.Services
                 DeviceWatcher.Stop();
                 Devices.Clear();
             }
-            
+
         }
     }
 }

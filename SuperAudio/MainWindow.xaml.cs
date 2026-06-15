@@ -53,7 +53,8 @@ namespace SuperAudio
         // 同步菜单高亮的方法
         private void UpdateNavigationViewSelection()
         {
-            if (_isUpdatingSelection) {
+            if (_isUpdatingSelection)
+            {
                 return;
             }
             _isUpdatingSelection = true;

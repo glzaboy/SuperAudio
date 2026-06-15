@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.UI.Xaml.Controls;
 
 namespace SuperAudio.ViewModels
 {
@@ -12,6 +10,6 @@ namespace SuperAudio.ViewModels
 
         public partial bool IsPaneToggleButtonVisible { get; set; } = true;
 
-        
+
     }
 }

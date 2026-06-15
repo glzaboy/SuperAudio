@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using Windows.Win32.Foundation;
 
 namespace SuperAudio.Helpers;
+
 internal partial class NativeMethods
 {
     [DllImport("user32.dll", EntryPoint = "SetWindowLong")]

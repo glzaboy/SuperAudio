@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SuperAudio.Services;
-using System;
 using System.Collections.ObjectModel;
 
 namespace SuperAudio.ViewModels
 {
-    public partial class HomePageViewModel(PlayerService playerService):ObservableObject
+    public partial class HomePageViewModel(PlayerService playerService) : ObservableObject
     {
         [ObservableProperty]
         public partial string Title { get; set; } = $"播放";
@@ -38,8 +37,26 @@ namespace SuperAudio.ViewModels
             {
                 Devices = playerService.Devices;
                 // Find the device for the given id and remove it from the list. 
-                
+
             });
+        }
+        [RelayCommand]
+        public void OpenAudio(string deviceId)
+        {
+
+            playerService.OpenAudio(deviceId);
+        }
+        [RelayCommand]
+        public void EnableAudioPlaybackConnection(string deviceId)
+        {
+
+            playerService.EnableAudioPlaybackConnection(deviceId);
+        }
+        [RelayCommand]
+        public void ReleaseAudioPlaybackConnection(string deviceId)
+        {
+
+            playerService.ReleaseAudioPlaybackConnection(deviceId);
         }
     }
 }

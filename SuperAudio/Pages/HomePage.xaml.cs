@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SuperAudio.ViewModels;
-using System;
 using System.Collections.Generic;
 using Windows.Devices.Enumeration;
 using Windows.Media.Audio;
@@ -18,12 +17,12 @@ namespace SuperAudio.Pages
     public sealed partial class HomePage : Page
     {
         public HomePageViewModel ViewModel { get; }
-        private Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections=[];
+        private readonly Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections = [];
         public HomePage()
         {
             InitializeComponent();
             ViewModel = App.Host.Services.GetRequiredService<HomePageViewModel>();
-            
+
             this.DataContext = ViewModel;
         }
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
@@ -33,9 +32,8 @@ namespace SuperAudio.Pages
         private async void OpenAudioPlaybackConnectionButtonButton_Click(object sender, RoutedEventArgs e)
         {
             var selectedDevice = (DeviceListView.SelectedItem as DeviceInformation).Id;
-            AudioPlaybackConnection selectedConnection;
-
-            if (this.audioPlaybackConnections.TryGetValue(selectedDevice, out selectedConnection))
+            ViewModel.OpenAudioCommand.Execute(selectedDevice);
+            /*if (this.audioPlaybackConnections.TryGetValue(selectedDevice, out AudioPlaybackConnection selectedConnection))
             {
                 if ((await selectedConnection.OpenAsync()).Status == AudioPlaybackConnectionOpenResultStatus.Success)
                 {
@@ -47,14 +45,15 @@ namespace SuperAudio.Pages
                     // Notify that the connection attempt did not succeed. 
                     ConnectionState.Text = "Disconnected (attempt failed)";
                 }
-            }
+            }*/
         }
         private async void EnableAudioPlaybackConnectionButton_Click(object sender, RoutedEventArgs e)
         {
             if (DeviceListView.SelectedItem is not null)
             {
                 var selectedDeviceId = (DeviceListView.SelectedItem as DeviceInformation).Id;
-                if (!audioPlaybackConnections.ContainsKey(selectedDeviceId))
+                ViewModel.EnableAudioPlaybackConnectionCommand.Execute(selectedDeviceId);
+                /*if (!audioPlaybackConnections.ContainsKey(selectedDeviceId))
                 {
                     // Create the audio playback connection from the selected device id and add it to the dictionary. 
                     // This will result in allowing incoming connections from the remote device. 
@@ -68,7 +67,7 @@ namespace SuperAudio.Pages
                         await playbackConnection.StartAsync();
                         OpenAudioPlaybackConnectionButtonButton.IsEnabled = true;
                     }
-                }
+                }*/
             }
         }
         private void ReleaseAudioPlaybackConnectionButton_Click(object sender, RoutedEventArgs e)
@@ -80,7 +79,8 @@ namespace SuperAudio.Pages
             }
 
             string deviceId = selectedDevice.Id;
-            if (audioPlaybackConnections.TryGetValue(deviceId, out var connection))
+            ViewModel.ReleaseAudioPlaybackConnectionCommand.Execute(deviceId);
+            /*if (audioPlaybackConnections.TryGetValue(deviceId, out var connection))
             {
                 // 关闭并释放连接
                 connection.StateChanged -= PlaybackConnection_StateChanged;
@@ -92,7 +92,7 @@ namespace SuperAudio.Pages
             else
             {
                 ConnectionState.Text = "No active connection for this device.";
-            }
+            }*/
         }
         private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
         {
