@@ -49,6 +49,6 @@
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
     <systemai:Capability Name="systemAIModels"/>
-    <uap:Capability Name="musicLibrary"/>
+    <DeviceCapability Name="bluetooth"/>
   </Capabilities>
 </Package>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
@@ -113,7 +112,7 @@ namespace SuperAudio.Services
                 connectionToRemove.Dispose();
                 _ = audioPlaybackConnections.Remove(args.Id);
             }
-            Removed.Invoke(sender, args);
+            Removed?.Invoke(sender, args);
         }
         public void Dispose()
         {
