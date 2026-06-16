@@ -52,7 +52,6 @@
                 <StackPanel Orientation="Vertical" Grid.Row="2">
                     <Button x:Name="EnableAudioPlaybackConnectionButton" Content="Enable Audio Playback Connection" Click="EnableAudioPlaybackConnectionButton_Click"/>
                     <Button x:Name="ReleaseAudioPlaybackConnectionButton" Content="Release Audio Playback Connection" Click="ReleaseAudioPlaybackConnectionButton_Click"/>
-                    <Button x:Name="OpenAudioPlaybackConnectionButtonButton" Content="Open Connection" Click="OpenAudioPlaybackConnectionButtonButton_Click"/>
                     
                 </StackPanel>
             </Grid>

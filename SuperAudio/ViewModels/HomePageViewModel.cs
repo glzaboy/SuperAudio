@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SuperAudio.Services;
 using System.Collections.ObjectModel;
 using System.Runtime.Versioning;
+using System.Threading.Tasks;
 using Windows.Media.Audio;
 
 namespace SuperAudio.ViewModels
@@ -53,7 +54,7 @@ namespace SuperAudio.ViewModels
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
-                Devices = playerService.Devices;
+                Devices = [..playerService.Devices];
 
             });
         }
@@ -62,31 +63,25 @@ namespace SuperAudio.ViewModels
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
-                Devices = playerService.Devices;
-                // Find the device for the given id and remove it from the list. 
+                Devices = [..playerService.Devices];
 
             });
         }
         [RelayCommand]
         [SupportedOSPlatform("Windows10.0.19041.0")]
-        public void OpenAudio(string deviceId)
+        public async Task EnableAudioPlaybackConnectionAsync(string deviceId)
         {
 
-            playerService.OpenAudio(deviceId);
+            await playerService.EnableAudioPlaybackConnectionAsync(deviceId);
+            await playerService.OpenAudioAsync(deviceId);
         }
         [RelayCommand]
         [SupportedOSPlatform("Windows10.0.19041.0")]
-        public void EnableAudioPlaybackConnection(string deviceId)
+        public async Task ReleaseAudioPlaybackConnectionAsync(string deviceId)
         {
 
-            playerService.EnableAudioPlaybackConnection(deviceId);
-        }
-        [RelayCommand]
-        [SupportedOSPlatform("Windows10.0.19041.0")]
-        public void ReleaseAudioPlaybackConnection(string deviceId)
-        {
-
-            playerService.ReleaseAudioPlaybackConnection(deviceId);
+            await playerService.ReleaseAudioPlaybackConnectionAsync(deviceId);
+            ConnectionStateText = "关闭";
         }
     }
 }

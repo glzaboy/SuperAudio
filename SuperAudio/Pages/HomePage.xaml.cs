@@ -2,9 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SuperAudio.ViewModels;
-using System.Runtime.Versioning;
 using Windows.Devices.Enumeration;
-using Windows.Media.Audio;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,24 +25,6 @@ namespace SuperAudio.Pages
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.InitCommand.Execute(this);
-        }
-        private async void OpenAudioPlaybackConnectionButtonButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedDevice = (DeviceListView.SelectedItem as DeviceInformation).Id;
-            ViewModel.OpenAudioCommand.Execute(selectedDevice);
-            /*if (this.audioPlaybackConnections.TryGetValue(selectedDevice, out AudioPlaybackConnection selectedConnection))
-            {
-                if ((await selectedConnection.OpenAsync()).Status == AudioPlaybackConnectionOpenResultStatus.Success)
-                {
-                    // Notify that the AudioPlaybackConnection is connected. 
-                    ConnectionState.Text = "Connected";
-                }
-                else
-                {
-                    // Notify that the connection attempt did not succeed. 
-                    ConnectionState.Text = "Disconnected (attempt failed)";
-                }
-            }*/
         }
         private async void EnableAudioPlaybackConnectionButton_Click(object sender, RoutedEventArgs e)
         {
@@ -82,7 +62,6 @@ namespace SuperAudio.Pages
             /*if (audioPlaybackConnections.TryGetValue(deviceId, out var connection))
             {
                 // 关闭并释放连接
-                connection.StateChanged -= PlaybackConnection_StateChanged;
                 connection.Dispose();
                 audioPlaybackConnections.Remove(deviceId);
                 ConnectionState.Text = "Connection released.";
@@ -92,25 +71,6 @@ namespace SuperAudio.Pages
             {
                 ConnectionState.Text = "No active connection for this device.";
             }*/
-        }
-        [SupportedOSPlatform("Windows10.0.19041.0")]
-        private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                if (sender.State == AudioPlaybackConnectionState.Closed)
-                {
-                    ConnectionState.Text = "Disconnected";
-                }
-                else if (sender.State == AudioPlaybackConnectionState.Opened)
-                {
-                    ConnectionState.Text = "Connected";
-                }
-                else
-                {
-                    ConnectionState.Text = "Unknown";
-                }
-            });
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Versioning;
+using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Media.Audio;
@@ -11,7 +13,7 @@ namespace SuperAudio.Services
     [SupportedOSPlatform("Windows10.0.19041.0")]
     public sealed partial class PlayerService : IDisposable
     {
-        public ObservableCollection<DeviceInformation> Devices { get; set; } = [];
+        public Collection<DeviceInformation> Devices { get; set; } = [];
         private readonly Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections = [];
         private DeviceWatcher? DeviceWatcher { get; set; }
         private bool Inited { get; set; } = false;
@@ -35,7 +37,7 @@ namespace SuperAudio.Services
             Devices.Add(args);
             Added?.Invoke(sender, args);
         }
-        public async void EnableAudioPlaybackConnection(string deviceId)
+        public async Task EnableAudioPlaybackConnectionAsync(string deviceId)
         {
             if (!audioPlaybackConnections.ContainsKey(deviceId))
             {
@@ -54,7 +56,7 @@ namespace SuperAudio.Services
                 }
             }
         }
-        public void ReleaseAudioPlaybackConnection(string deviceId)
+        public async Task ReleaseAudioPlaybackConnectionAsync(string deviceId)
         {
             if (audioPlaybackConnections.TryGetValue(deviceId, out var connection))
             {
@@ -76,7 +78,7 @@ namespace SuperAudio.Services
             StateChanged?.Invoke(sender, args);
         }
 
-        public async void OpenAudio(string deviceId)
+        public async Task OpenAudioAsync(string deviceId)
         {
             if (audioPlaybackConnections.TryGetValue(deviceId, out var selectedConnection))
             {
@@ -115,9 +117,24 @@ namespace SuperAudio.Services
         }
         public void Dispose()
         {
-            if (DeviceWatcher.Status == DeviceWatcherStatus.Created)
+            // 1. 释放所有音频播放连接 (无论 DeviceWatcher 状态如何)
+            foreach (var connection in audioPlaybackConnections.Values)
             {
-                DeviceWatcher.Stop();
+                connection.Dispose(); // 这里会触发 StateChanged 事件
+            }
+            audioPlaybackConnections.Clear();
+
+            // 2. 停止并清理 DeviceWatcher
+            if (DeviceWatcher != null)
+            {
+                DeviceWatcher.Added -= DeviceWatcher_Added;
+                DeviceWatcher.Removed -= DeviceWatcher_Removed;
+                // 检查 DeviceWatcher 是否正在运行或已启动，然后停止它
+                if (DeviceWatcher.Status == DeviceWatcherStatus.Started ||
+                    DeviceWatcher.Status == DeviceWatcherStatus.Created)
+                {
+                    DeviceWatcher.Stop();
+                }
                 Devices.Clear();
             }
 
