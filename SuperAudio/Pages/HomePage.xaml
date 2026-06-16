@@ -35,7 +35,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Connection state: "/>
-                    <TextBlock x:Name="ConnectionState" Grid.Row="0" Text="Disconnected."/>
+                    <TextBlock x:Name="ConnectionState" Grid.Row="0" Text="{Binding ConnectionStateText}" />
                 </StackPanel>
                 <ListView x:Name="DeviceListView" ItemsSource="{x:Bind ViewModel.Devices,Mode=TwoWay}" Grid.Row="1">
                     <ListView.ItemTemplate>
@@ -53,6 +53,7 @@
                     <Button x:Name="EnableAudioPlaybackConnectionButton" Content="Enable Audio Playback Connection" Click="EnableAudioPlaybackConnectionButton_Click"/>
                     <Button x:Name="ReleaseAudioPlaybackConnectionButton" Content="Release Audio Playback Connection" Click="ReleaseAudioPlaybackConnectionButton_Click"/>
                     <Button x:Name="OpenAudioPlaybackConnectionButtonButton" Content="Open Connection" Click="OpenAudioPlaybackConnectionButtonButton_Click"/>
+                    
                 </StackPanel>
             </Grid>
         </ScrollViewer>

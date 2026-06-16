@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.Versioning;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Media.Audio;
 
 namespace SuperAudio.Services
 {
+    [SupportedOSPlatform("Windows10.0.19041.0")]
     public sealed partial class PlayerService : IDisposable
     {
         public ObservableCollection<DeviceInformation> Devices { get; set; } = [];
@@ -14,8 +16,9 @@ namespace SuperAudio.Services
         private DeviceWatcher? DeviceWatcher { get; set; }
         private bool Inited { get; set; } = false;
 
-        public event TypedEventHandler<DeviceWatcher, DeviceInformation> Added;
-        public event TypedEventHandler<DeviceWatcher, DeviceInformationUpdate> Removed;
+        public event TypedEventHandler<DeviceWatcher, DeviceInformation>? Added;
+        public event TypedEventHandler<DeviceWatcher, DeviceInformationUpdate>? Removed;
+        public event TypedEventHandler<AudioPlaybackConnection, object>? StateChanged;
 
         public void Init()
         {
@@ -30,7 +33,7 @@ namespace SuperAudio.Services
         private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
         {
             Devices.Add(args);
-            Added.Invoke(sender, args);
+            Added?.Invoke(sender, args);
         }
         public async void EnableAudioPlaybackConnection(string deviceId)
         {
@@ -70,7 +73,7 @@ namespace SuperAudio.Services
 
         private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
         {
-            throw new NotImplementedException();
+            StateChanged?.Invoke(sender, args);
         }
 
         public async void OpenAudio(string deviceId)

@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.Input;
 using SuperAudio.Services;
 using System.Collections.ObjectModel;
+using System.Runtime.Versioning;
+using Windows.Media.Audio;
 
 namespace SuperAudio.ViewModels
 {
@@ -13,24 +15,49 @@ namespace SuperAudio.ViewModels
         [ObservableProperty]
         public partial ObservableCollection<Windows.Devices.Enumeration.DeviceInformation> Devices { get; set; } = [];
 
+        [ObservableProperty]
+        public partial string? ConnectionStateText { get; private set; } = "初始化";
+
         [RelayCommand]
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         public void Init()
         {
             playerService.Init();
             playerService.Added += PlayerService_Added;
             playerService.Removed += PlayerService_Removed;
+            playerService.StateChanged += PlayerService_StateChanged;
+        }
+        [SupportedOSPlatform("Windows10.0.19041.0")]
+        private void PlayerService_StateChanged(AudioPlaybackConnection sender, object args)
+        {
+            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                if (sender?.State == AudioPlaybackConnectionState.Closed)
+                {
+
+                    ConnectionStateText = "Disconnected";
+                }
+                else if (sender?.State == AudioPlaybackConnectionState.Opened)
+                {
+                    ConnectionStateText = "Connected";
+                }
+                else
+                {
+                    ConnectionStateText = "Unknown";
+                }
+            });
         }
 
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlayerService_Removed(Windows.Devices.Enumeration.DeviceWatcher sender, Windows.Devices.Enumeration.DeviceInformationUpdate args)
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 Devices = playerService.Devices;
-                // Find the device for the given id and remove it from the list. 
 
             });
         }
-
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlayerService_Added(Windows.Devices.Enumeration.DeviceWatcher sender, Windows.Devices.Enumeration.DeviceInformation args)
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
@@ -41,18 +68,21 @@ namespace SuperAudio.ViewModels
             });
         }
         [RelayCommand]
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         public void OpenAudio(string deviceId)
         {
 
             playerService.OpenAudio(deviceId);
         }
         [RelayCommand]
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         public void EnableAudioPlaybackConnection(string deviceId)
         {
 
             playerService.EnableAudioPlaybackConnection(deviceId);
         }
         [RelayCommand]
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         public void ReleaseAudioPlaybackConnection(string deviceId)
         {
 

@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SuperAudio.ViewModels;
-using System.Collections.Generic;
+using System.Runtime.Versioning;
 using Windows.Devices.Enumeration;
 using Windows.Media.Audio;
 
@@ -16,8 +16,7 @@ namespace SuperAudio.Pages
     /// </summary>
     public sealed partial class HomePage : Page
     {
-        public HomePageViewModel ViewModel { get; }
-        private readonly Dictionary<string, AudioPlaybackConnection> audioPlaybackConnections = [];
+        private HomePageViewModel ViewModel { get; }
         public HomePage()
         {
             InitializeComponent();
@@ -94,6 +93,7 @@ namespace SuperAudio.Pages
                 ConnectionState.Text = "No active connection for this device.";
             }*/
         }
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
         {
             DispatcherQueue.TryEnqueue(() =>
