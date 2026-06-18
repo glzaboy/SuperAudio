@@ -11,7 +11,7 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
-            <x:String x:Key="AppTitleName">WinUI 3 Gallery</x:String>
+            <x:String x:Key="AppTitleName">超级蓝牙音箱</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

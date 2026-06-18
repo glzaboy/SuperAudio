@@ -110,10 +110,10 @@
 
 
                     <!--  About  -->
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="About" />
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="关于" />
                     <toolkit:SettingsExpander
                         Margin="0,0,0,36"
-                        Description="© 2026 Microsoft. All rights reserved."
+                        Description="© 2026 顾留中 All rights reserved."
                         Header="{StaticResource AppTitleName}">
                         <toolkit:SettingsExpander.HeaderIcon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/Tiles/BadgeLogo.png" />
@@ -121,23 +121,9 @@
                         <TextBlock
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             IsTextSelectionEnabled="True"
-                            Text="1.1.1" />
+                            Text="1.0.0" />
                         <toolkit:SettingsExpander.Items>
-                            <toolkit:SettingsCard
-                                x:Name="toCloneRepoCard"
-                                Click="toCloneRepoCard_Click"
-                                Header="To clone this repository"
-                                IsClickEnabled="True">
-                                <TextBlock
-                                    x:Name="gitCloneTextBlock"
-                                    FontFamily="Consolas"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    IsTextSelectionEnabled="True"
-                                    Text="git clone https://github.com/microsoft/WinUI-Gallery" />
-                                <toolkit:SettingsCard.ActionIcon>
-                                    <FontIcon Glyph="&#xE8C8;" />
-                                </toolkit:SettingsCard.ActionIcon>
-                            </toolkit:SettingsCard>
+                            
                             <toolkit:SettingsCard
                                 x:Name="bugRequestCard"
                                 Click="bugRequestCard_Click"
@@ -154,20 +140,9 @@
                                 <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
                                     <HyperlinkButton Content="WinUI 3" NavigateUri="https://aka.ms/winui" />
                                     <HyperlinkButton Content="Windows Community Toolkit" NavigateUri="https://aka.ms/toolkit/windows" />
-                                    <HyperlinkButton Content="ColorCode-Universal" NavigateUri="https://github.com/WilliamABradley/ColorCode-Universal" />
-                                    <HyperlinkButton Content="Win2D" NavigateUri="https://github.com/Microsoft/Win2D" />
-                                    <HyperlinkButton Content="CsWin32" NavigateUri="https://github.com/Microsoft/CsWin32" />
                                 </StackPanel>
                             </toolkit:SettingsCard>
-                            <toolkit:SettingsCard
-                                HorizontalContentAlignment="Left"
-                                ContentAlignment="Vertical"
-                                Header="THIS CODE AND INFORMATION IS PROVIDED ‘AS IS’ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.">
-                                <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
-                                    <HyperlinkButton Content="Microsoft Services Agreement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=822631" />
-                                    <HyperlinkButton Content="Microsoft Privacy Statement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=521839" />
-                                </StackPanel>
-                            </toolkit:SettingsCard>
+                            
                         </toolkit:SettingsExpander.Items>
                     </toolkit:SettingsExpander>
                 </StackPanel>

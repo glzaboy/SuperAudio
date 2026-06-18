@@ -18,9 +18,7 @@ namespace SuperAudio.ViewModels
         [ObservableProperty]
         public partial ObservableCollection<PlayerInfoItem> Devices { get; set; } = [];
 
-        [ObservableProperty]
-        public partial string? ConnectionStateText { get; private set; } = "初始化";
-
+        
         [RelayCommand]
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public void Init()
@@ -54,7 +52,7 @@ namespace SuperAudio.ViewModels
         {
             try
             {
-                ContentDialog inputDialog = new ContentDialog
+                ContentDialog inputDialog = new()
                 {
                     Title = "请输入你的名字",
                     Content = new TextBlock { Text = "即将弹出蓝牙功能界面，您可以连接新设备" },

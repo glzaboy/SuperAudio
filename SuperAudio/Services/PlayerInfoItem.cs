@@ -18,7 +18,7 @@ namespace SuperAudio.Services
 
         public required DeviceInformation DeviceInformation { get; set; }
         [ObservableProperty]
-        public partial string? ConnectionStateText { get; private set; } = "初始化";
+        public partial string? ConnectionStateText { get; private set; } = "断开";
 
         public event TypedEventHandler<AudioPlaybackConnection, object>? StateChanged;
 

@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml.Controls;
 using SuperAudio.Helpers;
 using SuperAudio.Helpers.SettingsHelper;
 using System;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -59,12 +58,6 @@ namespace SuperAudio.Pages
         {
             await Launcher.LaunchUriAsync(new Uri("https://steamsda.com/"));
 
-        }
-        private void toCloneRepoCard_Click(object sender, RoutedEventArgs e)
-        {
-            DataPackage package = new DataPackage();
-            package.SetText(gitCloneTextBlock.Text);
-            Clipboard.SetContent(package);
         }
         private void soundToggle_Toggled(object sender, RoutedEventArgs e)
         {
