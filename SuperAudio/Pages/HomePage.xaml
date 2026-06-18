@@ -3,8 +3,10 @@
     x:Class="SuperAudio.Pages.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="page"
     xmlns:local="using:SuperAudio.Pages"
     xmlns:viewModel="using:SuperAudio.ViewModels"
+    xmlns:services="using:SuperAudio.Services"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enumeration="using:Windows.Devices.Enumeration"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -21,7 +23,7 @@
             Margin="36,24,36,0"
             AutomationProperties.HeadingLevel="Level1"
             Style="{StaticResource TitleTextBlockStyle}"
-            Text="{Binding Title}" />
+            Text="{x:Bind ViewModel.Title}" />
         <ScrollViewer
             Grid.Row="1"
             Padding="36,0,36,0"
@@ -39,20 +41,25 @@
                 </StackPanel>
                 <ListView x:Name="DeviceListView" ItemsSource="{x:Bind ViewModel.Devices,Mode=TwoWay}" Grid.Row="1">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="enumeration:DeviceInformation">
+                        <DataTemplate x:DataType="services:PlayerInfoItem">
                             <StackPanel Orientation="Horizontal" Margin="6">
                                 <SymbolIcon Symbol="Audio" Margin="0,0,12,0"/>
                                 <StackPanel>
-                                    <TextBlock Text="{x:Bind Name}" FontWeight="Bold"/>
+                                    <TextBlock><Run Text="{x:Bind DeviceInformation.Name}"></Run> (<Run Text="{x:Bind ConnectionStateText,Mode=OneWay}"></Run>)</TextBlock>
+                                    
+                                    <StackPanel HorizontalAlignment="Stretch"  Orientation="Horizontal">
+                                        <Button Command="{x:Bind EnableCommand}">连接音箱</Button>
+                                        <Button Command="{x:Bind DisableCommand}">断开链接</Button>
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
                 <StackPanel Orientation="Vertical" Grid.Row="2">
-                    <Button x:Name="EnableAudioPlaybackConnectionButton" Content="Enable Audio Playback Connection" Click="EnableAudioPlaybackConnectionButton_Click"/>
-                    <Button x:Name="ReleaseAudioPlaybackConnectionButton" Content="Release Audio Playback Connection" Click="ReleaseAudioPlaybackConnectionButton_Click"/>
+                    <TextBlock>没有找到你的设备，点击<Run FontWeight="Bold">添加新蓝牙设备</Run>增加一个</TextBlock>
                     
+                    <Button Content="添加新蓝牙设备" Command="{Binding OpenBluetoothSettingCommand}"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

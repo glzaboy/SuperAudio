@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using SuperAudio.Services;
+using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Runtime.Versioning;
 using System.Threading.Tasks;
-using Windows.Media.Audio;
 
 namespace SuperAudio.ViewModels
 {
@@ -14,7 +16,7 @@ namespace SuperAudio.ViewModels
         public partial string Title { get; set; } = $"播放";
 
         [ObservableProperty]
-        public partial ObservableCollection<Windows.Devices.Enumeration.DeviceInformation> Devices { get; set; } = [];
+        public partial ObservableCollection<PlayerInfoItem> Devices { get; set; } = [];
 
         [ObservableProperty]
         public partial string? ConnectionStateText { get; private set; } = "初始化";
@@ -26,35 +28,15 @@ namespace SuperAudio.ViewModels
             playerService.Init();
             playerService.Added += PlayerService_Added;
             playerService.Removed += PlayerService_Removed;
-            playerService.StateChanged += PlayerService_StateChanged;
         }
-        [SupportedOSPlatform("Windows10.0.19041.0")]
-        private void PlayerService_StateChanged(AudioPlaybackConnection sender, object args)
-        {
-            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                if (sender?.State == AudioPlaybackConnectionState.Closed)
-                {
-
-                    ConnectionStateText = "Disconnected";
-                }
-                else if (sender?.State == AudioPlaybackConnectionState.Opened)
-                {
-                    ConnectionStateText = "Connected";
-                }
-                else
-                {
-                    ConnectionStateText = "Unknown";
-                }
-            });
-        }
+        
 
         [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlayerService_Removed(Windows.Devices.Enumeration.DeviceWatcher sender, Windows.Devices.Enumeration.DeviceInformationUpdate args)
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
-                Devices = [..playerService.Devices];
+                Devices = [..playerService.Devices.Values];
 
             });
         }
@@ -63,25 +45,48 @@ namespace SuperAudio.ViewModels
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
-                Devices = [..playerService.Devices];
+                Devices = [..playerService.Devices.Values];
 
             });
         }
         [RelayCommand]
-        [SupportedOSPlatform("Windows10.0.19041.0")]
-        public async Task EnableAudioPlaybackConnectionAsync(string deviceId)
+        public static async Task OpenBluetoothSettingAsync(string deviceId)
         {
+            try
+            {
+                ContentDialog inputDialog = new ContentDialog
+                {
+                    Title = "请输入你的名字",
+                    Content = new TextBlock { Text = "即将弹出蓝牙功能界面，您可以连接新设备" },
+                    PrimaryButtonText = "确定",
+                    DefaultButton=ContentDialogButton.Primary,
+                    // 关键！必须设置 XamlRoot
+                    XamlRoot = App.MainWindow.Content.XamlRoot
+                };
+                inputDialog.ShowAsync();
+                // 优先使用Launcher（UWP环境）
+                bool success = await Windows.System.Launcher.LaunchUriAsync(
+                    new Uri("ms-settings:bluetooth"), new() { TreatAsUntrusted=true});
 
-            await playerService.EnableAudioPlaybackConnectionAsync(deviceId);
-            await playerService.OpenAudioAsync(deviceId);
-        }
-        [RelayCommand]
-        [SupportedOSPlatform("Windows10.0.19041.0")]
-        public async Task ReleaseAudioPlaybackConnectionAsync(string deviceId)
-        {
-
-            await playerService.ReleaseAudioPlaybackConnectionAsync(deviceId);
-            ConnectionStateText = "关闭";
+                if (!success)
+                {
+                    // 回退到Process方式
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "ms-settings:bluetooth",
+                        UseShellExecute = true
+                    });
+                }
+            }
+            catch
+            {
+                // 最终回退方案
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "ms-settings:bluetooth",
+                    UseShellExecute = true
+                });
+            }
         }
     }
 }

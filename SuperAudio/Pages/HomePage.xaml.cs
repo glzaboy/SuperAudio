@@ -26,51 +26,6 @@ namespace SuperAudio.Pages
         {
             ViewModel.InitCommand.Execute(this);
         }
-        private async void EnableAudioPlaybackConnectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (DeviceListView.SelectedItem is not null)
-            {
-                var selectedDeviceId = (DeviceListView.SelectedItem as DeviceInformation).Id;
-                ViewModel.EnableAudioPlaybackConnectionCommand.Execute(selectedDeviceId);
-                /*if (!audioPlaybackConnections.ContainsKey(selectedDeviceId))
-                {
-                    // Create the audio playback connection from the selected device id and add it to the dictionary. 
-                    // This will result in allowing incoming connections from the remote device. 
-                    var playbackConnection = AudioPlaybackConnection.TryCreateFromId(selectedDeviceId);
-
-                    if (playbackConnection != null)
-                    {
-                        // The device has an available audio playback connection. 
-                        playbackConnection.StateChanged += PlaybackConnection_StateChanged; ;
-                        audioPlaybackConnections.Add(selectedDeviceId, playbackConnection);
-                        await playbackConnection.StartAsync();
-                        OpenAudioPlaybackConnectionButtonButton.IsEnabled = true;
-                    }
-                }*/
-            }
-        }
-        private void ReleaseAudioPlaybackConnectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (DeviceListView.SelectedItem is not DeviceInformation selectedDevice)
-            {
-                ConnectionState.Text = "No device selected to release.";
-                return;
-            }
-
-            string deviceId = selectedDevice.Id;
-            ViewModel.ReleaseAudioPlaybackConnectionCommand.Execute(deviceId);
-            /*if (audioPlaybackConnections.TryGetValue(deviceId, out var connection))
-            {
-                // 关闭并释放连接
-                connection.Dispose();
-                audioPlaybackConnections.Remove(deviceId);
-                ConnectionState.Text = "Connection released.";
-                OpenAudioPlaybackConnectionButtonButton.IsEnabled = false;
-            }
-            else
-            {
-                ConnectionState.Text = "No active connection for this device.";
-            }*/
-        }
+        
     }
 }
