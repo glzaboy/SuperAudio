@@ -10,7 +10,7 @@ namespace SuperAudio.Services
     [SupportedOSPlatform("Windows10.0.19041.0")]
     public sealed partial class PlayerService : IDisposable
     {
-        public Dictionary<string,PlayerInfoItem> Devices { get; set; } = [];
+        public Dictionary<string, PlayerInfoItem> Devices { get; set; } = [];
         private DeviceWatcher? DeviceWatcher { get; set; }
         private bool Inited { get; set; } = false;
 
@@ -29,18 +29,18 @@ namespace SuperAudio.Services
         }
         private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
         {
-            Devices.Add(args.Id,new() { DeviceInformation=args});
+            Devices.Add(args.Id, new() { DeviceInformation = args });
             Added?.Invoke(sender, args);
         }
-        
+
 
 
         private void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args)
         {
             // Find the device for the given id and remove it from the list. 
-            if(Devices.TryGetValue(args.Id,out var playerInfoItem))
+            if (Devices.TryGetValue(args.Id, out var playerInfoItem))
             {
-                if (playerInfoItem.PlaybackConnection!=null)
+                if (playerInfoItem.PlaybackConnection != null)
                 {
                     playerInfoItem.Dispose();
                     Devices.Remove(args.Id);
@@ -55,12 +55,12 @@ namespace SuperAudio.Services
             {
                 if (device.Value != null)
                 {
-                    
+
                     device.Value.Dispose();
                     Devices.Remove(device.Key);
                 }
             }
-            
+
 
             // 2. 停止并清理 DeviceWatcher
             if (DeviceWatcher != null)

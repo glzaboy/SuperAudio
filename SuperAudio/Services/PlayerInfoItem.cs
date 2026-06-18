@@ -9,7 +9,7 @@ using Windows.Media.Audio;
 
 namespace SuperAudio.Services
 {
-    public partial class PlayerInfoItem: ObservableObject,IDisposable
+    public partial class PlayerInfoItem : ObservableObject, IDisposable
     {
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(DisableCommand))]
@@ -40,7 +40,7 @@ namespace SuperAudio.Services
                 if (PlaybackConnection != null)
                 {
                     // The device has an available audio playback connection. 
-                    PlaybackConnection.StateChanged += PlaybackConnection_StateChanged; 
+                    PlaybackConnection.StateChanged += PlaybackConnection_StateChanged;
                     await PlaybackConnection.StartAsync();
                     /*
                     OpenAudioPlaybackConnectionButtonButton.IsEnabled = true;*/
@@ -50,11 +50,12 @@ namespace SuperAudio.Services
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public async Task ReleaseAudioPlaybackConnectionAsync()
         {
-            if(PlaybackConnection != null) {
+            if (PlaybackConnection != null)
+            {
                 // 关闭并释放连接
                 PlaybackConnection.StateChanged -= PlaybackConnection_StateChanged;
                 PlaybackConnection.Dispose();
-                PlaybackConnection=null;
+                PlaybackConnection = null;
                 ConnectionStateText = "断开";
             }
             else
@@ -65,7 +66,7 @@ namespace SuperAudio.Services
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public async Task OpenAudioAsync()
         {
-            if (PlaybackConnection!=null)
+            if (PlaybackConnection != null)
             {
                 var openConnection = await PlaybackConnection.OpenAsync();
                 if ((openConnection.Status == AudioPlaybackConnectionOpenResultStatus.Success))
@@ -83,7 +84,7 @@ namespace SuperAudio.Services
         [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
         {
-            
+
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 if (sender?.State == AudioPlaybackConnectionState.Closed)
@@ -99,15 +100,15 @@ namespace SuperAudio.Services
                     ConnectionStateText = "Unknown";
                 }
             });
-            
+
             StateChanged?.Invoke(sender, args);
         }
         public bool CheckEnable()
         {
             return PlaybackConnection == null;
         }
-        [RelayCommand(CanExecute =nameof(CheckEnable))]
-        
+        [RelayCommand(CanExecute = nameof(CheckEnable))]
+
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public async Task Enable()
         {
@@ -118,8 +119,8 @@ namespace SuperAudio.Services
         {
             return PlaybackConnection != null;
         }
-        [RelayCommand(CanExecute =nameof(CheckDIsable))]
-        
+        [RelayCommand(CanExecute = nameof(CheckDIsable))]
+
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public async Task Disable()
         {

@@ -18,7 +18,7 @@ namespace SuperAudio.ViewModels
         [ObservableProperty]
         public partial ObservableCollection<PlayerInfoItem> Devices { get; set; } = [];
 
-        
+
         [RelayCommand]
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public void Init()
@@ -27,14 +27,14 @@ namespace SuperAudio.ViewModels
             playerService.Added += PlayerService_Added;
             playerService.Removed += PlayerService_Removed;
         }
-        
+
 
         [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlayerService_Removed(Windows.Devices.Enumeration.DeviceWatcher sender, Windows.Devices.Enumeration.DeviceInformationUpdate args)
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
-                Devices = [..playerService.Devices.Values];
+                Devices = [.. playerService.Devices.Values];
 
             });
         }
@@ -43,7 +43,7 @@ namespace SuperAudio.ViewModels
         {
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
-                Devices = [..playerService.Devices.Values];
+                Devices = [.. playerService.Devices.Values];
 
             });
         }
@@ -57,14 +57,14 @@ namespace SuperAudio.ViewModels
                     Title = "请输入你的名字",
                     Content = new TextBlock { Text = "即将弹出蓝牙功能界面，您可以连接新设备" },
                     PrimaryButtonText = "确定",
-                    DefaultButton=ContentDialogButton.Primary,
+                    DefaultButton = ContentDialogButton.Primary,
                     // 关键！必须设置 XamlRoot
                     XamlRoot = App.MainWindow.Content.XamlRoot
                 };
                 inputDialog.ShowAsync();
                 // 优先使用Launcher（UWP环境）
                 bool success = await Windows.System.Launcher.LaunchUriAsync(
-                    new Uri("ms-settings:bluetooth"), new() { TreatAsUntrusted=true});
+                    new Uri("ms-settings:bluetooth"), new() { TreatAsUntrusted = true });
 
                 if (!success)
                 {

@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SuperAudio.ViewModels;
-using Windows.Devices.Enumeration;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,6 +25,6 @@ namespace SuperAudio.Pages
         {
             ViewModel.InitCommand.Execute(this);
         }
-        
+
     }
 }
