@@ -78,7 +78,7 @@ namespace SuperAudio
             WindowHelper.TrackWindow(MainWindow);
             EnsureWindow();
         }
-        private async void EnsureWindow()
+        private async static void EnsureWindow()
         {
             // await ControlInfoDataSource.Instance.GetGroupsAsync();
             //await IconsDataSource.Instance.LoadIcons();

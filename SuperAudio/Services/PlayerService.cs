@@ -29,8 +29,11 @@ namespace SuperAudio.Services
         }
         private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
         {
-            Devices.Add(args.Id, new() { DeviceInformation = args });
-            Added?.Invoke(sender, args);
+            if (!Devices.ContainsKey(args.Id))
+            {
+                Devices.Add(args.Id, new PlayerInfoItem { DeviceInformation = args });
+                Added?.Invoke(sender, args);
+            }
         }
 
 
@@ -43,9 +46,8 @@ namespace SuperAudio.Services
                 if (playerInfoItem.PlaybackConnection != null)
                 {
                     playerInfoItem.Dispose();
-                    Devices.Remove(args.Id);
-                    //_ = audioPlaybackConnections.Remove(args.Id);
                 }
+                Devices.Remove(args.Id);
                 Removed?.Invoke(sender, args);
             }
         }
@@ -59,6 +61,15 @@ namespace SuperAudio.Services
                     device.Value.Dispose();
                     Devices.Remove(device.Key);
                 }
+            }
+            // 在 PlayerService.Dispose 中
+            foreach (var key in new List<string>(Devices.Keys))
+            {
+                if (Devices.TryGetValue(key, out var item))
+                {
+                    item?.Dispose(); // 现在会正确清理
+                }
+                Devices.Remove(key);
             }
 
 
@@ -75,7 +86,7 @@ namespace SuperAudio.Services
                 }
                 Devices.Clear();
             }
-
+            Inited = false;
         }
     }
 }

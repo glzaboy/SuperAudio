@@ -2,9 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Runtime.Versioning;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
-using Windows.Foundation;
 using Windows.Media.Audio;
 
 namespace SuperAudio.Services
@@ -17,33 +17,62 @@ namespace SuperAudio.Services
         public partial AudioPlaybackConnection? PlaybackConnection { get; private set; }
 
         public required DeviceInformation DeviceInformation { get; set; }
-        [ObservableProperty]
-        public partial string? ConnectionStateText { get; private set; } = "断开";
+        //[ObservableProperty]
+        public string? ConnectionStateText { get; private set; } = "断开";
 
-        public event TypedEventHandler<AudioPlaybackConnection, object>? StateChanged;
-
+        private readonly SemaphoreSlim _operationLock = new(1, 1);
+        private bool _disposed = false;
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public void Dispose()
         {
-            if (PlaybackConnection != null)
+            if (_disposed) return;
+            _disposed = true;
+
+            // ✅ 先获取锁，防止操作进行中
+            _operationLock.Wait();
+            try
             {
-                PlaybackConnection?.Dispose();
-                PlaybackConnection = null;
+                if (PlaybackConnection != null)
+                {
+                    PlaybackConnection.StateChanged -= PlaybackConnection_StateChanged;
+                    PlaybackConnection.Dispose();
+                    PlaybackConnection = null;
+                }
             }
+            finally
+            {
+                _operationLock.Release();
+                _operationLock.Dispose();  // ✅ 释放信号量
+            }
+
+            GC.SuppressFinalize(this);
         }
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public async Task EnableAudioPlaybackConnectionAsync()
         {
             if (PlaybackConnection == null)
             {
+                ConnectionStateText = "正在连接...";
+                App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+                    OnPropertyChanged(nameof(ConnectionStateText));
+                });
                 PlaybackConnection = AudioPlaybackConnection.TryCreateFromId(DeviceInformation.Id);
                 if (PlaybackConnection != null)
                 {
-                    // The device has an available audio playback connection. 
                     PlaybackConnection.StateChanged += PlaybackConnection_StateChanged;
-                    await PlaybackConnection.StartAsync();
-                    /*
-                    OpenAudioPlaybackConnectionButtonButton.IsEnabled = true;*/
+                    try
+                    {
+                        await PlaybackConnection.StartAsync();
+                    }
+                    catch
+                    {
+                        // 启动失败，清理资源
+                        PlaybackConnection.StateChanged -= PlaybackConnection_StateChanged;
+                        PlaybackConnection.Dispose();
+                        PlaybackConnection = null;
+                        throw;
+                    }
+
                 }
             }
         }
@@ -57,6 +86,9 @@ namespace SuperAudio.Services
                 PlaybackConnection.Dispose();
                 PlaybackConnection = null;
                 ConnectionStateText = "断开";
+                App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+                    OnPropertyChanged(nameof(ConnectionStateText));
+                });
             }
             else
             {
@@ -68,63 +100,100 @@ namespace SuperAudio.Services
         {
             if (PlaybackConnection != null)
             {
-                var openConnection = await PlaybackConnection.OpenAsync();
-                if ((openConnection.Status == AudioPlaybackConnectionOpenResultStatus.Success))
+                try
                 {
-                    // Notify that the AudioPlaybackConnection is connected. 
-                    //ConnectionState.Text = "Connected";
+                    var openConnection = await PlaybackConnection.OpenAsync();
+                    if ((openConnection.Status == AudioPlaybackConnectionOpenResultStatus.Success))
+                    {
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"打开音频连接失败: {openConnection.Status}");
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    // Notify that the connection attempt did not succeed. 
-                    //ConnectionState.Text = "Disconnected (attempt failed)";
+                    // 启动失败，清理资源
+                    PlaybackConnection.StateChanged -= PlaybackConnection_StateChanged;
+                    PlaybackConnection.Dispose();
+                    PlaybackConnection = null;
+                    ConnectionStateText = "打开音频连接失败";
+                    App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+                        OnPropertyChanged(nameof(ConnectionStateText));
+                    });
                 }
+                
+                
             }
         }
         [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
         {
-
-            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            if(sender== null)
             {
-                if (sender?.State == AudioPlaybackConnectionState.Closed)
-                {
-                    ConnectionStateText = "Disconnected";
-                }
-                else if (sender?.State == AudioPlaybackConnectionState.Opened)
-                {
-                    ConnectionStateText = "连接";
-                }
-                else
-                {
-                    ConnectionStateText = "Unknown";
-                }
+                return;
+            }
+            if (sender?.DeviceId == null)
+            {
+                return;
+            }
+            if (!Equals(sender.DeviceId, DeviceInformation.Id))
+            {
+                return;
+            }
+            ConnectionStateText = sender.State switch
+            {
+                AudioPlaybackConnectionState.Closed => "已断开",
+                AudioPlaybackConnectionState.Opened => "已连接",
+                _ => "未知"
+            };
+            
+            App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+                OnPropertyChanged(nameof(ConnectionStateText));
             });
-
-            StateChanged?.Invoke(sender, args);
         }
         public bool CheckEnable()
         {
-            return PlaybackConnection == null;
+            return !_disposed && PlaybackConnection == null;
         }
         [RelayCommand(CanExecute = nameof(CheckEnable))]
 
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public async Task Enable()
         {
-            await EnableAudioPlaybackConnectionAsync();
-            await OpenAudioAsync();
+            if (_disposed) return;
+            await _operationLock.WaitAsync();
+            try
+            {
+                await EnableAudioPlaybackConnectionAsync();
+                await OpenAudioAsync();
+            }
+            finally
+            {
+                _operationLock.Release();
+            }
+            
         }
-        public bool CheckDIsable()
+        public bool CheckDisable()
         {
-            return PlaybackConnection != null;
+            return !_disposed && PlaybackConnection != null;
         }
-        [RelayCommand(CanExecute = nameof(CheckDIsable))]
+        [RelayCommand(CanExecute = nameof(CheckDisable))]
 
         [SupportedOSPlatform("Windows10.0.19041.0")]
         public async Task Disable()
         {
-            await ReleaseAudioPlaybackConnectionAsync();
+            if (_disposed) return;
+            await _operationLock.WaitAsync();
+            try
+            {
+                await ReleaseAudioPlaybackConnectionAsync();
+            }
+            finally
+            {
+                _operationLock.Release();
+            }
+            
         }
     }
 }
