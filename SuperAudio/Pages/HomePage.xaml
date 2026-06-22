@@ -55,6 +55,7 @@
                     <TextBlock>没有找到你的设备，点击<Run FontWeight="Bold">添加新蓝牙设备</Run>增加一个</TextBlock>
                     
                     <Button Content="添加新蓝牙设备" Command="{Binding OpenBluetoothSettingCommand}"/>
+                    <TextBlock x:Uid="Play"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

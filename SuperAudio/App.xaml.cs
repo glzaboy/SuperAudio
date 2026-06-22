@@ -10,6 +10,7 @@ using SuperAudio.Pages;
 using SuperAudio.Services;
 using SuperAudio.ViewModels;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -41,6 +42,7 @@ namespace SuperAudio
         /// <param name="args">Details about the launch request and process.</param>
         protected async override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            //await Task.Delay(3000);
             var mainInstance = AppInstance.FindOrRegisterForKey("main");
 
             if (!mainInstance.IsCurrent)
