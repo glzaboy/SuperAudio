@@ -1,8 +1,13 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.Globalization;
 using SuperAudio.Helpers;
 using SuperAudio.Helpers.SettingsHelper;
+using SuperAudio.ViewModels;
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -16,9 +21,12 @@ namespace SuperAudio.Pages
     public sealed partial class SettingsPage : Page
     {
         private int lastNavigationSelectionMode = 0;
+        private SettingsViewModel ViewModel { get; }
         public SettingsPage()
         {
             InitializeComponent();
+            ViewModel = App.Host.Services.GetRequiredService<SettingsViewModel>();
+            
             Loaded += OnSettingsPageLoaded;
         }
         private void OnSettingsPageLoaded(object sender, RoutedEventArgs e)
@@ -53,11 +61,6 @@ namespace SuperAudio.Pages
                 soundToggle.IsOn = true;
             if (ElementSoundPlayer.SpatialAudioMode == ElementSpatialAudioMode.On)
                 spatialSoundBox.IsOn = true;
-        }
-        private async void bugRequestCard_Click(object sender, RoutedEventArgs e)
-        {
-            await Launcher.LaunchUriAsync(new Uri("https://steamsda.com/"));
-
         }
         private void soundToggle_Toggled(object sender, RoutedEventArgs e)
         {
@@ -163,6 +166,10 @@ namespace SuperAudio.Pages
                 NavigationOrientationHelper.IsLeftModeForElement(navigationLocation.SelectedIndex == 0);
                 lastNavigationSelectionMode = navigationLocation.SelectedIndex;
             }
+        }
+        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.InitCommand.Execute(sender);
         }
     }
 }

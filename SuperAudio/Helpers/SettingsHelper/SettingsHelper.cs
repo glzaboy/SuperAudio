@@ -28,6 +28,11 @@ public partial class SettingsHelper : ObservableSettings
         get => GetOrCreateDefault<bool>(true);
         set => Set(value);
     }
+    public string Language
+    {
+        get => GetOrCreateDefault<string>("en-Us");
+        set => Set(value);
+    }
 
     public bool IsShowCopyLinkTeachingTip
     {

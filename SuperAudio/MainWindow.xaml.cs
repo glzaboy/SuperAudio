@@ -33,12 +33,16 @@ namespace SuperAudio
         public MainWindow()
         {
             InitializeComponent();
+            
             this.ViewModel = App.Host.Services.GetRequiredService<MainWindowViewModel>();
             this.RootGrid.DataContext = ViewModel;
             this.ExtendsContentIntoTitleBar = true;
+            
         }
-        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
+            await SetWindowIconAsync();
+
             // We need to set the minimum size here because the XamlRoot is not available in the constructor.
             NavigationOrientationHelper.UpdateNavigationViewForElement(NavigationOrientationHelper.IsLeftMode());
         }
@@ -181,6 +185,39 @@ namespace SuperAudio
             if (this.rootFrame.CanGoBack)
             {
                 this.rootFrame.GoBack();
+            }
+        }
+        private async  Task SetWindowIconAsync()
+        {
+            try
+            {
+                var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+                var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
+                var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+
+                string iconPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Assets", "Logo.ico");
+        
+                // 检查文件是否存在
+                if (!System.IO.File.Exists(iconPath))
+                {
+                    System.Diagnostics.Debug.WriteLine($"图标文件不存在: {iconPath}");
+                    var uri = new Uri("ms-appx:///Assets/Logo.ico");
+                    var file = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri);
+                    var filePath = file.Path;
+                    
+                    appWindow.SetIcon(iconPath);
+                    return;
+                }
+
+        
+                // 设置图标
+                appWindow.SetIcon(iconPath);
+        
+                System.Diagnostics.Debug.WriteLine($"图标设置成功: {iconPath}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"设置图标失败: {ex.Message}");
             }
         }
     }

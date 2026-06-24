@@ -117,10 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-    <value>Play</value>
+  <data name="Connect.Content" xml:space="preserve">
+    <value>Connect</value>
   </data>
-  <data name="Play.Text" xml:space="preserve">
-    <value>播放</value>
+  <data name="ContentBtn_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ContentBtn_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ContentBtn_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ContentBtn_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Device.Text" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="DisConnect.Content" xml:space="preserve">
+    <value>DisConnect</value>
+  </data>
+  <data name="Home_Tip.Text" xml:space="preserve">
+    <value>Your device was not found. Click "Add New Bluetooth Device" to add one</value>
+  </data>
+  <data name="Language.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Main_Title" xml:space="preserve">
+    <value>Super Bluetooth Speaker</value>
+  </data>
+  <data name="Menu_Home.Content" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="New_Device.Content" xml:space="preserve">
+    <value>Add new Bluetooth device</value>
+  </data>
+  <data name="RestartAlert" xml:space="preserve">
+    <value>This operation requires a restart of the application, and playback may be interrupted. Please confirm.</value>
   </data>
 </root>

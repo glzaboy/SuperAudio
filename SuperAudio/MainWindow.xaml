@@ -63,7 +63,7 @@
                 <NavigationViewItem
                     x:Name="Home"
                     AutomationProperties.AutomationId="Home"
-                    Content="播放"
+                    x:Uid="Menu_Home"
                     Tag="HomePage"
                     Icon="Home" />
                 

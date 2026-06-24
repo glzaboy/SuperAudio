@@ -22,7 +22,7 @@
             Margin="36,24,36,0"
             AutomationProperties.HeadingLevel="Level1"
             Style="{StaticResource TitleTextBlockStyle}"
-            Text="{x:Bind ViewModel.Title}" />
+            x:Uid="Device" />
         <ScrollViewer
             Grid.Row="1"
             Padding="36,0,36,0"
@@ -43,8 +43,8 @@
                                     <TextBlock><Run Text="{x:Bind DeviceInformation.Name}"></Run> (<Run Text="{x:Bind ConnectionStateText,Mode=OneWay}"></Run>)</TextBlock>
 
                                     <StackPanel Orientation="Horizontal" Spacing="8">
-                                        <Button Command="{x:Bind EnableCommand}">连接</Button>
-                                        <Button Command="{x:Bind DisableCommand}">断开</Button>
+                                        <Button Command="{x:Bind EnableCommand}" x:Uid="Connect"></Button>
+                                        <Button Command="{x:Bind DisableCommand}" x:Uid="DisConnect"></Button>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
@@ -52,9 +52,9 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <StackPanel Orientation="Vertical" Grid.Row="0">
-                    <TextBlock>没有找到你的设备，点击<Run FontWeight="Bold">添加新蓝牙设备</Run>增加一个</TextBlock>
-                    
-                    <Button Content="添加新蓝牙设备" Command="{Binding OpenBluetoothSettingCommand}"/>
+                    <TextBlock x:Uid="Home_Tip"></TextBlock>
+
+                    <Button x:Uid="New_Device" Command="{Binding OpenBluetoothSettingCommand}"/>
                     <TextBlock x:Uid="Play"/>
                 </StackPanel>
             </Grid>

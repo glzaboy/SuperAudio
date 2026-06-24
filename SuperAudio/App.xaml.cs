@@ -2,10 +2,13 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.ApplicationModel.Resources;
 using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
+using Microsoft.Windows.Globalization;
 using SuperAudio.Helpers;
+using SuperAudio.Helpers.SettingsHelper;
 using SuperAudio.Pages;
 using SuperAudio.Services;
 using SuperAudio.ViewModels;
@@ -25,7 +28,8 @@ namespace SuperAudio
     {
         internal static MainWindow MainWindow { get; private set; } = null!;
         internal static IHost Host { get; private set; } = null!;
-
+        internal static ResourceLoader ResourceLoader { get; private set; } = new ResourceLoader();
+//this.myXAMLTextBlockElement.Text = resourceLoader.GetString("Farewell");
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,6 +38,10 @@ namespace SuperAudio
         {
             InitializeComponent();
             UnhandledException += HandleExceptions;
+            if (!string.IsNullOrEmpty(SettingsHelper.Current.Language))
+            {
+                ApplicationLanguages.PrimaryLanguageOverride = SettingsHelper.Current.Language;
+            }
         }
 
         /// <summary>
@@ -59,6 +67,7 @@ namespace SuperAudio
             hostApplicationBuilder.Services.AddSingleton<MainWindow>();
             hostApplicationBuilder.Services.AddSingleton<MainWindowViewModel>();
             hostApplicationBuilder.Services.AddSingleton<HomePageViewModel>();
+            hostApplicationBuilder.Services.AddSingleton<SettingsViewModel>();
             hostApplicationBuilder.Services.AddSingleton<PlayerService>();
             Host = hostApplicationBuilder.Build();
             Host.Start();
