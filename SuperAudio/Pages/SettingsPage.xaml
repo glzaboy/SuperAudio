@@ -49,17 +49,12 @@
                         <RepositionThemeTransition />
                     </StackPanel.ChildrenTransitions>
                     <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Appearance &amp; behavior" />
-                    <toolkit:SettingsCard Description="Select which app theme to display" Header="App theme">
+                    <toolkit:SettingsCard x:Uid="AppTheme">
                         <toolkit:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE790;" />
                         </toolkit:SettingsCard.HeaderIcon>
                         <ComboBox
-                            x:Name="themeMode"
-                            AutomationProperties.AutomationId="themeModeComboBox"
-                            SelectionChanged="themeMode_SelectionChanged">
-                            <ComboBoxItem Content="Light" Tag="Light" />
-                            <ComboBoxItem Content="Dark" Tag="Dark" />
-                            <ComboBoxItem Content="Use system setting" Tag="Default" />
+                            x:Name="themeMode" AutomationProperties.AutomationId="themeModeComboBox" ItemsSource="{x:Bind ViewModel.Themes}" SelectedItem="{x:Bind ViewModel.ThemeSelect,Mode=TwoWay}">
                         </ComboBox>
                     </toolkit:SettingsCard>
                     <toolkit:SettingsCard x:Uid="Language">

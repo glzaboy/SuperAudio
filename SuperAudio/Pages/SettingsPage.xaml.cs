@@ -31,20 +31,7 @@ namespace SuperAudio.Pages
         private void OnSettingsPageLoaded(object sender, RoutedEventArgs e)
         {
             CheckRecentAndFavoriteButtonStates();
-            var currentTheme = ThemeHelper.RootTheme;
-            switch (currentTheme)
-            {
-                case ElementTheme.Light:
-                    themeMode.SelectedIndex = 0;
-                    break;
-                case ElementTheme.Dark:
-                    themeMode.SelectedIndex = 1;
-                    break;
-                case ElementTheme.Default:
-                    themeMode.SelectedIndex = 2;
-                    break;
-            }
-
+          
             
 
             if (ElementSoundPlayer.State == ElementSoundPlayerState.On)
@@ -72,25 +59,7 @@ namespace SuperAudio.Pages
         {
             //App.MainWindow.Navigate(typeof(ItemPage), "Sound");
         }
-        private void themeMode_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            if (sender is not UIElement senderUiLement ||
-                (themeMode.SelectedItem as ComboBoxItem)?.Tag.ToString() is not string selectedTheme ||
-                WindowHelper.GetWindowForElement(this) is not Window window)
-            {
-                return;
-            }
-
-            ThemeHelper.RootTheme = EnumHelper.GetEnum<ElementTheme>(selectedTheme);
-            var elementThemeResolved = ThemeHelper.RootTheme == ElementTheme.Default ? ThemeHelper.ActualTheme : ThemeHelper.RootTheme;
-            TitleBarHelper.ApplySystemThemeToCaptionButtons(window, elementThemeResolved);
-
-            // announce visual change to automation
-            UIHelper.AnnounceActionForAccessibility(
-                senderUiLement,
-                $"Theme changed to {elementThemeResolved}",
-                "ThemeChangedNotificationActivityId");
-        }
+        
         private void CheckRecentAndFavoriteButtonStates()
         {
             ClearRecentBtn.IsEnabled = SettingsHelper.Current.RecentlyVisited.Count > 0;

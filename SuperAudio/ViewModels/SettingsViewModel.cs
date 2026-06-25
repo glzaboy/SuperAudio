@@ -16,6 +16,20 @@ namespace SuperAudio.ViewModels
         [RelayCommand]
         public void Init()
         {
+            var currentTheme = ThemeHelper.RootTheme;
+            switch (currentTheme)
+            {
+                case ElementTheme.Light:
+                    ThemeSelect = Themes.Where(d => Equals(d.Tag, "Light")).First();
+                    
+                    break;
+                case ElementTheme.Dark:
+                    ThemeSelect = Themes.Where(d => Equals(d.Tag, "Dark")).First();
+                    break;
+                case ElementTheme.Default:
+                    ThemeSelect = Themes.Where(d => Equals(d.Tag, "Default")).First();
+                    break;
+            }
             switch (SettingsHelper.Current.Language)
             {
                 case "en-US":
@@ -40,6 +54,53 @@ namespace SuperAudio.ViewModels
                 NavStyleSelect = NavStyles.Where(d => Equals(d.Tag, "Top")).First();
             }
         }
+        #region 主题
+        [ObservableProperty]
+        public partial ObservableCollection<ComboBoxItem> Themes { get; set; } = [
+            new ComboBoxItem(){
+                Content=App.ResourceLoader.GetString("AppTheme_Auto"),
+                Tag="Default"
+            },
+            new ComboBoxItem(){
+                Content=App.ResourceLoader.GetString("AppTheme_Light"),
+                Tag="Light"
+            },
+            new ComboBoxItem(){
+                Content=App.ResourceLoader.GetString("AppTheme_Dark"),
+                Tag="Dark"
+            },
+        ];
+        private ComboBoxItem? _themeSelect = null;
+
+        public ComboBoxItem? ThemeSelect
+        {
+            get => _themeSelect;
+            set
+            {
+                if (_themeSelect == null)
+                {
+                    SetProperty(ref _themeSelect, value);
+                    return;
+                }
+                if (Equals(_themeSelect, value)) return;
+                if (value != null)
+                {
+                    var tag = value.Tag?.ToString() ?? "";
+                    ThemeHelper.RootTheme = EnumHelper.GetEnum<ElementTheme>(tag);
+
+                    var elementThemeResolved = ThemeHelper.RootTheme == ElementTheme.Default ? ThemeHelper.ActualTheme : ThemeHelper.RootTheme;
+                    TitleBarHelper.ApplySystemThemeToCaptionButtons(App.MainWindow, elementThemeResolved);
+                    SetProperty(ref _themeSelect, value);
+                    // announce visual change to automation
+                    /*UIHelper.AnnounceActionForAccessibility(
+                        App.MainWindow.,
+                        $"Theme changed to {elementThemeResolved}",
+                        "ThemeChangedNotificationActivityId");*/
+
+                }
+            }
+        }
+        #endregion 主题
         #region 语言
         [ObservableProperty]
         public partial ObservableCollection<ComboBoxItem> Languages { get; set; } = [
@@ -75,7 +136,7 @@ namespace SuperAudio.ViewModels
                 if (Equals(_lanageSelect, value)) return;
                 if (value != null)
                 {
-                    var tag = value.Tag.ToString() ?? "";
+                    var tag = value.Tag?.ToString() ?? "";
                     if (Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride != tag)
                     {
                         switch (tag)
@@ -86,7 +147,7 @@ namespace SuperAudio.ViewModels
                                 break;
                             default:
                                 Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = tag ?? "";
-                                SettingsHelper.Current.Language = tag ?? "";
+                                SettingsHelper.Current.Language = tag??"";
                                 break;
                         }
                         ContentDialog dialog = new()
@@ -137,7 +198,7 @@ namespace SuperAudio.ViewModels
                 if (Equals(_navStyleSelect, value)) return;
                 if (value != null)
                 {
-                    var tag = value.Tag.ToString() ?? "";
+                    var tag = value.Tag?.ToString() ?? "";
                     NavigationOrientationHelper.IsLeftModeForElement(Equals( tag,"Left"));
                 }
                 SetProperty(ref _navStyleSelect, value);
