@@ -31,7 +31,16 @@ namespace SuperAudio.ViewModels
                     LanageSelect=Languages.Where(d => Equals(d.Tag, "Auto")).First();
                     break;
             }
+            if (App.MainWindow.NavigationView.PaneDisplayMode == NavigationViewPaneDisplayMode.Auto)
+            {
+                NavStyleSelect = NavStyles.Where(d => Equals(d.Tag, "Left")).First();
+            }
+            else
+            {
+                NavStyleSelect = NavStyles.Where(d => Equals(d.Tag, "Top")).First();
+            }
         }
+        #region 语言
         [ObservableProperty]
         public partial ObservableCollection<ComboBoxItem> Languages { get; set; } = [
             new ComboBoxItem(){
@@ -50,20 +59,15 @@ namespace SuperAudio.ViewModels
                 Content="繁體中文",
                 Tag="zh-TW"
             }
-            
         ];
-
-        [RelayCommand]
-        public static void ToBugReport()
-        {
-            _ = Launcher.LaunchUriAsync(new Uri("https://steamsda.com/?f=super%20bluetoth%20speaker"));
-        }
         private ComboBoxItem? _lanageSelect = null;
 
-        public ComboBoxItem? LanageSelect { 
-            get=>_lanageSelect;
-            set{
-                if (_lanageSelect==null) 
+        public ComboBoxItem? LanageSelect
+        {
+            get => _lanageSelect;
+            set
+            {
+                if (_lanageSelect == null)
                 {
                     SetProperty(ref _lanageSelect, value);
                     return;
@@ -71,7 +75,7 @@ namespace SuperAudio.ViewModels
                 if (Equals(_lanageSelect, value)) return;
                 if (value != null)
                 {
-                    var tag=value.Tag.ToString()??"";
+                    var tag = value.Tag.ToString() ?? "";
                     if (Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride != tag)
                     {
                         switch (tag)
@@ -81,7 +85,7 @@ namespace SuperAudio.ViewModels
                                 SettingsHelper.Current.Language = string.Empty;
                                 break;
                             default:
-                                Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = tag??"";
+                                Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = tag ?? "";
                                 SettingsHelper.Current.Language = tag ?? "";
                                 break;
                         }
@@ -100,10 +104,52 @@ namespace SuperAudio.ViewModels
                             AppLifeHelper.RestartApplication();
                         };
                         _ = dialog.ShowAsync();
-                        
+
                     }
                 }
             }
         }
+        #endregion 语言
+        #region 导航样式
+        [ObservableProperty]
+        public partial ObservableCollection<ComboBoxItem> NavStyles { get; set; } = [
+            new ComboBoxItem(){
+                Content=App.ResourceLoader.GetString("NavigationStyle_SideBar"),
+                Tag="Left"
+            },
+            new ComboBoxItem(){
+                Content=App.ResourceLoader.GetString("NavigationStyle_Top"),
+                Tag="Top"
+            }
+        ];
+        private ComboBoxItem? _navStyleSelect = null;
+
+        public ComboBoxItem? NavStyleSelect
+        {
+            get => _navStyleSelect;
+            set
+            {
+                if (_navStyleSelect == null)
+                {
+                    SetProperty(ref _navStyleSelect, value);
+                    return;
+                }
+                if (Equals(_navStyleSelect, value)) return;
+                if (value != null)
+                {
+                    var tag = value.Tag.ToString() ?? "";
+                    NavigationOrientationHelper.IsLeftModeForElement(Equals( tag,"Left"));
+                }
+                SetProperty(ref _navStyleSelect, value);
+            }
+        }
+        #endregion 导航样式
+
+        [RelayCommand]
+        public static void ToBugReport()
+        {
+            _ = Launcher.LaunchUriAsync(new Uri("https://steamsda.com/?f=super%20bluetoth%20speaker"));
+        }
+        
     }
 }

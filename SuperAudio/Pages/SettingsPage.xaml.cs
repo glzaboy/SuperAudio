@@ -20,7 +20,6 @@ namespace SuperAudio.Pages
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
-        private int lastNavigationSelectionMode = 0;
         private SettingsViewModel ViewModel { get; }
         public SettingsPage()
         {
@@ -46,16 +45,7 @@ namespace SuperAudio.Pages
                     break;
             }
 
-            if (App.MainWindow.NavigationView.PaneDisplayMode == NavigationViewPaneDisplayMode.Auto)
-            {
-                navigationLocation.SelectedIndex = 0;
-            }
-            else
-            {
-                navigationLocation.SelectedIndex = 1;
-            }
-
-            lastNavigationSelectionMode = navigationLocation.SelectedIndex;
+            
 
             if (ElementSoundPlayer.State == ElementSoundPlayerState.On)
                 soundToggle.IsOn = true;
@@ -155,16 +145,6 @@ namespace SuperAudio.Pages
             else
             {
                 ElementSoundPlayer.SpatialAudioMode = ElementSpatialAudioMode.On;
-            }
-        }
-        private void navigationLocation_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // Since setting the left mode does not look at the old setting we 
-            // need to check if this is an actual update
-            if (navigationLocation.SelectedIndex != lastNavigationSelectionMode)
-            {
-                NavigationOrientationHelper.IsLeftModeForElement(navigationLocation.SelectedIndex == 0);
-                lastNavigationSelectionMode = navigationLocation.SelectedIndex;
             }
         }
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)

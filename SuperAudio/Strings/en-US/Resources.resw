@@ -141,7 +141,10 @@
   <data name="Home_Tip.Text" xml:space="preserve">
     <value>Your device was not found. Click "Add New Bluetooth Device" to add one</value>
   </data>
-  <data name="Language.Text" xml:space="preserve">
+  <data name="Language.Description" xml:space="preserve">
+    <value>Modifying the language application will automatically restart it</value>
+  </data>
+  <data name="Language.Header" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
@@ -149,6 +152,15 @@
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>Device</value>
+  </data>
+  <data name="NavigationStyle.Header" xml:space="preserve">
+    <value>Navigation style</value>
+  </data>
+  <data name="NavigationStyle_SideBar" xml:space="preserve">
+    <value>sidebar</value>
+  </data>
+  <data name="NavigationStyle_Top" xml:space="preserve">
+    <value>top</value>
   </data>
   <data name="New_Device.Content" xml:space="preserve">
     <value>Add new Bluetooth device</value>

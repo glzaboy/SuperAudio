@@ -141,7 +141,10 @@
   <data name="Home_Tip.Text" xml:space="preserve">
     <value>没有找到你的设备，点击“添加新蓝牙设备”增加一个</value>
   </data>
-  <data name="Language.Text" xml:space="preserve">
+  <data name="Language.Description" xml:space="preserve">
+    <value>修改语言应用程序将自动重启</value>
+  </data>
+  <data name="Language.Header" xml:space="preserve">
     <value>语言</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
@@ -149,6 +152,15 @@
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>设备</value>
+  </data>
+  <data name="NavigationStyle.Header" xml:space="preserve">
+    <value>导航样式</value>
+  </data>
+  <data name="NavigationStyle_SideBar" xml:space="preserve">
+    <value>侧边栏</value>
+  </data>
+  <data name="NavigationStyle_Top" xml:space="preserve">
+    <value>顶部</value>
   </data>
   <data name="New_Device.Content" xml:space="preserve">
     <value>添加新蓝牙设备</value>

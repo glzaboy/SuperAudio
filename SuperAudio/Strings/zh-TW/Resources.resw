@@ -141,14 +141,26 @@
   <data name="Home_Tip.Text" xml:space="preserve">
     <value>沒有找到你的設備，點擊 "添加新藍牙設備"增加一個</value>
   </data>
-  <data name="Language.Text" xml:space="preserve">
-    <value>语言</value>
+  <data name="Language.Description" xml:space="preserve">
+    <value>修改語言應用程式將自動重新啟動</value>
+  </data>
+  <data name="Language.Header" xml:space="preserve">
+    <value>語言</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
     <value>超級藍牙音箱</value>
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>設備</value>
+  </data>
+  <data name="NavigationStyle.Header" xml:space="preserve">
+    <value>導航樣式</value>
+  </data>
+  <data name="NavigationStyle_SideBar" xml:space="preserve">
+    <value>側邊欄</value>
+  </data>
+  <data name="NavigationStyle_Top" xml:space="preserve">
+    <value>頂部</value>
   </data>
   <data name="New_Device.Content" xml:space="preserve">
     <value>添加新藍牙設備</value>

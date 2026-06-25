@@ -62,22 +62,19 @@
                             <ComboBoxItem Content="Use system setting" Tag="Default" />
                         </ComboBox>
                     </toolkit:SettingsCard>
-                    <toolkit:SettingsCard Header="Navigation style">
+                    <toolkit:SettingsCard x:Uid="Language">
                         <toolkit:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xF594;" />
+                            <FontIcon Glyph="&#xE775;" />
                         </toolkit:SettingsCard.HeaderIcon>
                         <StackPanel Orientation="Horizontal">
-
                             <ComboBox x:Name="language"  ItemsSource="{x:Bind ViewModel.Languages,Mode=TwoWay}" SelectedItem="{x:Bind ViewModel.LanageSelect,Mode=TwoWay}"/>
                         </StackPanel>
                     </toolkit:SettingsCard>
-                    <toolkit:SettingsCard Header="Navigation style">
+                    <toolkit:SettingsCard Header="Navigation style" x:Uid="NavigationStyle">
                         <toolkit:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xF594;" />
                         </toolkit:SettingsCard.HeaderIcon>
-                        <ComboBox x:Name="navigationLocation" SelectionChanged="navigationLocation_SelectionChanged">
-                            <ComboBoxItem Content="Left" />
-                            <ComboBoxItem Content="Top" />
+                        <ComboBox x:Name="navigationLocation" ItemsSource="{x:Bind ViewModel.NavStyles}" SelectedItem="{x:Bind ViewModel.NavStyleSelect,Mode=TwoWay}">
                         </ComboBox>
                     </toolkit:SettingsCard>
 
