@@ -41,7 +41,7 @@
                     HorizontalAlignment="Stretch"
                     PlaceholderText="Search controls and samples..."
                     QueryIcon="Find"
-                    VerticalAlignment="Center" >
+                    VerticalAlignment="Center" Visibility="Collapsed">
                 </AutoSuggestBox>
             </TitleBar.Content>
         </TitleBar>

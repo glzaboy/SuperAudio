@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Appearance.Text" xml:space="preserve">
+    <value>Appearance &amp; behavior</value>
+  </data>
   <data name="AppTheme.Description" xml:space="preserve">
     <value>Select which app theme to display</value>
   </data>
@@ -194,5 +200,8 @@
   </data>
   <data name="RestartAlert" xml:space="preserve">
     <value>This operation requires a restart of the application, and playback may be interrupted. Please confirm.</value>
+  </data>
+  <data name="SettingsPageTitle.Text" xml:space="preserve">
+    <value>setting</value>
   </data>
 </root>

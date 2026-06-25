@@ -37,7 +37,7 @@
             Margin="36,24,36,0"
             AutomationProperties.HeadingLevel="Level1"
             Style="{StaticResource TitleTextBlockStyle}"
-            Text="Settings" />
+            x:Uid="SettingsPageTitle"/>
         <ScrollView
             Grid.Row="1"
             Padding="36,0,36,0"
@@ -48,7 +48,7 @@
                     <StackPanel.ChildrenTransitions>
                         <RepositionThemeTransition />
                     </StackPanel.ChildrenTransitions>
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Appearance &amp; behavior" />
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" x:Uid="Appearance" />
                     <toolkit:SettingsCard x:Uid="AppTheme">
                         <toolkit:SettingsCard.HeaderIcon>
                             <FontIcon Glyph="&#xE790;" />
@@ -73,45 +73,9 @@
                         </ComboBox>
                     </toolkit:SettingsCard>
 
-                    <toolkit:SettingsExpander Description="Controls provide audible feedback" Header="Sound">
-                        <toolkit:SettingsExpander.HeaderIcon>
-                            <FontIcon Glyph="&#xEC4F;" />
-                        </toolkit:SettingsExpander.HeaderIcon>
-                        <ToggleSwitch x:Name="soundToggle" Toggled="soundToggle_Toggled" />
-                        <toolkit:SettingsExpander.Items>
-                            <toolkit:SettingsCard
-                                x:Name="SpatialAudioCard"
-                                Header="Enable Spatial Audio"
-                                IsEnabled="False">
-                                <toolkit:SettingsCard.Description>
-                                    <HyperlinkButton Click="soundPageHyperlink_Click" Content="Learn more about enabling sounds in your app" />
-                                </toolkit:SettingsCard.Description>
-                                <ToggleSwitch x:Name="spatialSoundBox" Toggled="spatialSoundBox_Toggled" />
-                            </toolkit:SettingsCard>
-                        </toolkit:SettingsExpander.Items>
-                    </toolkit:SettingsExpander>
-
-                    <toolkit:SettingsCard Description="Clear your recent or favorite samples" Header="Manage samples">
-                        <toolkit:SettingsCard.HeaderIcon>
-                            <FontIcon Glyph="&#xE8A9;" />
-                        </toolkit:SettingsCard.HeaderIcon>
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <Button
-                                x:Name="ClearRecentBtn"
-                                MinWidth="120"
-                                Click="ClearRecentBtn_Click"
-                                Content="Clear recents" />
-                            <Button
-                                x:Name="UnfavoriteBtn"
-                                MinWidth="120"
-                                Click="UnfavoriteBtn_Click"
-                                Content="Remove favorites" />
-                        </StackPanel>
-                    </toolkit:SettingsCard>
-
 
                     <!--  About  -->
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="关于" />
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"  x:Uid="About"/>
                     <toolkit:SettingsExpander
                         Margin="0,0,0,36"
                         Description="© 2026 顾留中 All rights reserved."
