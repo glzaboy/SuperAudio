@@ -33,11 +33,11 @@ namespace SuperAudio
         public MainWindow()
         {
             InitializeComponent();
-            
+
             this.ViewModel = App.Host.Services.GetRequiredService<MainWindowViewModel>();
             this.RootGrid.DataContext = ViewModel;
             this.ExtendsContentIntoTitleBar = true;
-            
+
         }
         private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
@@ -187,7 +187,7 @@ namespace SuperAudio
                 this.rootFrame.GoBack();
             }
         }
-        private async  Task SetWindowIconAsync()
+        private async Task SetWindowIconAsync()
         {
             try
             {
@@ -196,7 +196,7 @@ namespace SuperAudio
                 var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
                 string iconPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Assets", "Logo.ico");
-        
+
                 // 检查文件是否存在
                 if (!System.IO.File.Exists(iconPath))
                 {
@@ -204,15 +204,15 @@ namespace SuperAudio
                     var uri = new Uri("ms-appx:///Assets/Logo.ico");
                     var file = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri);
                     var filePath = file.Path;
-                    
+
                     appWindow.SetIcon(iconPath);
                     return;
                 }
 
-        
+
                 // 设置图标
                 appWindow.SetIcon(iconPath);
-        
+
                 System.Diagnostics.Debug.WriteLine($"图标设置成功: {iconPath}");
             }
             catch (Exception ex)

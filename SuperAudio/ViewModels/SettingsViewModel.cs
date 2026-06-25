@@ -11,7 +11,7 @@ using Windows.System;
 
 namespace SuperAudio.ViewModels
 {
-    public partial class SettingsViewModel:ObservableObject
+    public partial class SettingsViewModel : ObservableObject
     {
         [RelayCommand]
         public void Init()
@@ -21,7 +21,7 @@ namespace SuperAudio.ViewModels
             {
                 case ElementTheme.Light:
                     ThemeSelect = Themes.Where(d => Equals(d.Tag, "Light")).First();
-                    
+
                     break;
                 case ElementTheme.Dark:
                     ThemeSelect = Themes.Where(d => Equals(d.Tag, "Dark")).First();
@@ -42,7 +42,7 @@ namespace SuperAudio.ViewModels
                     LanageSelect = Languages.Where(d => Equals(d.Tag, "zh-TW")).First();
                     break;
                 default:
-                    LanageSelect=Languages.Where(d => Equals(d.Tag, "Auto")).First();
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "Auto")).First();
                     break;
             }
             if (App.MainWindow.NavigationView.PaneDisplayMode == NavigationViewPaneDisplayMode.Auto)
@@ -53,7 +53,7 @@ namespace SuperAudio.ViewModels
             {
                 NavStyleSelect = NavStyles.Where(d => Equals(d.Tag, "Top")).First();
             }
-            Version= ProcessInfoHelper.GetVersion() is Version version
+            Version = ProcessInfoHelper.GetVersion() is Version version
                 ? string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision)
                 : string.Empty;
         }
@@ -156,7 +156,7 @@ namespace SuperAudio.ViewModels
                                 break;
                             default:
                                 Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = tag ?? "";
-                                SettingsHelper.Current.Language = tag??"";
+                                SettingsHelper.Current.Language = tag ?? "";
                                 break;
                         }
                         ContentDialog dialog = new()
@@ -208,7 +208,7 @@ namespace SuperAudio.ViewModels
                 if (value != null)
                 {
                     var tag = value.Tag?.ToString() ?? "";
-                    NavigationOrientationHelper.IsLeftModeForElement(Equals( tag,"Left"));
+                    NavigationOrientationHelper.IsLeftModeForElement(Equals(tag, "Left"));
                 }
                 SetProperty(ref _navStyleSelect, value);
             }
@@ -220,6 +220,6 @@ namespace SuperAudio.ViewModels
         {
             _ = Launcher.LaunchUriAsync(new Uri("https://steamsda.com/?f=super%20bluetoth%20speaker"));
         }
-        
+
     }
 }

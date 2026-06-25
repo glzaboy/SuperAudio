@@ -53,7 +53,8 @@ namespace SuperAudio.Services
             if (PlaybackConnection == null)
             {
                 ConnectionStateText = App.ResourceLoader.GetString("AudioPlaybackConnectionState_Connecting");
-                App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                {
                     OnPropertyChanged(nameof(ConnectionStateText));
                 });
                 PlaybackConnection = AudioPlaybackConnection.TryCreateFromId(DeviceInformation.Id);
@@ -86,7 +87,8 @@ namespace SuperAudio.Services
                 PlaybackConnection.Dispose();
                 PlaybackConnection = null;
                 ConnectionStateText = App.ResourceLoader.GetString("AudioPlaybackConnectionState_Disconnected");
-                App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+                App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                {
                     OnPropertyChanged(nameof(ConnectionStateText));
                 });
             }
@@ -111,25 +113,26 @@ namespace SuperAudio.Services
                         throw new InvalidOperationException($"{App.ResourceLoader.GetString("AudioPlaybackConnectionState_Error")}: {openConnection.Status}");
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     // 启动失败，清理资源
                     PlaybackConnection.StateChanged -= PlaybackConnection_StateChanged;
                     PlaybackConnection.Dispose();
                     PlaybackConnection = null;
                     ConnectionStateText = $"{ex.Message}";
-                    App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+                    App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+                    {
                         OnPropertyChanged(nameof(ConnectionStateText));
                     });
                 }
-                
-                
+
+
             }
         }
         [SupportedOSPlatform("Windows10.0.19041.0")]
         private void PlaybackConnection_StateChanged(AudioPlaybackConnection sender, object args)
         {
-            if(sender== null)
+            if (sender == null)
             {
                 return;
             }
@@ -147,8 +150,9 @@ namespace SuperAudio.Services
                 AudioPlaybackConnectionState.Opened => App.ResourceLoader.GetString("AudioPlaybackConnectionState_Connected"),
                 _ => "未知"
             };
-            
-            App.MainWindow.DispatcherQueue.TryEnqueue(() => {
+
+            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
                 OnPropertyChanged(nameof(ConnectionStateText));
             });
         }
@@ -172,7 +176,7 @@ namespace SuperAudio.Services
             {
                 _operationLock.Release();
             }
-            
+
         }
         public bool CheckDisable()
         {
@@ -193,7 +197,7 @@ namespace SuperAudio.Services
             {
                 _operationLock.Release();
             }
-            
+
         }
     }
 }
