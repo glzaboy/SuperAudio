@@ -132,6 +132,18 @@
   <data name="AppTheme_Light" xml:space="preserve">
     <value>浅色</value>
   </data>
+  <data name="AudioPlaybackConnectionState_Connected" xml:space="preserve">
+    <value>已连接</value>
+  </data>
+  <data name="AudioPlaybackConnectionState_Connecting" xml:space="preserve">
+    <value>连接中...</value>
+  </data>
+  <data name="AudioPlaybackConnectionState_Disconnected" xml:space="preserve">
+    <value>断开</value>
+  </data>
+  <data name="AudioPlaybackConnectionState_Error" xml:space="preserve">
+    <value>连接出错</value>
+  </data>
   <data name="Connect.Content" xml:space="preserve">
     <value>连接</value>
   </data>

@@ -18,7 +18,7 @@ namespace SuperAudio.Services
 
         public required DeviceInformation DeviceInformation { get; set; }
         //[ObservableProperty]
-        public string? ConnectionStateText { get; private set; } = "断开";
+        public string? ConnectionStateText { get; private set; } = App.ResourceLoader.GetString("AudioPlaybackConnectionState_Disconnected");
 
         private readonly SemaphoreSlim _operationLock = new(1, 1);
         private bool _disposed = false;
@@ -52,7 +52,7 @@ namespace SuperAudio.Services
         {
             if (PlaybackConnection == null)
             {
-                ConnectionStateText = "正在连接...";
+                ConnectionStateText = App.ResourceLoader.GetString("AudioPlaybackConnectionState_Connecting");
                 App.MainWindow.DispatcherQueue.TryEnqueue(() => {
                     OnPropertyChanged(nameof(ConnectionStateText));
                 });
@@ -85,7 +85,7 @@ namespace SuperAudio.Services
                 PlaybackConnection.StateChanged -= PlaybackConnection_StateChanged;
                 PlaybackConnection.Dispose();
                 PlaybackConnection = null;
-                ConnectionStateText = "断开";
+                ConnectionStateText = App.ResourceLoader.GetString("AudioPlaybackConnectionState_Disconnected");
                 App.MainWindow.DispatcherQueue.TryEnqueue(() => {
                     OnPropertyChanged(nameof(ConnectionStateText));
                 });
@@ -108,7 +108,7 @@ namespace SuperAudio.Services
                     }
                     else
                     {
-                        throw new InvalidOperationException($"打开音频连接失败: {openConnection.Status}");
+                        throw new InvalidOperationException($"{App.ResourceLoader.GetString("AudioPlaybackConnectionState_Error")}: {openConnection.Status}");
                     }
                 }
                 catch(Exception ex)
@@ -117,7 +117,7 @@ namespace SuperAudio.Services
                     PlaybackConnection.StateChanged -= PlaybackConnection_StateChanged;
                     PlaybackConnection.Dispose();
                     PlaybackConnection = null;
-                    ConnectionStateText = "打开音频连接失败";
+                    ConnectionStateText = $"{ex.Message}";
                     App.MainWindow.DispatcherQueue.TryEnqueue(() => {
                         OnPropertyChanged(nameof(ConnectionStateText));
                     });
@@ -143,8 +143,8 @@ namespace SuperAudio.Services
             }
             ConnectionStateText = sender.State switch
             {
-                AudioPlaybackConnectionState.Closed => "已断开",
-                AudioPlaybackConnectionState.Opened => "已连接",
+                AudioPlaybackConnectionState.Closed => App.ResourceLoader.GetString("AudioPlaybackConnectionState_Disconnected"),
+                AudioPlaybackConnectionState.Opened => App.ResourceLoader.GetString("AudioPlaybackConnectionState_Connected"),
                 _ => "未知"
             };
             

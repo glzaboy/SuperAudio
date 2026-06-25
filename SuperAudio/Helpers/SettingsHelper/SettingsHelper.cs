@@ -42,13 +42,13 @@ public partial class SettingsHelper : ObservableSettings
 
     public List<string> RecentlyVisited
     {
-        get => GetOrCreateDefault<List<string>>(new List<string>());
+        get => GetOrCreateDefault<List<string>>([]);
         private set => Set(value);
     }
 
     public List<string> Favorites
     {
-        get => GetOrCreateDefault<List<string>>(new List<string>());
+        get => GetOrCreateDefault<List<string>>([]);
         private set => Set(value);
     }
 

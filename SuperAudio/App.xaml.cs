@@ -13,7 +13,7 @@ using SuperAudio.Pages;
 using SuperAudio.Services;
 using SuperAudio.ViewModels;
 using System;
-using System.Threading.Tasks;
+using System.Runtime.Versioning;
 using Windows.ApplicationModel.Activation;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -29,7 +29,6 @@ namespace SuperAudio
         internal static MainWindow MainWindow { get; private set; } = null!;
         internal static IHost Host { get; private set; } = null!;
         internal static ResourceLoader ResourceLoader { get; private set; } = new ResourceLoader();
-//this.myXAMLTextBlockElement.Text = resourceLoader.GetString("Farewell");
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -48,6 +47,7 @@ namespace SuperAudio
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
+        [SupportedOSPlatform("Windows10.0.19041.0")]
         protected async override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             //await Task.Delay(3000);

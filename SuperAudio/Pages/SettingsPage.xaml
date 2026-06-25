@@ -115,14 +115,14 @@
                     <toolkit:SettingsExpander
                         Margin="0,0,0,36"
                         Description="© 2026 顾留中 All rights reserved."
-                        Header="{StaticResource AppTitleName}">
+                        Header="{x:Bind ViewModel.Title}">
                         <toolkit:SettingsExpander.HeaderIcon>
                             <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/StoreLogo.scale-100.png" />
                         </toolkit:SettingsExpander.HeaderIcon>
                         <TextBlock
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             IsTextSelectionEnabled="True"
-                            Text="1.0.0" />
+                            Text="{x:Bind ViewModel.Version}" />
                         <toolkit:SettingsExpander.Items>
                             <toolkit:SettingsCard
                                 x:Name="bugRequestCard"

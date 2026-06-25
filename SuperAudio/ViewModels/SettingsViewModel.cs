@@ -53,7 +53,16 @@ namespace SuperAudio.ViewModels
             {
                 NavStyleSelect = NavStyles.Where(d => Equals(d.Tag, "Top")).First();
             }
+            Version= ProcessInfoHelper.GetVersion() is Version version
+                ? string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision)
+                : string.Empty;
         }
+        [ObservableProperty]
+        public partial string? Title { get; set; } = App.ResourceLoader.GetString("Main_Title");
+        #region Version;
+        [ObservableProperty]
+        public partial string Version { get; set; }
+        #endregion Version
         #region 主题
         [ObservableProperty]
         public partial ObservableCollection<ComboBoxItem> Themes { get; set; } = [

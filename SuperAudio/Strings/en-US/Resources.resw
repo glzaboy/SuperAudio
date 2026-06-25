@@ -132,6 +132,18 @@
   <data name="AppTheme_Light" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="AudioPlaybackConnectionState_Connected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="AudioPlaybackConnectionState_Connecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="AudioPlaybackConnectionState_Disconnected" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
+  <data name="AudioPlaybackConnectionState_Error" xml:space="preserve">
+    <value>Connection error</value>
+  </data>
   <data name="Connect.Content" xml:space="preserve">
     <value>Connect</value>
   </data>
