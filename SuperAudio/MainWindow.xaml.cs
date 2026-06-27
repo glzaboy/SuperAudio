@@ -1,14 +1,18 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Windows.AppNotifications;
+using Microsoft.Windows.AppNotifications.Builder;
 using SuperAudio.Helpers;
 using SuperAudio.Pages;
 using SuperAudio.ViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -18,9 +22,10 @@ namespace SuperAudio
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class MainWindow : WinUIEx.WindowEx
     {
         public Action? NavigationViewLoaded { get; set; }
+        public TrayIcon? TrayIcon { get; private set; }
         /// <summary>
         /// 防止循环的标志位
         /// </summary>
@@ -34,9 +39,38 @@ namespace SuperAudio
         {
             InitializeComponent();
 
+            if (this.AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.IsMaximizable = false; // 禁用最大化按钮
+                                                 // presenter.IsMinimizable = false; // 禁用最小化按钮
+                                                 // presenter.IsResizable = false;  // 同时禁用窗口调整大小
+            }
+
+            
+            
             this.ViewModel = App.Host.Services.GetRequiredService<MainWindowViewModel>();
             this.RootGrid.DataContext = ViewModel;
             this.ExtendsContentIntoTitleBar = true;
+            this.AppWindow.Changed += async (s, e) =>
+            {
+                if (e.DidPresenterChange && s.Presenter is OverlappedPresenter presenter)
+                {
+                    if (presenter.State == OverlappedPresenterState.Minimized)
+                    {
+                        s.Hide();
+                        AppNotification notification = new AppNotificationBuilder()
+                        .AddText("窗口已经最小化点击托盘图标恢复")
+                        .SetAppLogoOverride(new Uri("ms-appx:///Assets/ControlImages/SquareLogo.png"), AppNotificationImageCrop.Circle)
+                        .SetAudioEvent(AppNotificationSoundEvent.Alarm)
+                        .SetTimeStamp(DateTime.Now)
+                        .SetDuration(AppNotificationDuration.Default)
+                        .BuildNotification();
+
+                        AppNotificationManager.Default.Show(notification);
+                        //WindowManager
+                    }
+                }
+            };
 
         }
         private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
@@ -46,7 +80,7 @@ namespace SuperAudio
             // We need to set the minimum size here because the XamlRoot is not available in the constructor.
             NavigationOrientationHelper.UpdateNavigationViewForElement(NavigationOrientationHelper.IsLeftMode());
         }
-        private void TitleBar_PaneToggleRequested(TitleBar sender, object args)
+        private void TitleBar_PaneToggleRequested(Microsoft.UI.Xaml.Controls.TitleBar sender, object args)
         {
             NavigationViewControl.IsPaneOpen = !NavigationViewControl.IsPaneOpen;
         }
@@ -180,7 +214,7 @@ namespace SuperAudio
                 }
             }
         }
-        private void TitleBar_BackRequested(TitleBar sender, object args)
+        private void TitleBar_BackRequested(Microsoft.UI.Xaml.Controls.TitleBar sender, object args)
         {
             if (this.rootFrame.CanGoBack)
             {
@@ -191,9 +225,6 @@ namespace SuperAudio
         {
             try
             {
-                var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-                var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hWnd);
-                var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
                 string iconPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Assets", "Logo.ico");
 
@@ -203,16 +234,26 @@ namespace SuperAudio
                     System.Diagnostics.Debug.WriteLine($"图标文件不存在: {iconPath}");
                     var uri = new Uri("ms-appx:///Assets/Logo.ico");
                     var file = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(uri);
-                    var filePath = file.Path;
-
-                    appWindow.SetIcon(iconPath);
-                    return;
+                    iconPath = file.Path;
                 }
 
 
                 // 设置图标
-                appWindow.SetIcon(iconPath);
-
+                AppWindow.SetIcon(iconPath);
+                TrayIcon = new TrayIcon(1, iconPath, "Test");
+                TrayIcon.IsVisible = true;
+                TrayIcon.Selected += (s, e)=>{
+                    this.Activate();
+                };
+                TrayIcon.ContextMenu += (s, e) =>
+                {
+                    MenuFlyout menuFlyout = new();
+                    menuFlyout.Items.Add(new MenuFlyoutItem() { Text = "Quit App" });
+                    ((MenuFlyoutItem)menuFlyout.Items[0]).Click += (s,e)=>{ this.Show(); this.Close();};
+                    e.Flyout= menuFlyout;
+                };
+                TrayIcon.Tooltip = App.ResourceLoader.GetString("Main_Title");
+                
                 System.Diagnostics.Debug.WriteLine($"图标设置成功: {iconPath}");
             }
             catch (Exception ex)

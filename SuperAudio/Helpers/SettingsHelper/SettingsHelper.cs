@@ -30,7 +30,7 @@ public partial class SettingsHelper : ObservableSettings
     }
     public string Language
     {
-        get => GetOrCreateDefault<string>("en-Us");
+        get => GetOrCreateDefault<string>("auto");
         set => Set(value);
     }
 
