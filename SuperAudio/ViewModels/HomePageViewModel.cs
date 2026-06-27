@@ -54,9 +54,8 @@ namespace SuperAudio.ViewModels
             {
                 ContentDialog inputDialog = new()
                 {
-                    Title = "请输入你的名字",
-                    Content = new TextBlock { Text = "即将弹出蓝牙功能界面，您可以连接新设备" },
-                    PrimaryButtonText = "确定",
+                    Content = new TextBlock { Text = App.ResourceLoader.GetString("ReqBluetoothTip") },
+                    PrimaryButtonText = App.ResourceLoader.GetString("ContentBtn_OK"),
                     DefaultButton = ContentDialogButton.Primary,
                     // 关键！必须设置 XamlRoot
                     XamlRoot = App.MainWindow.Content.XamlRoot

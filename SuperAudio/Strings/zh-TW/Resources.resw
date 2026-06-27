@@ -123,6 +123,12 @@
   <data name="Appearance.Text" xml:space="preserve">
     <value>外觀和行為</value>
   </data>
+  <data name="AppExit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="AppHide" xml:space="preserve">
+    <value>視窗已經隱藏，點擊托盤圖示或訊息恢復</value>
+  </data>
   <data name="AppTheme.Description" xml:space="preserve">
     <value>選擇要顯示的應用程式主題</value>
   </data>
@@ -197,6 +203,9 @@
   </data>
   <data name="New_Device.Content" xml:space="preserve">
     <value>添加新藍牙設備</value>
+  </data>
+  <data name="ReqBluetoothTip" xml:space="preserve">
+    <value>即將彈出藍牙功能界面，您可以連接新設備</value>
   </data>
   <data name="RestartAlert" xml:space="preserve">
     <value>此操作需要重新啟動應用程式，播放內容可能中斷請確認。</value>

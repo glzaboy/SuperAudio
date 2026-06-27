@@ -123,6 +123,12 @@
   <data name="Appearance.Text" xml:space="preserve">
     <value>Appearance &amp; behavior</value>
   </data>
+  <data name="AppExit" xml:space="preserve">
+    <value>Quit</value>
+  </data>
+  <data name="AppHide" xml:space="preserve">
+    <value>The window has been hidden. Click the tray icon or message to restore it</value>
+  </data>
   <data name="AppTheme.Description" xml:space="preserve">
     <value>Select which app theme to display</value>
   </data>
@@ -197,6 +203,9 @@
   </data>
   <data name="New_Device.Content" xml:space="preserve">
     <value>Add new Bluetooth device</value>
+  </data>
+  <data name="ReqBluetoothTip" xml:space="preserve">
+    <value>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</value>
   </data>
   <data name="RestartAlert" xml:space="preserve">
     <value>This operation requires a restart of the application, and playback may be interrupted. Please confirm.</value>

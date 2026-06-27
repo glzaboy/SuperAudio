@@ -124,6 +124,12 @@
     <value>外观和行为</value>
     <comment>外观和行为</comment>
   </data>
+  <data name="AppExit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="AppHide" xml:space="preserve">
+    <value>窗口已经隐藏点击托盘图标或消息恢复</value>
+  </data>
   <data name="AppTheme.Description" xml:space="preserve">
     <value>选择要显示的应用主题</value>
   </data>
@@ -198,6 +204,10 @@
   </data>
   <data name="New_Device.Content" xml:space="preserve">
     <value>添加新蓝牙设备</value>
+  </data>
+  <data name="ReqBluetoothTip" xml:space="preserve">
+    <value>即将弹出蓝牙功能界面，您可以连接新设备</value>
+    <comment>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</comment>
   </data>
   <data name="RestartAlert" xml:space="preserve">
     <value>此操作需要重启应用程序，播放内容可能中断请确认。</value>

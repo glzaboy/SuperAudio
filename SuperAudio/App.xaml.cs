@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.ApplicationModel.Resources;
@@ -37,19 +36,15 @@ namespace SuperAudio
         public App()
         {
             InitializeComponent();
-            
+
             UnhandledException += HandleExceptions;
             if (!string.IsNullOrEmpty(SettingsHelper.Current.Language) && !Equals(SettingsHelper.Current.Language, "auto"))
             {
                 ApplicationLanguages.PrimaryLanguageOverride = SettingsHelper.Current.Language;
             }
         }
-        private void OnAppExit(object sender, object e)
-        {
-            Host?.Dispose();
-        }
         private void OnNotificationInvoked(AppNotificationManager sender, AppNotificationActivatedEventArgs args)
-{
+        {
             // 使用 this.DispatcherQueue 而不是 DispatcherQueue
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {

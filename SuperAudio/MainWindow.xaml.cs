@@ -22,7 +22,7 @@ namespace SuperAudio
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : WinUIEx.WindowEx
+    public sealed partial class MainWindow : Window
     {
         public Action? NavigationViewLoaded { get; set; }
         public TrayIcon? TrayIcon { get; private set; }
@@ -46,8 +46,8 @@ namespace SuperAudio
                                                  // presenter.IsResizable = false;  // 同时禁用窗口调整大小
             }
 
-            
-            
+
+
             this.ViewModel = App.Host.Services.GetRequiredService<MainWindowViewModel>();
             this.RootGrid.DataContext = ViewModel;
             this.ExtendsContentIntoTitleBar = true;
@@ -59,15 +59,13 @@ namespace SuperAudio
                     {
                         s.Hide();
                         AppNotification notification = new AppNotificationBuilder()
-                        .AddText("窗口已经最小化点击托盘图标恢复")
+                        .AddText(App.ResourceLoader.GetString("AppHide"))
                         .SetAppLogoOverride(new Uri("ms-appx:///Assets/ControlImages/SquareLogo.png"), AppNotificationImageCrop.Circle)
-                        .SetAudioEvent(AppNotificationSoundEvent.Alarm)
                         .SetTimeStamp(DateTime.Now)
                         .SetDuration(AppNotificationDuration.Default)
                         .BuildNotification();
 
                         AppNotificationManager.Default.Show(notification);
-                        //WindowManager
                     }
                 }
             };
@@ -242,18 +240,19 @@ namespace SuperAudio
                 AppWindow.SetIcon(iconPath);
                 TrayIcon = new TrayIcon(1, iconPath, "Test");
                 TrayIcon.IsVisible = true;
-                TrayIcon.Selected += (s, e)=>{
+                TrayIcon.Selected += (s, e) =>
+                {
                     this.Activate();
                 };
                 TrayIcon.ContextMenu += (s, e) =>
                 {
                     MenuFlyout menuFlyout = new();
-                    menuFlyout.Items.Add(new MenuFlyoutItem() { Text = "Quit App" });
-                    ((MenuFlyoutItem)menuFlyout.Items[0]).Click += (s,e)=>{ this.Show(); this.Close();};
-                    e.Flyout= menuFlyout;
+                    menuFlyout.Items.Add(new MenuFlyoutItem() { Text = App.ResourceLoader.GetString("AppExit"), Icon = new SymbolIcon(Symbol.Clear) });
+                    ((MenuFlyoutItem)menuFlyout.Items[0]).Click += (s, e) => { this.Show(); this.Close(); };
+                    e.Flyout = menuFlyout;
                 };
                 TrayIcon.Tooltip = App.ResourceLoader.GetString("Main_Title");
-                
+
                 System.Diagnostics.Debug.WriteLine($"图标设置成功: {iconPath}");
             }
             catch (Exception ex)
