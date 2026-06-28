@@ -15,7 +15,7 @@
   <Identity
     Name="7E3037EB.105291C4FA142"
     Publisher="CN=903CF430-4F60-456C-BD6B-BBB21C21420D"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="1ed8ac62-25fc-4d95-b50a-3812e36471c0" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

@@ -39,12 +39,12 @@ namespace SuperAudio
         {
             InitializeComponent();
 
-            if (this.AppWindow.Presenter is OverlappedPresenter presenter)
+            /*if (this.AppWindow.Presenter is OverlappedPresenter presenter)
             {
                 presenter.IsMaximizable = false; // 禁用最大化按钮
                                                  // presenter.IsMinimizable = false; // 禁用最小化按钮
                                                  // presenter.IsResizable = false;  // 同时禁用窗口调整大小
-            }
+            }*/
 
 
 

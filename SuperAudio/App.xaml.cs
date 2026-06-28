@@ -63,7 +63,6 @@ namespace SuperAudio
         [SupportedOSPlatform("Windows10.0.19041.0")]
         protected async override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            //await Task.Delay(3000);
             var mainInstance = AppInstance.FindOrRegisterForKey("main");
 
             if (!mainInstance.IsCurrent)
@@ -96,6 +95,7 @@ namespace SuperAudio
                     {
                         MainWindow.TrayIcon?.Dispose();
                         await Host.StopAsync(TimeSpan.FromSeconds(10));
+                        AppNotificationManager.Default.Unregister();
                         Host.Dispose();
                     }
                     catch (OperationCanceledException ex)
