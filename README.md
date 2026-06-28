@@ -4,6 +4,10 @@
 
 超级蓝牙音箱是一款轻量级的 Windows 工具，将您的电脑变身为一台蓝牙音箱（音频接收端），让手机、平板等设备能够通过蓝牙将音乐或音频流传输到电脑的扬声器或耳机上播放。
 
+点击下方徽章即可从微软商店下载安装 超级蓝牙音箱：
+
+[![获取 SuperAudio](https://get.microsoft.com/images/zh-cn%20dark.svg)](https://get.microsoft.com/installer/download/9ngsn37k2gcc?referrer=appbadge)
+
 ## 技术栈
 
 - **框架**：WinUI 3 (Windows UI Library)
