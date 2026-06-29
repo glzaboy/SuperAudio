@@ -49,10 +49,7 @@ namespace SuperAudio
             App.MainWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 var mainWindow = App.MainWindow;
-                if (mainWindow != null)
-                {
-                    mainWindow.Activate();
-                }
+                mainWindow?.Activate();
             });
         }
 
@@ -81,6 +78,7 @@ namespace SuperAudio
             hostApplicationBuilder.Services.AddSingleton<HomePageViewModel>();
             hostApplicationBuilder.Services.AddSingleton<SettingsViewModel>();
             hostApplicationBuilder.Services.AddSingleton<PlayerService>();
+            hostApplicationBuilder.Services.AddSingleton<AudioGraphService>();
             Host = hostApplicationBuilder.Build();
             Host.Start();
             MainWindow = Host.Services.GetRequiredService<MainWindow>();
