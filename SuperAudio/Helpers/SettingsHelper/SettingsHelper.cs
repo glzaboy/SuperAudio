@@ -57,7 +57,14 @@ public partial class SettingsHelper : ObservableSettings
         get => GetOrCreateDefault<bool>(true);
         set => Set(value);
     }
-
+    /// <summary>
+    /// 录制完成后定位文件
+    /// </summary>
+    public bool IsOpenFileAfterRecording
+    {
+        get => GetOrCreateDefault<bool>(true);
+        set => Set(value);
+    }
     public void UpdateFavorites(Action<List<string>> updater)
     {
         var list = Favorites;

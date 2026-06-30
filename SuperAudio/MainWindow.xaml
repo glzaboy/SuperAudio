@@ -44,37 +44,45 @@
                     </Grid.ColumnDefinitions>
                     <!-- 左侧可放搜索框或其他内容，这里留空 -->
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
-                        <!-- 录制按钮 -->
-                        <ToggleSplitButton 
-                            x:Name="RecordToggleSplitButton"
-                            ToolTipService.ToolTip="点击主体开始/停止录制，点击箭头选择格式"
-                            VerticalAlignment="Center"
-                            IsChecked="{x:Bind ViewModel.IsRecording, Mode=OneWay}"
+                        <SplitButton 
+                            x:Name="RecordSplitButton"
                             Command="{x:Bind ViewModel.RecordCommand}"
-                            >
-                            <!-- 按钮主体内容 -->
+                            x:Uid="RecordSplitButton"
+                            VerticalAlignment="Center">
+
+                            <!-- 按钮主体内容：红点 + 当前格式 -->
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <!-- 红色闪烁圆点 -->
                                 <Viewbox Width="16" Height="16">
                                     <Ellipse x:Name="RecordingDot" 
-                                         Fill="Red" 
-                                         Width="12" 
-                                         Height="12" 
-                                         Opacity="0" />
+                     Fill="Red" 
+                     Width="12" 
+                     Height="12" 
+                     Opacity="1" />
                                 </Viewbox>
-                                <!-- 当前格式显示 -->
                                 <TextBlock Text="{x:Bind ViewModel.SelectedFormatDisplay, Mode=OneWay}" />
                             </StackPanel>
 
-                            <ToggleSplitButton.Flyout>
+                            <!-- 下拉菜单：格式选项 -->
+                            <SplitButton.Flyout>
                                 <MenuFlyout>
-                                    <MenuFlyoutItem Text="WAV" Command="{x:Bind ViewModel.SelectFormatCommand}" CommandParameter="wav" IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled,Mode=OneWay}"/>
-                                    <MenuFlyoutItem Text="MP3" Command="{x:Bind ViewModel.SelectFormatCommand}" CommandParameter="mp3" IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled,Mode=OneWay}"/>
-                                    <MenuFlyoutItem Text="AAC" Command="{x:Bind ViewModel.SelectFormatCommand}" CommandParameter="aac" IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled,Mode=OneWay}"/>
+                                    <MenuFlyoutItem Text="WAV" 
+                                Command="{x:Bind ViewModel.SelectFormatCommand}" 
+                                CommandParameter="wav" 
+                                IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled, Mode=OneWay}"/>
+                                        <MenuFlyoutItem Text="MP3" 
+                                Command="{x:Bind ViewModel.SelectFormatCommand}" 
+                                CommandParameter="mp3" 
+                                IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled, Mode=OneWay}"/>
+                                        <MenuFlyoutItem Text="AAC" 
+                                Command="{x:Bind ViewModel.SelectFormatCommand}" 
+                                CommandParameter="aac" 
+                                IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled, Mode=OneWay}"/>
+                                        <MenuFlyoutSeparator/>
+                                    <ToggleMenuFlyoutItem x:Uid="OpenFileAfterCecord" IsChecked="{x:Bind ViewModel.IsOpenFileAfterRecording, Mode=TwoWay}"/>
                                 </MenuFlyout>
-                            </ToggleSplitButton.Flyout>
-                        </ToggleSplitButton>
-                        <TextBlock Text="" VerticalAlignment="Center"/>
+                            </SplitButton.Flyout>
+                        </SplitButton>
+                        <!-- 录制按钮 -->
                     </StackPanel>
                 </Grid>
             </TitleBar.Content>
@@ -91,8 +99,7 @@
             SelectionChanged="OnNavigationViewSelectionChanged">
             <Frame
                 x:Name="rootFrame"
-                Navigated="OnRootFrameNavigated"
-                Navigating="OnRootFrameNavigating" />
+                Navigated="OnRootFrameNavigated" />
             <NavigationView.MenuItems>
                 <NavigationViewItem
                     x:Name="Home"

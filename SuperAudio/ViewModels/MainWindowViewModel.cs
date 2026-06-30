@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using SuperAudio.Helpers.SettingsHelper;
 using SuperAudio.Services;
 using System;
 using System.Diagnostics;
@@ -25,7 +26,6 @@ namespace SuperAudio.ViewModels
             // 当录制状态变化时，通知依赖属性
             OnPropertyChanged(nameof(IsFormatSelectionEnabled));
         }
-
         public bool IsFormatSelectionEnabled => !IsRecording;
 
         private readonly LoopbackRecorder _recorder = App.Host.Services.GetRequiredService<LoopbackRecorder>();
@@ -56,8 +56,12 @@ namespace SuperAudio.ViewModels
                 try
                 {
                     string musicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-                    string fileName = $"录音_{DateTime.Now:yyyyMMdd_HHmmss}";
-                    await _recorder.StopLoopbackRecordingAsync(_recorder.GetMusicFilePath(fileName), SelectedFormat.ToLower());
+                    string fileName = $"{App.ResourceLoader.GetString("RecordFilePrefix")}{DateTime.Now:yyyyMMdd_HHmmss}";
+                    await _recorder.StopLoopbackRecordingAsync(_recorder.GetMusicFilePath(fileName), SelectedFormat.ToLowerInvariant());
+                    if (IsOpenFileAfterRecording)
+                    {
+                        OpenFileInExplorer(_recorder.GetMusicFilePath(fileName) + "." + SelectedFormat.ToLowerInvariant());
+                    }
                     IsRecording = false;
                     // 显示保存成功提示
                 }
@@ -70,12 +74,30 @@ namespace SuperAudio.ViewModels
                 }
             }
         }
+        private void OpenFileInExplorer(string filePath)
+        {
+            try
+            {
+                Process.Start("explorer.exe", $"/select, \"{filePath}\"");
+            }
+            catch (Exception ex)
+            {
+                // 静默处理，不影响录制流程
+                Debug.WriteLine($"打开文件位置失败: {ex.Message}");
+            }
+        }
         [ObservableProperty]
         public partial string SelectedFormat { get; set; } = "wav";
 
         [ObservableProperty]
         public partial string SelectedFormatDisplay { get; set; } = "WAV";
-
+        [ObservableProperty]
+        public partial bool IsOpenFileAfterRecording { get; set; } = SettingsHelper.Current.IsOpenFileAfterRecording;
+        // 当属性变化时自动保存
+        partial void OnIsOpenFileAfterRecordingChanged(bool value)
+        {
+            SettingsHelper.Current.IsOpenFileAfterRecording = value;
+        }
         [RelayCommand]
         public void SelectFormat(string format)
         {
