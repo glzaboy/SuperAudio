@@ -24,6 +24,7 @@ namespace SuperAudio
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private Storyboard? _blinkStoryboard;
         public Action? NavigationViewLoaded { get; set; }
         public TrayIcon? TrayIcon { get; private set; }
         /// <summary>
@@ -39,19 +40,24 @@ namespace SuperAudio
         {
             InitializeComponent();
 
-            /*if (this.AppWindow.Presenter is OverlappedPresenter presenter)
+            if (this.AppWindow.Presenter is OverlappedPresenter presenter)
             {
-                presenter.IsMaximizable = false; // 禁用最大化按钮
-                                                 // presenter.IsMinimizable = false; // 禁用最小化按钮
-                                                 // presenter.IsResizable = false;  // 同时禁用窗口调整大小
-            }*/
+                // 设置最小尺寸
+                presenter.PreferredMinimumWidth = 800;
+                presenter.PreferredMinimumHeight = 600;
+
+                // 你的其他设置，例如禁用最大化按钮
+                //presenter.IsMaximizable = false;
+                // presenter.IsMinimizable = false;
+                // presenter.IsResizable = false;
+            }
 
 
 
-            this.ViewModel = App.Host.Services.GetRequiredService<MainWindowViewModel>();
-            this.RootGrid.DataContext = ViewModel;
-            this.ExtendsContentIntoTitleBar = true;
-            this.AppWindow.Changed += async (s, e) =>
+            ViewModel = App.Host.Services.GetRequiredService<MainWindowViewModel>();
+            RootGrid.DataContext = ViewModel;
+            ExtendsContentIntoTitleBar = true;
+            AppWindow.Changed += async (s, e) =>
             {
                 if (e.DidPresenterChange && s.Presenter is OverlappedPresenter presenter)
                 {
@@ -63,6 +69,7 @@ namespace SuperAudio
                         .SetAppLogoOverride(new Uri("ms-appx:///Assets/ControlImages/SquareLogo.png"), AppNotificationImageCrop.Circle)
                         .SetTimeStamp(DateTime.Now)
                         .SetDuration(AppNotificationDuration.Default)
+                        .MuteAudio()
                         .BuildNotification();
 
                         AppNotificationManager.Default.Show(notification);
@@ -74,7 +81,37 @@ namespace SuperAudio
         private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
             await SetWindowIconAsync();
-
+            var dot = RecordingDot;
+            var storyboard = new Storyboard();
+            var animation = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                Duration = TimeSpan.FromMilliseconds(500),
+                AutoReverse = true,
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+            Storyboard.SetTarget(animation, dot);
+            Storyboard.SetTargetProperty(animation, "Opacity");
+            storyboard.Children.Add(animation);
+            _blinkStoryboard = storyboard;
+            ViewModel.PropertyChanged += (s, args) =>
+            {
+                if (args.PropertyName == nameof(MainWindowViewModel.IsRecording))
+                {
+                    if (ViewModel.IsRecording)
+                    {
+                        // 开始闪烁
+                        _blinkStoryboard.Begin();
+                    }
+                    else
+                    {
+                        // 停止闪烁并隐藏红点
+                        _blinkStoryboard.Stop();
+                        dot.Opacity = 1;
+                    }
+                }
+            };
             // We need to set the minimum size here because the XamlRoot is not available in the constructor.
             NavigationOrientationHelper.UpdateNavigationViewForElement(NavigationOrientationHelper.IsLeftMode());
         }
@@ -242,6 +279,7 @@ namespace SuperAudio
                 TrayIcon.IsVisible = true;
                 TrayIcon.Selected += (s, e) =>
                 {
+                    this.Restore();
                     this.Activate();
                 };
                 TrayIcon.ContextMenu += (s, e) =>
