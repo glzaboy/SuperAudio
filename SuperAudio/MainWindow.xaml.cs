@@ -78,9 +78,8 @@ namespace SuperAudio
             };
 
         }
-        private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        private void SetupRecordingDotAnimation()
         {
-            await SetWindowIconAsync();
             var dot = RecordingDot;
             var storyboard = new Storyboard();
             var animation = new DoubleAnimation
@@ -95,23 +94,25 @@ namespace SuperAudio
             Storyboard.SetTargetProperty(animation, "Opacity");
             storyboard.Children.Add(animation);
             _blinkStoryboard = storyboard;
+
             ViewModel.PropertyChanged += (s, args) =>
             {
                 if (args.PropertyName == nameof(MainWindowViewModel.IsRecording))
                 {
                     if (ViewModel.IsRecording)
-                    {
-                        // 开始闪烁
                         _blinkStoryboard.Begin();
-                    }
                     else
                     {
-                        // 停止闪烁并隐藏红点
                         _blinkStoryboard.Stop();
                         dot.Opacity = 1;
                     }
                 }
             };
+        }
+        private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            await SetWindowIconAsync();
+            SetupRecordingDotAnimation();
             // We need to set the minimum size here because the XamlRoot is not available in the constructor.
             NavigationOrientationHelper.UpdateNavigationViewForElement(NavigationOrientationHelper.IsLeftMode());
         }
@@ -177,10 +178,6 @@ namespace SuperAudio
             return tag.Equals(nameof(SettingsPage));
         }
 
-        private void OnRootFrameNavigating(object sender, NavigatingCancelEventArgs e)
-        {
-            //TestContentLoadedCheckBox.IsChecked = false;
-        }
         private void OnPaneDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {
             if (sender.PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
@@ -275,21 +272,22 @@ namespace SuperAudio
 
                 // 设置图标
                 AppWindow.SetIcon(iconPath);
-                TrayIcon = new TrayIcon(1, iconPath, "Test");
-                TrayIcon.IsVisible = true;
+                TrayIcon = new(1, iconPath, App.ResourceLoader.GetString("Main_Title"))
+                {
+                    IsVisible = true
+                };
                 TrayIcon.Selected += (s, e) =>
                 {
                     this.Restore();
-                    this.Activate();
+                    Activate();
                 };
                 TrayIcon.ContextMenu += (s, e) =>
                 {
                     MenuFlyout menuFlyout = new();
                     menuFlyout.Items.Add(new MenuFlyoutItem() { Text = App.ResourceLoader.GetString("AppExit"), Icon = new SymbolIcon(Symbol.Clear) });
-                    ((MenuFlyoutItem)menuFlyout.Items[0]).Click += (s, e) => { this.Show(); this.Close(); };
+                    ((MenuFlyoutItem)menuFlyout.Items[0]).Click += (s, e) => this.Close();
                     e.Flyout = menuFlyout;
                 };
-                TrayIcon.Tooltip = App.ResourceLoader.GetString("Main_Title");
 
                 System.Diagnostics.Debug.WriteLine($"图标设置成功: {iconPath}");
             }

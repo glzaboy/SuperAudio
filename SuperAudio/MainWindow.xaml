@@ -44,25 +44,45 @@
                     </Grid.ColumnDefinitions>
                     <!-- 左侧可放搜索框或其他内容，这里留空 -->
                     <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
-                        <!-- 录制按钮 -->
-                        <Button 
-                x:Name="RecordButton"
-                Command="{x:Bind ViewModel.RecordCommand}"
-                
-                ToolTipService.ToolTip="开始/停止录制"
-                VerticalAlignment="Center">
+                        <SplitButton 
+                            x:Name="RecordSplitButton"
+                            Command="{x:Bind ViewModel.RecordCommand}"
+                            x:Uid="RecordSplitButton"
+                            VerticalAlignment="Center">
+
+                            <!-- 按钮主体内容：红点 + 当前格式 -->
                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                <!-- 红色闪烁圆点 -->
                                 <Viewbox Width="16" Height="16">
                                     <Ellipse x:Name="RecordingDot" 
-                                         Fill="Red" 
-                                         Width="12" 
-                                         Height="12" 
-                                         Opacity="1" />
+                     Fill="Red" 
+                     Width="12" 
+                     Height="12" 
+                     Opacity="1" />
                                 </Viewbox>
-                                <TextBlock Text="{x:Bind ViewModel.RecordButtonText, Mode=OneWay}" />
+                                <TextBlock Text="{x:Bind ViewModel.SelectedFormatDisplay, Mode=OneWay}" />
                             </StackPanel>
-                        </Button>
+
+                            <!-- 下拉菜单：格式选项 -->
+                            <SplitButton.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="WAV" 
+                                Command="{x:Bind ViewModel.SelectFormatCommand}" 
+                                CommandParameter="wav" 
+                                IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled, Mode=OneWay}"/>
+                                        <MenuFlyoutItem Text="MP3" 
+                                Command="{x:Bind ViewModel.SelectFormatCommand}" 
+                                CommandParameter="mp3" 
+                                IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled, Mode=OneWay}"/>
+                                        <MenuFlyoutItem Text="AAC" 
+                                Command="{x:Bind ViewModel.SelectFormatCommand}" 
+                                CommandParameter="aac" 
+                                IsEnabled="{x:Bind ViewModel.IsFormatSelectionEnabled, Mode=OneWay}"/>
+                                        <MenuFlyoutSeparator/>
+                                    <ToggleMenuFlyoutItem x:Uid="OpenFileAfterCecord" IsChecked="{x:Bind ViewModel.IsOpenFileAfterRecording, Mode=TwoWay}"/>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
+                        <!-- 录制按钮 -->
                     </StackPanel>
                 </Grid>
             </TitleBar.Content>
@@ -79,8 +99,7 @@
             SelectionChanged="OnNavigationViewSelectionChanged">
             <Frame
                 x:Name="rootFrame"
-                Navigated="OnRootFrameNavigated"
-                Navigating="OnRootFrameNavigating" />
+                Navigated="OnRootFrameNavigated" />
             <NavigationView.MenuItems>
                 <NavigationViewItem
                     x:Name="Home"

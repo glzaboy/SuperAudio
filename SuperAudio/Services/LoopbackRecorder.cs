@@ -16,8 +16,6 @@ namespace SuperAudio.Services
 
         public bool IsRecording => _isRecording;
 
-        // 统一编码格式（仅用于参考，未实际使用）
-        private static readonly WaveFormat DefaultWaveFormat = WaveFormat.CreateIeeeFloatWaveFormat(44100, 2);
 
         /// <summary>
         /// 开始环回录音（写入临时 WAV 文件，内存占用极低）
@@ -74,15 +72,15 @@ namespace SuperAudio.Services
 
                 if (ext == "wav")
                 {
-                    File.Copy(_tempWavPath!, outputPath, overwrite: true);
+                    File.Copy(_tempWavPath!, outputPath + "." + ext, overwrite: true);
                 }
                 else if (ext == "mp3")
                 {
-                    MediaFoundationEncoder.EncodeToMp3(reader, outputPath);
+                    MediaFoundationEncoder.EncodeToMp3(reader, outputPath + "." + ext);
                 }
                 else if (ext == "aac" || ext == "m4a")
                 {
-                    MediaFoundationEncoder.EncodeToAac(reader, outputPath);
+                    MediaFoundationEncoder.EncodeToAac(reader, outputPath + "." + ext);
                 }
                 else
                 {

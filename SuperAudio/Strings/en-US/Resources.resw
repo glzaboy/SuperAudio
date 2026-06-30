@@ -204,6 +204,15 @@
   <data name="New_Device.Content" xml:space="preserve">
     <value>Add new Bluetooth device</value>
   </data>
+  <data name="OpenFileAfterCecord.Text" xml:space="preserve">
+    <value>Open the file after recording is complete</value>
+  </data>
+  <data name="RecordFilePrefix" xml:space="preserve">
+    <value>Track_</value>
+  </data>
+  <data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Click on the subject to start/stop recording, and click on the arrow to select the format</value>
+  </data>
   <data name="ReqBluetoothTip" xml:space="preserve">
     <value>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</value>
   </data>
