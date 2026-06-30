@@ -48,6 +48,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="NAudio" Version="2.3.0" />
 		<PackageReference Include="WinUIEx" Version="2.9.1" />
 	</ItemGroup>
 	<ItemGroup>
