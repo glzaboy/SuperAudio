@@ -275,8 +275,10 @@ namespace SuperAudio
 
                 // 设置图标
                 AppWindow.SetIcon(iconPath);
-                TrayIcon = new TrayIcon(1, iconPath, "Test");
-                TrayIcon.IsVisible = true;
+                TrayIcon = new(1, iconPath, App.ResourceLoader.GetString("Main_Title"))
+                {
+                    IsVisible = true
+                };
                 TrayIcon.Selected += (s, e) =>
                 {
                     this.Restore();
@@ -289,7 +291,6 @@ namespace SuperAudio
                     ((MenuFlyoutItem)menuFlyout.Items[0]).Click += (s, e) => { this.Show(); this.Close(); };
                     e.Flyout = menuFlyout;
                 };
-                TrayIcon.Tooltip = App.ResourceLoader.GetString("Main_Title");
 
                 System.Diagnostics.Debug.WriteLine($"图标设置成功: {iconPath}");
             }

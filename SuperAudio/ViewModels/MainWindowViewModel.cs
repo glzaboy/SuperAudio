@@ -1,9 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using SuperAudio.Services;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace SuperAudio.ViewModels
 {
@@ -14,43 +15,23 @@ namespace SuperAudio.ViewModels
         [ObservableProperty]
 
         public partial bool IsPaneToggleButtonVisible { get; set; } = true;
-        private bool _isRecording;
-        private string _recordIcon = "\uE7C8"; // 播放/开始图标
-        private string _recordButtonText = "录制";
 
-        public bool IsRecording
+
+        [ObservableProperty]
+        public partial bool IsRecording { get; set; }
+
+        partial void OnIsRecordingChanged(bool value)
         {
-            get => _isRecording;
-            set
-            {
-                SetProperty(ref _isRecording, value);
-                RecordIcon = value ? "\uE783" : "\uE7C8"; // 停止图标 vs 开始图标
-                RecordButtonText = value ? "停止" : "录制";
-            }
+            // 当录制状态变化时，通知依赖属性
+            OnPropertyChanged(nameof(IsFormatSelectionEnabled));
         }
 
-        public string RecordIcon
-        {
-            get => _recordIcon;
-            set => SetProperty(ref _recordIcon, value);
-        }
+        public bool IsFormatSelectionEnabled => !IsRecording;
 
-        public string RecordButtonText
-        {
-            get => _recordButtonText;
-            set => SetProperty(ref _recordButtonText, value);
-        }
-        public ICommand RecordCommand { get; }
+        private readonly LoopbackRecorder _recorder = App.Host.Services.GetRequiredService<LoopbackRecorder>();
 
-        private readonly LoopbackRecorder _recorder;
-
-        public MainWindowViewModel()
-        {
-            _recorder = new LoopbackRecorder();
-            RecordCommand = new RelayCommand(async () => await ExecuteRecordAsync());
-        }
-
-        private async Task ExecuteRecordAsync()
+        [RelayCommand]
+        public async Task RecordAsync()
         {
             if (!IsRecording)
             {
@@ -64,6 +45,9 @@ namespace SuperAudio.ViewModels
                 catch (Exception ex)
                 {
                     // 处理错误
+                    Debug.WriteLine($"启动录制失败: {ex.Message}");
+                    // 可以重新抛出或处理
+                    throw; // 或通知 UI
                 }
             }
             else
@@ -72,16 +56,31 @@ namespace SuperAudio.ViewModels
                 try
                 {
                     string musicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-                    string fileName = $"录音_{DateTime.Now:yyyyMMdd_HHmmss}.mp3";
-                    await _recorder.StopLoopbackRecordingAsync(_recorder.GetMusicFilePath(fileName), "mp3");
+                    string fileName = $"录音_{DateTime.Now:yyyyMMdd_HHmmss}";
+                    await _recorder.StopLoopbackRecordingAsync(_recorder.GetMusicFilePath(fileName), SelectedFormat.ToLower());
                     IsRecording = false;
                     // 显示保存成功提示
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine($"启动录制失败: {ex.Message}");
+                    // 可以重新抛出或处理
+                    throw; // 或通知 UI
                     // 处理错误
                 }
             }
+        }
+        [ObservableProperty]
+        public partial string SelectedFormat { get; set; } = "wav";
+
+        [ObservableProperty]
+        public partial string SelectedFormatDisplay { get; set; } = "WAV";
+
+        [RelayCommand]
+        public void SelectFormat(string format)
+        {
+            SelectedFormat = format;
+            SelectedFormatDisplay = format.ToUpper(); ;
         }
     }
 }
