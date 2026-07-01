@@ -60,8 +60,8 @@ namespace SuperAudio.ViewModels
                     // 关键！必须设置 XamlRoot
                     XamlRoot = App.MainWindow.Content.XamlRoot
                 };
-                inputDialog.ShowAsync();
-                // 优先使用Launcher（UWP环境）
+                _ = inputDialog.ShowAsync();
+                // 优先使用Launcher（UWP环境）`
                 bool success = await Windows.System.Launcher.LaunchUriAsync(
                     new Uri("ms-settings:bluetooth"), new() { TreatAsUntrusted = true });
 
