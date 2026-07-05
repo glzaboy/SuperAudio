@@ -54,10 +54,10 @@
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <Viewbox Width="16" Height="16">
                                     <Ellipse x:Name="RecordingDot" 
-                     Fill="Red" 
-                     Width="12" 
-                     Height="12" 
-                     Opacity="1" />
+                                         Fill="Red" 
+                                         Width="12" 
+                                         Height="12" 
+                                         Opacity="1" />
                                 </Viewbox>
                                 <TextBlock Text="{x:Bind ViewModel.SelectedFormatDisplay, Mode=OneWay}" />
                             </StackPanel>
@@ -107,8 +107,13 @@
                     x:Uid="Menu_Home"
                     Tag="HomePage"
                     Icon="Home" />
-                
-            </NavigationView.MenuItems>
+                <NavigationViewItem
+                    x:Name="File"
+                    AutomationProperties.AutomationId="File"
+                    x:Uid="Menu_File"
+                    Tag="FilePage"
+                    Icon="MusicInfo" />
+                </NavigationView.MenuItems>
         </NavigationView>
     </Grid>
 </Window>

@@ -189,6 +189,9 @@
   <data name="Main_Title" xml:space="preserve">
     <value>Super Bluetooth Speaker</value>
   </data>
+  <data name="Menu_File.Content" xml:space="preserve">
+    <value>File</value>
+  </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>Device</value>
   </data>

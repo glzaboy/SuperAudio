@@ -190,6 +190,9 @@
   <data name="Main_Title" xml:space="preserve">
     <value>超级蓝牙音箱</value>
   </data>
+  <data name="Menu_File.Content" xml:space="preserve">
+    <value>文件</value>
+  </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>设备</value>
   </data>

@@ -243,6 +243,13 @@ namespace SuperAudio
                             Navigate(typeof(HomePage));
                         }
                     }
+                    if (tag == nameof(FilePage)) // 或者 "HomePage"
+                    {
+                        if (rootFrame.CurrentSourcePageType != typeof(FilePage))
+                        {
+                            Navigate(typeof(FilePage));
+                        }
+                    }
                 }
             }
         }
