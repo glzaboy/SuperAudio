@@ -333,7 +333,7 @@ namespace SuperAudio
 
                 // 3. 隐藏覆盖层并清空 Content（这会触发 PlayerPage 的 Unloaded）
 
-                
+
                 // 3. 清空 Content（这会触发 Unloaded，但 Unloaded 中不再有动画操作）
                 PlayerContentHost.Content = null;
 
@@ -345,8 +345,8 @@ namespace SuperAudio
                 {
 
                     //filePage.OnReturnFromPlayer(currentFile);
-                    
-                    
+
+
                     //PlayerContentHost.Content = null;
                 }
             }

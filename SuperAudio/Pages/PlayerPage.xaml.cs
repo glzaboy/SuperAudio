@@ -6,7 +6,6 @@ using SuperAudio.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Windows.Media.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,11 +27,11 @@ public sealed partial class PlayerPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
-        if (e.Parameter is FileItem fileItem && e.NavigationMode== NavigationMode.Forward)
+        if (e.Parameter is FileItem fileItem && e.NavigationMode == NavigationMode.Forward)
         {
             // 根据 filePath 加载 FileItem 或直接使用路径
             LoadData(fileItem);
-            
+
         }
     }
     public void LoadData(FileItem item)
@@ -108,7 +107,7 @@ public sealed partial class PlayerPage : Page
 
             // Use the recommended configuration for back animation.
             animation.Configuration = new DirectConnectedAnimationConfiguration();
-            
+
             //(this.ViewModel as IDisposable)?.Dispose();
         }
     }

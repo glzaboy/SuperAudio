@@ -7,7 +7,6 @@ using SuperAudio.ViewModels;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,7 +27,7 @@ namespace SuperAudio.Pages
             ViewModel.LoadDirectory(ViewModel.CurrentPath);
         }
         // 加载指定目录
-        
+
 
         // 单击条目：进入文件夹 或 打开文件（可自定义）
         private void OnItemClick(object sender, ItemClickEventArgs e)

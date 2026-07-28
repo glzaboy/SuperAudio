@@ -24,7 +24,7 @@ namespace SuperAudio.ViewModels
             DateModified = info.LastWriteTime.ToString("yyyy-MM-dd HH:mm");
         }
     }
-    public partial class FilePageViewModel: ObservableObject
+    public partial class FilePageViewModel : ObservableObject
     {
         [ObservableProperty]
         public partial ObservableCollection<FileItem> FileItems { get; set; }
@@ -73,7 +73,7 @@ namespace SuperAudio.ViewModels
                 CurrentPath = parent.FullName;
                 LoadDirectory(parent.FullName);
             }
-                
+
         }
     }
 }
