@@ -80,6 +80,7 @@ namespace SuperAudio
             hostApplicationBuilder.Services.AddSingleton<PlayerService>();
             hostApplicationBuilder.Services.AddSingleton<LoopbackRecorder>();
             hostApplicationBuilder.Services.AddSingleton<FilePageViewModel>();
+            hostApplicationBuilder.Services.AddSingleton<PlayerPageViewModel>();
             Host = hostApplicationBuilder.Build();
             Host.Start();
             MainWindow = Host.Services.GetRequiredService<MainWindow>();

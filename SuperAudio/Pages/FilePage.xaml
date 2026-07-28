@@ -40,9 +40,9 @@
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,12" Spacing="4">
                         <!-- 把 CommandBar 的样式改得更紧凑 -->
                         <CommandBar DefaultLabelPosition="Right" 
-                Background="Transparent"
-                MinHeight="40"
-                Padding="0">
+                            Background="Transparent"
+                            MinHeight="40"
+                            Padding="0">
                             <CommandBar.PrimaryCommands>
                                 <!-- 返回上级 -->
                                 <AppBarButton Icon="Up" 
@@ -57,24 +57,24 @@
                             <!-- 地址栏作为 Content，占据剩余空间 -->
                             <CommandBar.Content>
                                 <TextBox x:Name="AddressBar" 
-                     Text="{x:Bind ViewModel.CurrentPath, Mode=TwoWay}"
-                     MinWidth="200"
-                     Width="Auto"
-                     VerticalAlignment="Center"
-                     KeyDown="OnAddressBarKeyDown"
-                     PlaceholderText="输入路径..."
-                     Margin="8,0,0,0" />
+                                     Text="{x:Bind ViewModel.CurrentPath, Mode=TwoWay}"
+                                     MinWidth="200"
+                                     Width="Auto"
+                                     VerticalAlignment="Center"
+                                     KeyDown="OnAddressBarKeyDown"
+                                     PlaceholderText="输入路径..."
+                                     Margin="8,0,0,0" />
                             </CommandBar.Content>
                         </CommandBar>
                     </StackPanel>
 
                     <!-- 文件/文件夹列表 -->
                     <ListView x:Name="FileListView" 
-                  Grid.Row="1"
-                  ItemsSource="{x:Bind ViewModel.FileItems, Mode=OneWay}"
-                  SelectionMode="None"
-                  IsItemClickEnabled="True"
-                  ItemClick="OnItemClick">
+                      Grid.Row="1"
+                      ItemsSource="{x:Bind ViewModel.FileItems, Mode=OneWay}"
+                      SelectionMode="None"
+                      IsItemClickEnabled="True"
+                      ItemClick="OnItemClick">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="viewModel:FileItem">
                                 <Grid Padding="4" Background="Transparent">
@@ -84,7 +84,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- 图标 -->
-                                    <SymbolIcon Symbol="{x:Bind Icon}" 
+                                    <SymbolIcon Symbol="{x:Bind Icon}"  x:Name="ItemIcon"
                                         Margin="0,0,12,0" 
                                         VerticalAlignment="Center"/>
                                     <!-- 名称 -->

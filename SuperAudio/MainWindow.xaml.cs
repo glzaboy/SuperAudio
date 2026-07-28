@@ -167,11 +167,11 @@ namespace SuperAudio
             }
         }
         // 递归查找 NavigationViewItem（支持嵌套菜单）
-        private NavigationViewItem FindMenuItemByTag(string tag)
+        private NavigationViewItem? FindMenuItemByTag(string tag)
         {
             var menuitems = NavigationViewControl.MenuItems.OfType<NavigationViewItem>();
             var MenuItem = menuitems.Where(menuItem => tag.Equals(menuItem.Tag?.ToString())).ToList();
-            return MenuItem.First();
+            return MenuItem.FirstOrDefault();
         }
         private bool IsSettingPageTag(string tag)
         {
@@ -302,6 +302,57 @@ namespace SuperAudio
             {
                 System.Diagnostics.Debug.WriteLine($"设置图标失败: {ex.Message}");
             }
+        }
+        public void OpenPlayer(FileItem clickedItem)
+        {
+            // 1. 实例化 PlayerPage（不用导航，直接 new）
+            var playerPage = new PlayerPage();
+            // 2. 传数据进去（在 PlayerPage 里定义一个公开方法）
+            playerPage.LoadData(clickedItem);
+
+            // 3. 把 Page 放进覆盖层的 ContentControl 中
+            PlayerContentHost.Content = playerPage;
+
+            // 4. 显示覆盖层（全屏出现）
+            PlayerOverlay.Visibility = Visibility.Visible;
+        }
+
+        private void OnClosePlayerClick(object sender, RoutedEventArgs e)
+        {
+            // 1. 获取当前的 PlayerPage 实例，并让它在卸载前准备返回动画
+            if (PlayerContentHost.Content is PlayerPage playerPage)
+            {
+                // 触发 Unloaded 事件（通过清空 Content）
+                // 但为了确保顺序，也可以显式调用一个方法
+                // 我们直接让 Unloaded 处理准备动画，所以只需清空 Content
+                // 2. 获取当前播放的文件（从 PlayerPage 的 ViewModel 中取）
+                var playerViewModel = App.Host.Services.GetRequiredService<PlayerPageViewModel>();
+                FileItem currentFile = playerViewModel.CurrentItem;
+                // 2. 准备返回动画（此时元素仍在树中）
+                //playerPage.PrepareReturnAnimation();
+
+                // 3. 隐藏覆盖层并清空 Content（这会触发 PlayerPage 的 Unloaded）
+
+                
+                // 3. 清空 Content（这会触发 Unloaded，但 Unloaded 中不再有动画操作）
+                PlayerContentHost.Content = null;
+
+                // 4. 隐藏覆盖层
+                PlayerOverlay.Visibility = Visibility.Collapsed;
+
+                // 4. 通知 FilePage 执行返回动画（需要获取 FilePage 实例）
+                if (rootFrame.Content is FilePage filePage && currentFile != null)
+                {
+
+                    //filePage.OnReturnFromPlayer(currentFile);
+                    
+                    
+                    //PlayerContentHost.Content = null;
+                }
+            }
+            //GC.Collect();
+            //GC.WaitForPendingFinalizers();
+
         }
     }
 }

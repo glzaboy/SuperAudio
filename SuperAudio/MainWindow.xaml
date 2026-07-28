@@ -115,5 +115,22 @@
                     Icon="MusicInfo" />
                 </NavigationView.MenuItems>
         </NavigationView>
+        <!-- 🆕 全屏覆盖层（初始隐藏，置于顶层） -->
+        <Grid x:Name="PlayerOverlay" 
+          Grid.RowSpan="2" 
+          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          Visibility="Collapsed">
+            <!-- 用一个 ContentControl 来托管 PlayerPage -->
+            <ContentControl x:Name="PlayerContentHost" />
+
+            <!-- 可选的关闭按钮（置于最上层） -->
+            <Button x:Name="ClosePlayerButton" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" 
+                Margin="20,40,20,0"
+                Click="OnClosePlayerClick">
+                <SymbolIcon Symbol="Cancel" />
+            </Button>
+        </Grid>
     </Grid>
 </Window>
