@@ -8,12 +8,12 @@ namespace SuperAudio.Converters
     /// <summary>
     /// 将文件路径转换为大写的扩展名（不含点），如果是文件夹则返回"文件夹"。
     /// </summary>
-    class FileExtensionConverter : IValueConverter
+    partial class  FileExtensionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             // 如果传入的是 FileItem 对象，则取其 FullPath
-            string path = null;
+            string? path = null;
             if (value is FileItem fileItem)
                 path = fileItem.FullPath;
             else if (value is string str)

@@ -110,8 +110,8 @@
                 <NavigationViewItem
                     x:Name="File"
                     AutomationProperties.AutomationId="File"
-                    x:Uid="Menu_File"
-                    Tag="FilePage"
+                    x:Uid="Menu_MediaLibrary"
+                    Tag="MediaLibraryPage"
                     Icon="MusicInfo" />
                 </NavigationView.MenuItems>
         </NavigationView>

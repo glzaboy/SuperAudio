@@ -145,7 +145,7 @@ namespace SuperAudio
                 }
 
                 // 根据当前页面类型找到对应的菜单项（遍历所有一级菜单及子菜单）
-                NavigationViewItem targetItem = FindMenuItemByTag(currentPageType.Name);
+                NavigationViewItem? targetItem = FindMenuItemByTag(currentPageType.Name);
                 if (targetItem != null)
                 {
                     if (NavigationViewControl.SelectedItem == null)
@@ -243,11 +243,11 @@ namespace SuperAudio
                             Navigate(typeof(HomePage));
                         }
                     }
-                    if (tag == nameof(FilePage)) // 或者 "HomePage"
+                    if (tag == nameof(MediaLibraryPage)) // 或者 "HomePage"
                     {
-                        if (rootFrame.CurrentSourcePageType != typeof(FilePage))
+                        if (rootFrame.CurrentSourcePageType != typeof(MediaLibraryPage))
                         {
-                            Navigate(typeof(FilePage));
+                            Navigate(typeof(MediaLibraryPage));
                         }
                     }
                 }
@@ -341,7 +341,7 @@ namespace SuperAudio
                 PlayerOverlay.Visibility = Visibility.Collapsed;
 
                 // 4. 通知 FilePage 执行返回动画（需要获取 FilePage 实例）
-                if (rootFrame.Content is FilePage filePage && currentFile != null)
+                if (rootFrame.Content is MediaLibraryPage filePage && currentFile != null)
                 {
 
                     //filePage.OnReturnFromPlayer(currentFile);

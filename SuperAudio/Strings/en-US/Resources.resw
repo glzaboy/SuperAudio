@@ -189,8 +189,8 @@
   <data name="Main_Title" xml:space="preserve">
     <value>Super Bluetooth Speaker</value>
   </data>
-  <data name="Menu_File.Content" xml:space="preserve">
-    <value>File</value>
+  <data name="Menu_MediaLibrary.Content" xml:space="preserve">
+    <value>Media Library</value>
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>Device</value>
@@ -224,5 +224,17 @@
   </data>
   <data name="SettingsPageTitle.Text" xml:space="preserve">
     <value>setting</value>
+  </data>
+  <data name="MediaLibraryPageTitle.Text" xml:space="preserve">
+    <value>Media Library</value>
+  </data>
+  <data name="MenuItem_Play.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="MenuItem_FindInExplorer.Text" xml:space="preserve">
+    <value>Find in Explorer</value>
+  </data>
+  <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
+    <value>Play with System</value>
   </data>
 </root>

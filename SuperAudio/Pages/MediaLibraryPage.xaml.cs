@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using SuperAudio.ViewModels;
@@ -16,47 +17,51 @@ namespace SuperAudio.Pages
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class FilePage : Page
+    public sealed partial class MediaLibraryPage : Page
     {
-        private FilePageViewModel ViewModel { get; }
+        private MediaLibraryPageViewModel ViewModel { get; }
         private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-        public FilePage()
+        public MediaLibraryPage()
         {
             InitializeComponent();
-            ViewModel = App.Host.Services.GetRequiredService<FilePageViewModel>();
+            ViewModel = App.Host.Services.GetRequiredService<MediaLibraryPageViewModel>();
             ViewModel.LoadDirectory(ViewModel.CurrentPath);
         }
         // 加载指定目录
 
 
         // 单击条目：进入文件夹 或 打开文件（可自定义）
-        private void OnItemClick(object sender, ItemClickEventArgs e)
+        private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (e.ClickedItem is not FileItem item) return;
-
-            if (item.IsFolder)
+            if (sender is FrameworkElement element && element.DataContext is FileItem item)
             {
-                ViewModel.LoadDirectory(item.FullPath);
-            }
-            else
-            {
-                var animationService = ConnectedAnimationService.GetForCurrentView();
-                var container = FileListView.ContainerFromItem(item) as ListViewItem;
-                if (container != null)
+                if (item.IsFolder)
                 {
-                    // 在 ListViewItem 的视觉树中查找名为 "ItemIcon" 的 SymbolIcon
-                    var icon = FindVisualChild<SymbolIcon>(container, "ItemIcon");
-                    if (icon != null)
-                    {
-                        // 准备动画：Key 使用 FullPath
-                        animationService.PrepareToAnimate(item.FullPath, icon);
-                    }
+                    ViewModel.LoadDirectory(item.FullPath);
                 }
-                App.MainWindow.OpenPlayer(item);
+                else
+                {
+                    var animationService = ConnectedAnimationService.GetForCurrentView();
+                    var container = FileListView.ContainerFromItem(item) as ListViewItem;
+                    if (container != null)
+                    {
+                        // 在 ListViewItem 的视觉树中查找名为 "ItemIcon" 的 SymbolIcon
+                        var icon = FindVisualChild<SymbolIcon>(container, "ItemIcon");
+                        if (icon != null)
+                        {
+                            // 准备动画：Key 使用 FullPath
+                            animationService.PrepareToAnimate(item.FullPath, icon);
+                        }
+                    }
+                    App.MainWindow.OpenPlayer(item);
+                }
             }
+                //if (sender is Fro is not FileItem item) return;
+
+            
         }
         // 辅助方法：在视觉树中查找指定名称的子元素
-        private T FindVisualChild<T>(DependencyObject parent, string name) where T : FrameworkElement
+        private T? FindVisualChild<T>(DependencyObject parent, string name) where T : FrameworkElement
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
             {

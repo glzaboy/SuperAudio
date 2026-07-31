@@ -11,7 +11,7 @@
     xmlns:enumeration="using:Windows.Devices.Enumeration"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid x:Name="RootGrid" d:DataContext="{d:DesignInstance Type=viewModel:HomePageViewModel, IsDesignTimeCreatable=True}">
+    <Grid x:Name="RootGrid" d:DataContext="{d:DesignInstance Type=viewModel:HomePageViewModel, IsDesignTimeCreatable=True}" MaxWidth="1064">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -19,7 +19,7 @@
 
         <TextBlock
             x:Name="PageHeader"
-            Margin="36,24,36,0"
+            Margin="36,24,36,24"
             AutomationProperties.HeadingLevel="Level1"
             Style="{StaticResource TitleTextBlockStyle}"
             x:Uid="Device" />

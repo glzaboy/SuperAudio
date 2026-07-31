@@ -20,7 +20,7 @@
     <None Remove="Assets\StoreLogo.scale-150.png" />
     <None Remove="Assets\StoreLogo.scale-200.png" />
     <None Remove="Assets\StoreLogo.scale-400.png" />
-    <None Remove="Pages\FilePage.xaml" />
+	<None Remove="Pages\MediaLibraryPage.xaml" />
     <None Remove="Pages\HomePage.xaml" />
     <None Remove="Pages\PlayerPage.xaml" />
     <None Remove="Pages\SettingsPage.xaml" />
@@ -216,7 +216,7 @@
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Pages\FilePage.xaml">
+	  <Page Update="Pages\MediaLibraryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

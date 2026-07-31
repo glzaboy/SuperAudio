@@ -189,8 +189,8 @@
   <data name="Main_Title" xml:space="preserve">
     <value>超級藍牙音箱</value>
   </data>
-  <data name="Menu_File.Content" xml:space="preserve">
-    <value>File</value>
+  <data name="Menu_MediaLibrary.Content" xml:space="preserve">
+    <value>媒體庫</value>
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>設備</value>
@@ -224,5 +224,17 @@
   </data>
   <data name="SettingsPageTitle.Text" xml:space="preserve">
     <value>設置</value>
+  </data>
+  <data name="MediaLibraryPageTitle.Text" xml:space="preserve">
+    <value>媒體庫</value>
+  </data>
+  <data name="MenuItem_Play.Text" xml:space="preserve">
+    <value>播放</value>
+  </data>
+  <data name="MenuItem_FindInExplorer.Text" xml:space="preserve">
+    <value>在資源管理器中查找</value>
+  </data>
+  <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
+    <value>系統播放</value>
   </data>
 </root>
