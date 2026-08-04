@@ -1,21 +1,14 @@
+
+
 # SuperAudio
 
 ## 项目简介
 
-超级蓝牙音箱是一款轻量级的 Windows 工具，将您的电脑变身为一台蓝牙音箱（音频接收端），让手机、平板等设备能够通过蓝牙将音乐或音频流传输到电脑的扬声器或耳机上播放。
+超级蓝牙音箱是一款轻量级的 Windows 工具，将您的电脑变身为一台蓝牙音箱（音频接收端），让手机、平板等设备能够通过蓝牙将音乐或音频流传输到电脑的扬声器或耳机上播放。此外，本应用还集成了系统音频录制、本地媒体库管理及播放功能，是一款全方位的音频管理工具。
 
 点击下方徽章即可从微软商店下载安装 超级蓝牙音箱：
 
 [![获取 SuperAudio](https://get.microsoft.com/images/zh-cn%20dark.svg)](https://get.microsoft.com/installer/download/9ngsn37k2gcc?referrer=appbadge)
-
-## 技术栈
-
-- **框架**：WinUI 3 (Windows UI Library)
-- **编程语言**：C# / .NET
-- **目标平台**：Windows 10 版本 1809 (build 17763) 或更高版本 / Windows 11
-- **开发工具**：Visual Studio 2022
-- **架构模式**：MVVM
-- **UI 技术**：Microsoft UI XAML
 
 ## 功能特性
 
@@ -25,6 +18,9 @@
 - 🔗 **音频播放连接**：支持启用和释放音频播放连接
 - 📱 **设备监控**：实时监控音频设备的插拔状态
 - 🔌 **热插拔支持**：设备插拔时自动更新设备列表
+- 🎙️ **系统音频录制**：支持录制系统输出的音频流（Loopback Recording），并可选择输出格式
+- 📂 **媒体库管理**：浏览本地音乐文件夹，管理音频文件
+- ▶️ **内置播放器**：提供应用内音频播放体验
 
 ### 界面特性
 
@@ -40,35 +36,49 @@
 - 📌 **跳转列表**：支持 Windows 任务栏跳转列表
 - 🌐 **多语言支持**：支持自动/English/简体中文/繁體中文
 
+## 技术栈
+
+- **框架**：WinUI 3 (Windows UI Library)
+- **编程语言**：C# / .NET
+- **目标平台**：Windows 10 版本 1809 (build 17763) 或更高版本 / Windows 11
+- **开发工具**：Visual Studio 2022
+- **架构模式**：MVVM
+- **UI 技术**：Microsoft UI XAML
+
 ## 项目结构
 
 ```
 SuperAudio/
 ├── Assets/                      # 应用资源（图标、启动画面等）
+├── Converters/                  # 值转换器
 ├── Helpers/                     # 辅助工具类
 │   ├── AppLifeHelper.cs        # 应用生命周期辅助类
 │   ├── EnumHelper.cs           # 枚举辅助类
+│   ├── ExplorerHelper.cs       # 文件资源管理器辅助类
 │   ├── JumpListHelper.cs       # 跳转列表辅助类
 │   ├── NativeMethods.cs        # Windows 原生方法调用
 │   ├── NavigationHelper.cs     # 页面导航辅助类
 │   ├── NavigationOrientationHelper.cs  # 导航方向辅助类
 │   ├── ProcessInfoHelper.cs    # 进程信息辅助类
 │   ├── SettingsHelper/        # 设置辅助类
-│   │   ├── ObservableSettings.cs
-│   │   └── Providers/          # 设置提供者
 │   ├── SuspensionManager.cs   # 状态管理类
 │   ├── ThemeHelper.cs          # 主题辅助类
 │   ├── TitleBarHelper.cs      # 标题栏辅助类
 │   ├── UIHelper.cs             # UI辅助类
 │   └── WindowHelper.cs         # 窗口辅助类
 ├── Pages/                       # 页面
-│   ├── HomePage.xaml(.cs)      # 首页
+│   ├── HomePage.xaml(.cs)      # 首页（设备管理）
+│   ├── MediaLibraryPage.xaml(.cs) # 媒体库页面
+│   ├── PlayerPage.xaml(.cs)    # 播放页面
 │   └── SettingsPage.xaml(.cs) # 设置页
 ├── Services/                    # 服务层
+│   ├── LoopbackRecorder.cs     # 音频录制服务
 │   ├── PlayerInfoItem.cs      # 音频设备项
 │   └── PlayerService.cs        # 音频播放服务
 ├── ViewModels/                  # 视图模型
 │   ├── HomePageViewModel.cs   # 首页视图模型
+│   ├── MediaLibraryPageViewModel.cs # 媒体库视图模型
+│   ├── PlayerPageViewModel.cs # 播放页视图模型
 │   ├── SettingsViewModel.cs   # 设置页视图模型
 │   └── MainWindowViewModel.cs  # 主窗口视图模型
 ├── Strings/                     # 国际化资源
@@ -123,10 +133,13 @@ SuperAudio/
 | `NativeMethods` | Windows 原生 API 调用，窗口消息处理 |
 | `JumpListHelper` | 任务栏跳转列表管理 |
 | `NavigationOrientationHelper` | 导航方向辅助，适配左右/顶部导航 |
+| `ExplorerHelper` | 支持在文件资源管理器中定位文件 |
 
 ### 页面 (Pages)
 
-- **HomePage**：应用程序主页，提供音频设备管理和播放连接功能
+- **HomePage**：应用程序首页，提供音频设备管理和播放连接功能
+- **MediaLibraryPage**：媒体库页面，用于浏览和管理本地音乐文件
+- **PlayerPage**：播放页面，提供音频文件的播放控制
 - **SettingsPage**：设置页面，包含主题、语言、导航等配置选项
 
 ### 服务 (Services)
@@ -135,16 +148,21 @@ SuperAudio/
   - 设备监听和状态变化通知
   - 音频播放连接管理
   - 设备热插拔支持
-
 - **PlayerInfoItem**：音频设备项模型
   - 设备信息管理
   - 连接状态跟踪
   - 连接启用/释放操作
+- **LoopbackRecorder**：系统音频录制服务
+  - 捕获系统音频输出
+  - 支持 WAV 格式保存
+  - 录音任务管理
 
 ### 视图模型 (ViewModels)
 
-- **MainWindowViewModel**：主窗口视图模型，管理主窗口状态和标题
+- **MainWindowViewModel**：主窗口视图模型，管理主窗口状态、标题、录音控制及格式选择
 - **HomePageViewModel**：首页视图模型，管理设备列表和连接状态
+- **MediaLibraryPageViewModel**：媒体库视图模型，管理文件列表、路径导航和文件操作
+- **PlayerPageViewModel**：播放页视图模型，管理播放列表和播放状态
 - **SettingsViewModel**：设置页视图模型，管理应用程序设置
 
 ## 使用说明
@@ -155,6 +173,18 @@ SuperAudio/
 2. 点击设备对应的"连接"按钮启用音频播放连接
 3. 点击"释放"按钮断开音频播放连接
 4. 设备列表会实时更新，插拔设备时自动刷新
+
+### 音频录制
+
+1. 在主界面点击录音按钮开始录制系统音频
+2. 选择录音格式（如 WAV）
+3. 录音完成后，可在媒体库中查看和管理录音文件
+
+### 媒体库管理
+
+1. 进入媒体库页面浏览本地音乐文件夹
+2. 支持双击播放音频文件
+3. 支持在文件资源管理器中打开文件位置
 
 ### 设置配置
 
