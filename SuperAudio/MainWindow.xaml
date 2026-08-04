@@ -128,8 +128,13 @@
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top" 
                 Margin="20,40,20,0"
+                BorderThickness="1"
+                ToolTipService.ToolTip="关闭播放返回媒体库"
                 Click="OnClosePlayerClick">
                 <SymbolIcon Symbol="Cancel" />
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Escape" />
+                </Button.KeyboardAccelerators>
             </Button>
         </Grid>
     </Grid>

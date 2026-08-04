@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using SuperAudio.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -24,7 +25,7 @@ public sealed partial class PlayerPage : Page
         ViewModel = App.Host.Services.GetRequiredService<PlayerPageViewModel>();
     }
     // 在目标页面中
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+   /* protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
         if (e.Parameter is FileItem fileItem && e.NavigationMode == NavigationMode.Forward)
@@ -33,11 +34,12 @@ public sealed partial class PlayerPage : Page
             LoadData(fileItem);
 
         }
-    }
-    public void LoadData(FileItem item)
+    }*/
+    public void LoadData(List<FileItem> item)
     {
-        ViewModel.CurrentItem = item;
-        StartConnectedAnimation(item);
+        ViewModel.PlayListItems = [..item];
+        StartConnectedAnimation(item[0]);
+        ViewModel.PlayWithInternalPlayerCommand.Execute(item);
     }
     private async void StartConnectedAnimation(FileItem item)
     {
@@ -67,7 +69,7 @@ public sealed partial class PlayerPage : Page
     }
     public void PrepareReturnAnimation()
     {
-        if (ViewModel.CurrentItem == null || CoverBorder == null)
+        if (ViewModel.PlayListItems == null || CoverBorder == null)
             return;
 
         // 确保元素还在可视化树中且已加载
@@ -81,7 +83,8 @@ public sealed partial class PlayerPage : Page
         try
         {
             var animationService = ConnectedAnimationService.GetForCurrentView();
-            var animationKey = ViewModel.CurrentItem.FullPath + "_return";
+            FileItem currentFile = ViewModel.PlayListItems[0];
+            var animationKey = currentFile.FullPath + "_return";
             var animation = animationService.PrepareToAnimate(animationKey, CoverBorder);
             if (animation != null)
             {
@@ -95,15 +98,16 @@ public sealed partial class PlayerPage : Page
     }
     private void Page_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        PlayerElement?.MediaPlayer?.Pause();
+        PlayListPlayer?.MediaPlayer.Pause();
     }
 
     protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
     {
         if (e.NavigationMode == NavigationMode.Back)
         {
+            FileItem currentFile = ViewModel.PlayListItems[0];
             ConnectedAnimation animation =
-                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate(ViewModel.CurrentItem.FullPath, CoverBorder);
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate(currentFile.FullPath, CoverBorder);
 
             // Use the recommended configuration for back animation.
             animation.Configuration = new DirectConnectedAnimationConfiguration();

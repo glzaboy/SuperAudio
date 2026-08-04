@@ -239,4 +239,13 @@
   <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
     <value>系统播放</value>
   </data>
+  <data name="RefreshCommand.ToolTipService.ToolTip" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="GoUpCommand.ToolTipService.ToolTip" xml:space="preserve">
+    <value>返回上一级</value>
+  </data>
+  <data name="CurrentPath.PlaceholderText" xml:space="preserve">
+    <value>输入路径...</value>
+  </data>
 </root>

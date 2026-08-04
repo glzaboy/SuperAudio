@@ -10,6 +10,7 @@ using SuperAudio.Helpers;
 using SuperAudio.Pages;
 using SuperAudio.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WinUIEx;
@@ -303,12 +304,12 @@ namespace SuperAudio
                 System.Diagnostics.Debug.WriteLine($"设置图标失败: {ex.Message}");
             }
         }
-        public void OpenPlayer(FileItem clickedItem)
+        public void OpenPlayer(List<FileItem> clickedItems)
         {
             // 1. 实例化 PlayerPage（不用导航，直接 new）
             var playerPage = new PlayerPage();
             // 2. 传数据进去（在 PlayerPage 里定义一个公开方法）
-            playerPage.LoadData(clickedItem);
+            playerPage.LoadData(clickedItems);
 
             // 3. 把 Page 放进覆盖层的 ContentControl 中
             PlayerContentHost.Content = playerPage;
@@ -327,7 +328,7 @@ namespace SuperAudio
                 // 我们直接让 Unloaded 处理准备动画，所以只需清空 Content
                 // 2. 获取当前播放的文件（从 PlayerPage 的 ViewModel 中取）
                 var playerViewModel = App.Host.Services.GetRequiredService<PlayerPageViewModel>();
-                FileItem currentFile = playerViewModel.CurrentItem;
+                FileItem currentFile = playerViewModel.PlayListItems[0];
                 // 2. 准备返回动画（此时元素仍在树中）
                 //playerPage.PrepareReturnAnimation();
 
@@ -350,8 +351,6 @@ namespace SuperAudio
                     //PlayerContentHost.Content = null;
                 }
             }
-            //GC.Collect();
-            //GC.WaitForPendingFinalizers();
 
         }
     }

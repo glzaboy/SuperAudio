@@ -237,4 +237,16 @@
   <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
     <value>Play with System</value>
   </data>
+  <data name="RefreshCommand.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="GoUpCommand.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Go back to the previous level</value>
+  </data>
+  <data name="2" xml:space="preserve">
+    <value>Input path ..</value>
+  </data>
+  <data name="CurrentPath.PlaceholderText" xml:space="preserve">
+    <value>Input path ..</value>
+  </data>
 </root>

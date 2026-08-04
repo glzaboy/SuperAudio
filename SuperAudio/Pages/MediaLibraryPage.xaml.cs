@@ -6,8 +6,11 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using SuperAudio.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -53,7 +56,8 @@ namespace SuperAudio.Pages
                             animationService.PrepareToAnimate(item.FullPath, icon);
                         }
                     }
-                    App.MainWindow.OpenPlayer(item);
+                    List<FileItem> list = [item];
+                    App.MainWindow.OpenPlayer(list);
                 }
             }
                 //if (sender is Fro is not FileItem item) return;
@@ -141,6 +145,21 @@ namespace SuperAudio.Pages
             catch (Exception ex)
             {
                 Debug.WriteLine($"OnReturnFromPlayer 异常: {ex}");
+            }
+        }
+
+        private void FileListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listView = sender as ListView;
+            if (listView.SelectedItems?.Count > 0)
+            {
+                ViewModel.SelectedFileItems = new ObservableCollection<FileItem>(
+                    listView.SelectedItems.Cast<FileItem>()
+                );
+            }
+            else
+            {
+                ViewModel.SelectedFileItems.Clear();
             }
         }
     }
