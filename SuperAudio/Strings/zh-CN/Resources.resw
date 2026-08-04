@@ -190,6 +190,9 @@
   <data name="Main_Title" xml:space="preserve">
     <value>超级蓝牙音箱</value>
   </data>
+  <data name="Menu_MediaLibrary.Content" xml:space="preserve">
+    <value>媒体库</value>
+  </data>
   <data name="Menu_Home.Content" xml:space="preserve">
     <value>设备</value>
   </data>
@@ -223,5 +226,26 @@
   </data>
   <data name="SettingsPageTitle.Text" xml:space="preserve">
     <value>设置</value>
+  </data>
+  <data name="MediaLibraryPageTitle.Text" xml:space="preserve">
+    <value>媒体库</value>
+  </data>
+  <data name="MenuItem_Play.Text" xml:space="preserve">
+    <value>播放</value>
+  </data>
+  <data name="MenuItem_FindInExplorer.Text" xml:space="preserve">
+    <value>在资源管理器中查找</value>
+  </data>
+  <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
+    <value>系统播放</value>
+  </data>
+  <data name="RefreshCommand.ToolTipService.ToolTip" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="GoUpCommand.ToolTipService.ToolTip" xml:space="preserve">
+    <value>返回上一级</value>
+  </data>
+  <data name="CurrentPath.PlaceholderText" xml:space="preserve">
+    <value>输入路径...</value>
   </data>
 </root>

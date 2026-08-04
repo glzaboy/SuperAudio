@@ -167,7 +167,8 @@ namespace SuperAudio.ViewModels
                             PrimaryButtonText = App.ResourceLoader.GetString("ContentBtn_OK"),
                             CloseButtonText = App.ResourceLoader.GetString("ContentBtn_No"),
                             DefaultButton = ContentDialogButton.Primary,
-                            Content = App.ResourceLoader.GetString("ReStartAlert")
+                            Content = App.ResourceLoader.GetString("ReStartAlert"),
+                            RequestedTheme = ThemeHelper.RootTheme
                         };
                         dialog.PrimaryButtonClick += (s, args) =>
                         {
