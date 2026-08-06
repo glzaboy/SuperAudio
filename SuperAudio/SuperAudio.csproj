@@ -211,6 +211,11 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
+	  <Page Update="Pages\ChangelogPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
 	  <Page Update="Pages\PlayerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>

@@ -23,7 +23,6 @@ namespace SuperAudio.Pages
     public sealed partial class MediaLibraryPage : Page
     {
         private MediaLibraryPageViewModel ViewModel { get; }
-        private string _currentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
         public MediaLibraryPage()
         {
             InitializeComponent();
@@ -60,9 +59,6 @@ namespace SuperAudio.Pages
                     App.MainWindow.OpenPlayer(list);
                 }
             }
-                //if (sender is Fro is not FileItem item) return;
-
-            
         }
         // 辅助方法：在视觉树中查找指定名称的子元素
         private T? FindVisualChild<T>(DependencyObject parent, string name) where T : FrameworkElement
@@ -151,7 +147,7 @@ namespace SuperAudio.Pages
         private void FileListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listView = sender as ListView;
-            if (listView.SelectedItems?.Count > 0)
+            if (listView?.SelectedItems?.Count > 0)
             {
                 ViewModel.SelectedFileItems = new ObservableCollection<FileItem>(
                     listView.SelectedItems.Cast<FileItem>()

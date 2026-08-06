@@ -248,4 +248,11 @@
   <data name="CurrentPath.PlaceholderText" xml:space="preserve">
     <value>输入路径...</value>
   </data>
+  <data name="Menu_Changelog.Content" xml:space="preserve">
+    <value>更新日志</value>
+    <comment>Menu_Changelog</comment>
+  </data>
+  <data name="ChangelogPageTitle.Text" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
 </root>

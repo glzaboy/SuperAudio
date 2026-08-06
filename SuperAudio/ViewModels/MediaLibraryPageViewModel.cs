@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using SuperAudio.Helpers;
 using System;
-using System.Collections;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -36,6 +35,7 @@ namespace SuperAudio.ViewModels
         [ObservableProperty]
         public partial ObservableCollection<FileItem> SelectedFileItems { get; set; } = [];
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(GoHomeCommand))]
         public partial string CurrentPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
         [RelayCommand]
         public void Refresh()
@@ -140,6 +140,19 @@ namespace SuperAudio.ViewModels
         {
             return SelectedFileItems?.Count >= 1;
         }
+        [RelayCommand(CanExecute = nameof(CanGoHome))]
+        public void GoHome(object parameter)
+        {
+            LoadDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic));
+        }
 
+        public bool CanGoHome()
+        {
+            if (Environment.GetFolderPath(Environment.SpecialFolder.MyMusic).Equals(CurrentPath))
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

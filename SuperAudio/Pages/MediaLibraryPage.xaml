@@ -9,20 +9,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" MaxWidth="1064">
+    <Grid x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock
             x:Name="PageHeader"
+             MaxWidth="1064"
             Margin="36,24,36,24"
             AutomationProperties.HeadingLevel="Level1"
             Style="{StaticResource TitleTextBlockStyle}"
             x:Uid="MediaLibraryPageTitle"/>
         <ScrollView
             Grid.Row="1"
-            Padding="36,0,36,0"
+            MaxWidth="1064"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Auto">
             <Border>
@@ -39,32 +40,43 @@
                     <StackPanel Orientation="Vertical" Margin="0,0,0,12" Spacing="4">
                         <!-- 把 CommandBar 的样式改得更紧凑 -->
                         <CommandBar 
-                            Background="Transparent"
-                            MinHeight="40"
-                            Padding="0">
+                            Background="Transparent" x:Name="MyCommandBar"
+                            Padding="0" HorizontalContentAlignment="Stretch">
                             <CommandBar.Content>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                                    <TextBox x:Name="AddressBar" 
+
+                                <Grid  Width="{Binding ElementName=MyCommandBar, Path=ActualWidth}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 返回上级按钮（Up），放在地址栏左侧 -->
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <AppBarButton Icon="Home" Command="{x:Bind ViewModel.GoHomeCommand}" LabelPosition="Collapsed"/>
+                                        <AppBarButton
+                                          Icon="Up" 
+                                          Command="{x:Bind ViewModel.GoUpCommand}"
+                                          x:Uid="GoUpCommand"
+                                          
+                                          LabelPosition="Collapsed"
+                                           />
+                                        <AppBarButton Icon="Refresh" 
+                                          Command="{x:Bind ViewModel.RefreshCommand}"
+                                          x:Uid="RefreshCommand" LabelPosition="Collapsed"/>
+                                    </StackPanel>
+                                    <!-- 地址栏文本框，填充剩余宽度，直接设置外观样式 -->
+                                    <TextBox Grid.Column="1"
+                                         x:Name="AddressBar"
                                          Text="{x:Bind ViewModel.CurrentPath, Mode=TwoWay}"
                                          MinWidth="250"
-                                         Width="Auto"
                                          VerticalAlignment="Center"
                                          KeyDown="OnAddressBarKeyDown"
                                          x:Uid="CurrentPath"
                                          PlaceholderText="输入路径..."
-                                         Margin="8,8,0,0"/>
-                                </StackPanel>
+                                         
+                                         FontSize="14" />
+                                </Grid>
                             </CommandBar.Content>
-                            <CommandBar.PrimaryCommands>
-                                <!-- 返回上级 -->
-                                <AppBarButton Icon="Up" 
-                                    x:Uid="GoUpCommand"
-                                    Command="{x:Bind ViewModel.GoUpCommand}" />
-                                <AppBarButton Icon="Refresh" 
-                                  Command="{x:Bind ViewModel.RefreshCommand}"
-                                  x:Uid="RefreshCommand"/>
-                                <AppBarButton Icon="Home"/>
-                            </CommandBar.PrimaryCommands>
                         </CommandBar>
                     </StackPanel>
 

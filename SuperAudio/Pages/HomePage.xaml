@@ -11,7 +11,7 @@
     xmlns:enumeration="using:Windows.Devices.Enumeration"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid x:Name="RootGrid" d:DataContext="{d:DesignInstance Type=viewModel:HomePageViewModel, IsDesignTimeCreatable=True}" MaxWidth="1064">
+    <Grid x:Name="RootGrid" d:DataContext="{d:DesignInstance Type=viewModel:HomePageViewModel, IsDesignTimeCreatable=True}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -19,13 +19,14 @@
 
         <TextBlock
             x:Name="PageHeader"
-            Margin="36,24,36,24"
+            Margin="0,24,0,24"
+            MaxWidth="1064"
             AutomationProperties.HeadingLevel="Level1"
             Style="{StaticResource TitleTextBlockStyle}"
             x:Uid="Device" />
         <ScrollViewer
             Grid.Row="1"
-            Padding="36,0,36,0"
+            MaxWidth="1064"
             VerticalScrollBarVisibility="Auto"
             VerticalScrollMode="Auto">
             <Grid x:Name="MainGrid" Loaded="MainGrid_Loaded">

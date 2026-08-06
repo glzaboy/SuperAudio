@@ -108,12 +108,22 @@
                     Tag="HomePage"
                     Icon="Home" />
                 <NavigationViewItem
-                    x:Name="File"
-                    AutomationProperties.AutomationId="File"
+                    x:Name="MediaLibrary"
+                    AutomationProperties.AutomationId="MediaLibrary"
                     x:Uid="Menu_MediaLibrary"
                     Tag="MediaLibraryPage"
                     Icon="MusicInfo" />
-                </NavigationView.MenuItems>
+                <NavigationViewItem
+                    x:Name="Changelog"
+                    AutomationProperties.AutomationId="Changelog"
+                    x:Uid="Menu_Changelog"
+                    Tag="ChangelogPage"
+                    >
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xF739;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
         </NavigationView>
         <!-- 🆕 全屏覆盖层（初始隐藏，置于顶层） -->
         <Grid x:Name="PlayerOverlay" 

@@ -11,7 +11,7 @@ namespace SuperAudio.Helpers
     /// 用于打开指定文件夹并高亮选中一个或多个文件/子文件夹。
     /// </summary>
     /// <remarks>
-    /// <para><b>作者：</b>[填写你的姓名或团队名称]</para>
+    /// <para><b>作者：</b>glzaboy@163.com</para>
     /// <para><b>创建日期：</b>2026-07-31</para>
     /// <para><b>版本：</b>1.0.0</para>
     /// <para><b>公司：</b>[可选：公司或组织名称]</para>
