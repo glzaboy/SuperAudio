@@ -14,3 +14,6 @@ GetCurrentThreadId
 IsDebuggerPresent
 DebugBreak
 GetActiveWindow
+ILCreateFromPath
+ILFree
+SHOpenFolderAndSelectItems
