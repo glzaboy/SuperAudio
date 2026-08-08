@@ -1,199 +1,190 @@
-
-
 # SuperAudio
 
-## 项目简介
+[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
-超级蓝牙音箱是一款轻量级的 Windows 工具，将您的电脑变身为一台蓝牙音箱（音频接收端），让手机、平板等设备能够通过蓝牙将音乐或音频流传输到电脑的扬声器或耳机上播放。此外，本应用还集成了系统音频录制、本地媒体库管理及播放功能，是一款全方位的音频管理工具。
+**Super Bluetooth Speaker** — turn your PC into a Bluetooth speaker and a lightweight audio hub.
 
-点击下方徽章即可从微软商店下载安装 超级蓝牙音箱：
+[![Get it from Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://get.microsoft.com/installer/download/9ngsn37k2gcc?referrer=appbadge)
 
-[![获取 SuperAudio](https://get.microsoft.com/images/zh-cn%20dark.svg)](https://get.microsoft.com/installer/download/9ngsn37k2gcc?referrer=appbadge)
+## Introduction
 
-## 功能特性
+SuperAudio is a lightweight Windows desktop app that turns your computer into a **Bluetooth speaker (audio sink)**, so phones and tablets can stream music or any audio to your PC's speakers or headphones over Bluetooth. On top of that, it bundles **system audio recording (loopback)**, a **local media library**, and a **built-in player** — an all-in-one audio companion.
 
-### 核心功能
+Click the badge above to install SuperAudio from the Microsoft Store.
 
-- 🎵 **音频设备管理**：自动检测和管理系统音频播放设备
-- 🔗 **音频播放连接**：支持启用和释放音频播放连接
-- 📱 **设备监控**：实时监控音频设备的插拔状态
-- 🔌 **热插拔支持**：设备插拔时自动更新设备列表
-- 🎙️ **系统音频录制**：支持录制系统输出的音频流（Loopback Recording），并可选择输出格式
-- 📂 **媒体库管理**：浏览本地音乐文件夹，管理音频文件
-- ▶️ **内置播放器**：提供应用内音频播放体验
+## Features
 
-### 界面特性
+### Core
 
-- 🎨 **原生 Windows 11 风格**：采用 WinUI 3 构建的现代界面设计
-- 🌙 **主题切换**：支持深色/浅色主题以及跟随系统设置
-- 📺 **流畅动画**：提供流畅的动画和交互体验
-- 🧭 **导航模式**：支持左侧导航栏和顶部导航栏两种模式
+- 🎵 **Audio device management** — auto-detect and manage system playback devices
+- 🔗 **Audio playback connection** — enable / release the Bluetooth audio-sink connection
+- 📱 **Device monitoring** — real-time tracking of audio device plug/unplug state
+- 🔌 **Hot-plug support** — the device list refreshes automatically on connect/disconnect
+- 🎙️ **System audio recording (loopback)** — capture the system's output stream and pick the output format
+- 📂 **Media library** — browse local music folders and manage audio files
+- ▶️ **Built-in player** — in-app playback experience
 
-### 系统集成
+### Interface
 
-- ⚙️ **设置管理**：持久化用户偏好设置（支持 ApplicationData 和 JSON 两种存储方式）
-- 🔲 **窗口管理**：支持窗口最小化、大小调整等操作
-- 📌 **跳转列表**：支持 Windows 任务栏跳转列表
-- 🌐 **多语言支持**：支持自动/English/简体中文/繁體中文
+- 🎨 **Native Windows 11 style** — modern UI built with WinUI 3
+- 🌙 **Theme switching** — dark / light / follow system
+- 📺 **Smooth animations** — fluid transitions and interactions
+- 🧭 **Navigation modes** — left sidebar or top navigation bar
 
-## 技术栈
+### System integration
 
-- **框架**：WinUI 3 (Windows UI Library)
-- **编程语言**：C# / .NET
-- **目标平台**：Windows 10 版本 1809 (build 17763) 或更高版本 / Windows 11
-- **开发工具**：Visual Studio 2022
-- **架构模式**：MVVM
-- **UI 技术**：Microsoft UI XAML
+- ⚙️ **Settings persistence** — user preferences saved via ApplicationData or JSON providers
+- 🔲 **Window management** — minimize, resize, and more
+- 📌 **Jump List** — Windows taskbar jump list support
+- 🌐 **Multilingual** — Auto + 13 locales: English, 简体中文, 繁體中文（台灣）, 繁體中文（香港）, 简体中文（新加坡）, 日本語, 한국어, Français, Deutsch, Español, Italiano, Português (Brasil), Русский
 
-## 项目结构
+## Tech Stack
+
+| | |
+|---|---|
+| Framework | WinUI 3 (Windows App SDK 2.2.0) |
+| Language | C# / .NET 10 |
+| Target OS | Windows 10 (build 17763 / 1809) or later, Windows 11 |
+| Architectures | x86, x64, ARM64 |
+| Pattern | MVVM (CommunityToolkit.Mvvm 8.4.2) |
+| Key libraries | NAudio 2.3.0, WinUIEx 2.9.1, CommunityToolkit.WinUI.Controls.SettingsControls |
+
+## Project Structure
 
 ```
 SuperAudio/
-├── Assets/                      # 应用资源（图标、启动画面等）
-├── Converters/                  # 值转换器
-├── Helpers/                     # 辅助工具类
-│   ├── AppLifeHelper.cs        # 应用生命周期辅助类
-│   ├── EnumHelper.cs           # 枚举辅助类
-│   ├── ExplorerHelper.cs       # 文件资源管理器辅助类
-│   ├── JumpListHelper.cs       # 跳转列表辅助类
-│   ├── NativeMethods.cs        # Windows 原生方法调用
-│   ├── NavigationHelper.cs     # 页面导航辅助类
-│   ├── NavigationOrientationHelper.cs  # 导航方向辅助类
-│   ├── ProcessInfoHelper.cs    # 进程信息辅助类
-│   ├── SettingsHelper/        # 设置辅助类
-│   ├── SuspensionManager.cs   # 状态管理类
-│   ├── ThemeHelper.cs          # 主题辅助类
-│   ├── TitleBarHelper.cs      # 标题栏辅助类
-│   ├── UIHelper.cs             # UI辅助类
-│   └── WindowHelper.cs         # 窗口辅助类
-├── Pages/                       # 页面
-│   ├── HomePage.xaml(.cs)      # 首页（设备管理）
-│   ├── MediaLibraryPage.xaml(.cs) # 媒体库页面
-│   ├── PlayerPage.xaml(.cs)    # 播放页面
-│   └── SettingsPage.xaml(.cs) # 设置页
-├── Services/                    # 服务层
-│   ├── LoopbackRecorder.cs     # 音频录制服务
-│   ├── PlayerInfoItem.cs      # 音频设备项
-│   └── PlayerService.cs        # 音频播放服务
-├── ViewModels/                  # 视图模型
-│   ├── HomePageViewModel.cs   # 首页视图模型
-│   ├── MediaLibraryPageViewModel.cs # 媒体库视图模型
-│   ├── PlayerPageViewModel.cs # 播放页视图模型
-│   ├── SettingsViewModel.cs   # 设置页视图模型
-│   └── MainWindowViewModel.cs  # 主窗口视图模型
-├── Strings/                     # 国际化资源
-│   ├── en-US/                  # 英文资源
-│   ├── zh-CN/                  # 简体中文资源
-│   └── zh-TW/                  # 繁体中文资源
-├── App.xaml(.cs)              # 应用程序入口
-├── MainWindow.xaml(.cs)        # 主窗口
-└── SuperAudio.csproj         # 项目文件
+├── Assets/                # App assets (icons, splash, tiles)
+├── Converters/            # Value converters
+├── Helpers/               # Helper utilities
+│   ├── AppLifeHelper.cs
+│   ├── EnumHelper.cs
+│   ├── ExplorerHelper.cs
+│   ├── JumpListHelper.cs
+│   ├── NativeMethods.cs
+│   ├── NavigationHelper.cs
+│   ├── NavigationOrientationHelper.cs
+│   ├── ProcessInfoHelper.cs
+│   ├── SettingsHelper/
+│   ├── SuspensionManager.cs
+│   ├── ThemeHelper.cs
+│   ├── TitleBarHelper.cs
+│   ├── UIHelper.cs
+│   └── WindowHelper.cs
+├── Pages/                 # UI pages
+│   ├── HomePage.xaml(.cs)        # Home (device management)
+│   ├── MediaLibraryPage.xaml(.cs) # Media library
+│   ├── PlayerPage.xaml(.cs)      # Player
+│   ├── SettingsPage.xaml(.cs)    # Settings
+│   └── ChangelogPage.xaml(.cs)   # Changelog / what's new
+├── Services/              # Service layer
+│   ├── LoopbackRecorder.cs      # Audio recording
+│   ├── PlayerInfoItem.cs        # Audio device item model
+│   └── PlayerService.cs         # Audio playback service
+├── ViewModels/            # View models
+│   ├── HomePageViewModel.cs
+│   ├── MediaLibraryPageViewModel.cs
+│   ├── PlayerPageViewModel.cs
+│   ├── SettingsViewModel.cs
+│   └── MainWindowViewModel.cs
+├── Strings/               # Localization (13 locales)
+│   ├── en-US/  zh-CN/  zh-TW/  zh-HK/  zh-SG/
+│   └── ja-JP/  ko-KR/  fr-FR/  de-DE/  es-ES/  it-IT/  pt-BR/  ru-RU/
+├── App.xaml(.cs)          # Application entry
+├── MainWindow.xaml(.cs)   # Main window
+└── SuperAudio.csproj      # Project file
 ```
 
-## 系统要求
+## Requirements
 
-- Windows 10 版本 1809 (build 17763) 或更高版本
-- Windows 11
+- Windows 10 (1809 / build 17763) or later, including Windows 11
+- For building from source: Visual Studio 2022 with the **.NET Desktop Development** and **Windows App Development** (WinUI 3) workloads
 
-## 安装说明
+## Build & Run
 
-### 开发环境设置
+1. Install **Visual Studio 2022** (or later).
+2. Add the workloads: **.NET Desktop Development** and **Windows App Development** (includes WinUI 3).
+3. Clone the repository.
+4. Open `SuperAudio.slnx` in Visual Studio.
+5. Pick a target architecture (**x64** / **ARM64** / **x86**).
+6. Press `F5` (or click Run) to launch.
 
-1. 确保已安装 **Visual Studio 2022** 或更高版本
-2. 安装以下工作负载：
-   - ".NET 桌面开发"
-   - "Windows 应用开发"（含 WinUI 3 支持）
-3. 克隆项目仓库
-4. 使用 Visual Studio 打开 `SuperAudio.slnx` 解决方案文件
-5. 选择目标运行设备（x64/arm64）
-6. 按 `F5` 或点击运行按钮启动应用程序
+### Create a release package
 
-### 构建发布版本
+1. Switch the solution configuration to **Release**.
+2. Choose the target architecture (x64 / ARM64 / x86).
+3. Right-click the project → **Publish**, then follow the wizard to produce the MSIX package.
 
-1. 将解决方案配置切换为 **Release**
-2. 选择合适的目标架构（x64/arm64）
-3. 右键点击项目 → **发布**
-4. 按照向导完成打包部署
+## Core Modules
 
-## 核心模块说明
+### Helpers
 
-### 辅助类 (Helpers)
+| Helper | Responsibility |
+|--------|----------------|
+| `AppLifeHelper` | App lifecycle management / restart |
+| `NavigationHelper` | Page navigation & state (back/forward) |
+| `SettingsHelper` | Settings persistence (ApplicationData / JSON) |
+| `ThemeHelper` | Theme switching (dark / light / system) |
+| `WindowHelper` | Window creation & tracking |
+| `SuspensionManager` | Session state save & restore |
+| `UIHelper` | UI element lookup & accessibility |
+| `TitleBarHelper` | Title bar styling & system theme adaptation |
+| `ProcessInfoHelper` | Process info & version retrieval |
+| `NativeMethods` | Windows native API calls / window messages |
+| `JumpListHelper` | Taskbar jump list management |
+| `NavigationOrientationHelper` | Navigation orientation (side / top) |
+| `ExplorerHelper` | Reveal a file in File Explorer |
 
-| 辅助类 | 功能说明 |
-|--------|----------|
-| `AppLifeHelper` | 应用程序生命周期管理，应用重启 |
-| `NavigationHelper` | 处理页面导航和状态管理，支持返回/前进操作 |
-| `SettingsHelper` | 应用程序设置管理，支持持久化配置（ApplicationData/JSON） |
-| `ThemeHelper` | 主题切换管理，支持深色/浅色/跟随系统主题 |
-| `WindowHelper` | 窗口创建和管理，窗口追踪 |
-| `SuspensionManager` | 会话状态管理和恢复 |
-| `UIHelper` | UI 元素查找和辅助功能 |
-| `TitleBarHelper` | 标题栏样式管理，系统主题适配 |
-| `ProcessInfoHelper` | 进程信息和版本获取 |
-| `NativeMethods` | Windows 原生 API 调用，窗口消息处理 |
-| `JumpListHelper` | 任务栏跳转列表管理 |
-| `NavigationOrientationHelper` | 导航方向辅助，适配左右/顶部导航 |
-| `ExplorerHelper` | 支持在文件资源管理器中定位文件 |
+### Pages
 
-### 页面 (Pages)
+- **HomePage** — device management and playback connection
+- **MediaLibraryPage** — browse and manage local music
+- **PlayerPage** — playback controls
+- **SettingsPage** — theme, language, navigation, and more
+- **ChangelogPage** — what's new / changelog
 
-- **HomePage**：应用程序首页，提供音频设备管理和播放连接功能
-- **MediaLibraryPage**：媒体库页面，用于浏览和管理本地音乐文件
-- **PlayerPage**：播放页面，提供音频文件的播放控制
-- **SettingsPage**：设置页面，包含主题、语言、导航等配置选项
+### Services
 
-### 服务 (Services)
+- **PlayerService** — audio playback service; device lifecycle, connection management, hot-plug support
+- **PlayerInfoItem** — audio device item model (info, connection state, enable/release)
+- **LoopbackRecorder** — captures system audio output, saves as WAV, manages recording tasks
 
-- **PlayerService**：音频播放服务，管理音频设备生命周期
-  - 设备监听和状态变化通知
-  - 音频播放连接管理
-  - 设备热插拔支持
-- **PlayerInfoItem**：音频设备项模型
-  - 设备信息管理
-  - 连接状态跟踪
-  - 连接启用/释放操作
-- **LoopbackRecorder**：系统音频录制服务
-  - 捕获系统音频输出
-  - 支持 WAV 格式保存
-  - 录音任务管理
+### ViewModels
 
-### 视图模型 (ViewModels)
+- **MainWindowViewModel** — main window state, title, recording control & format selection
+- **HomePageViewModel** — device list & connection state
+- **MediaLibraryPageViewModel** — file list, path navigation, file operations
+- **PlayerPageViewModel** — playlist & playback state
+- **SettingsViewModel** — app settings
 
-- **MainWindowViewModel**：主窗口视图模型，管理主窗口状态、标题、录音控制及格式选择
-- **HomePageViewModel**：首页视图模型，管理设备列表和连接状态
-- **MediaLibraryPageViewModel**：媒体库视图模型，管理文件列表、路径导航和文件操作
-- **PlayerPageViewModel**：播放页视图模型，管理播放列表和播放状态
-- **SettingsViewModel**：设置页视图模型，管理应用程序设置
+## Usage
 
-## 使用说明
+### Audio device management
 
-### 音频设备管理
+1. On launch, the home page lists available playback devices.
+2. Click **Connect** to enable the audio-sink connection.
+3. Click **Release** to disconnect.
+4. The list updates live as devices are plugged/unplugged.
 
-1. 启动应用程序后，首页会自动列出可用的音频播放设备
-2. 点击设备对应的"连接"按钮启用音频播放连接
-3. 点击"释放"按钮断开音频播放连接
-4. 设备列表会实时更新，插拔设备时自动刷新
+### System audio recording
 
-### 音频录制
+1. Click the record button on the main screen to start capturing system audio.
+2. Choose a format (e.g. WAV).
+3. When done, find the recording in the media library.
 
-1. 在主界面点击录音按钮开始录制系统音频
-2. 选择录音格式（如 WAV）
-3. 录音完成后，可在媒体库中查看和管理录音文件
+### Media library
 
-### 媒体库管理
+1. Open the media library to browse local music folders.
+2. Double-click a file to play it.
+3. Use **Open file location** to reveal it in File Explorer.
 
-1. 进入媒体库页面浏览本地音乐文件夹
-2. 支持双击播放音频文件
-3. 支持在文件资源管理器中打开文件位置
+### Settings
 
-### 设置配置
+1. Open **Settings** from the navigation bar.
+2. Configure:
+   - **Theme**: Auto / Light / Dark
+   - **Language**: Auto / 13 locales (see above)
+   - **Navigation**: Sidebar / Top
 
-1. 进入设置页面（点击导航栏设置图标）
-2. 可配置选项包括：
-   - **主题模式**：自动/浅色/深色
-   - **语言**：自动/English/简体中文/繁體中文
-   - **导航位置**：侧边栏/顶部
+## License
 
-## 许可证
-
-本项目的许可证信息请参阅仓库中的 **LICENSE** 文件。
+See the [LICENSE](LICENSE) file for details.
