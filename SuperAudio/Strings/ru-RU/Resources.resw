@@ -118,138 +118,138 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About.Text" xml:space="preserve">
-    <value>About</value>
+    <value>О программе</value>
   </data>
   <data name="Appearance.Text" xml:space="preserve">
-    <value>Appearance &amp; behavior</value>
+    <value>Внешний вид и поведение</value>
   </data>
   <data name="AppExit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Выход</value>
   </data>
   <data name="AppHide" xml:space="preserve">
-    <value>The window has been hidden. Click the tray icon or message to restore it</value>
+    <value>Окно было скрыто. Нажмите значок в области уведомлений или сообщение, чтобы восстановить его.</value>
   </data>
   <data name="AppTheme.Description" xml:space="preserve">
-    <value>Select which app theme to display</value>
+    <value>Выберите тему приложения для отображения</value>
   </data>
   <data name="AppTheme.Header" xml:space="preserve">
-    <value>App theme</value>
+    <value>Тема приложения</value>
   </data>
   <data name="AppTheme_Auto" xml:space="preserve">
-    <value>Use system setting</value>
+    <value>Использовать системные настройки</value>
   </data>
   <data name="AppTheme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Тёмная</value>
   </data>
   <data name="AppTheme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>Светлая</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Подключено</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Подключение...</value>
   </data>
   <data name="AudioPlaybackConnectionState_Disconnected" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>Отключено</value>
   </data>
   <data name="AudioPlaybackConnectionState_Error" xml:space="preserve">
-    <value>Connection error</value>
+    <value>Ошибка подключения</value>
   </data>
   <data name="Connect.Content" xml:space="preserve">
-    <value>Connect</value>
+    <value>Подключить</value>
   </data>
   <data name="ContentBtn_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Отмена</value>
   </data>
   <data name="ContentBtn_No" xml:space="preserve">
-    <value>No</value>
+    <value>Нет</value>
   </data>
   <data name="ContentBtn_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ContentBtn_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Да</value>
   </data>
   <data name="Device.Text" xml:space="preserve">
-    <value>Device</value>
+    <value>Устройство</value>
   </data>
   <data name="DisConnect.Content" xml:space="preserve">
-    <value>DisConnect</value>
+    <value>Отключить</value>
   </data>
   <data name="Home_Tip.Text" xml:space="preserve">
-    <value>Your device was not found. Click "Add New Bluetooth Device" to add one</value>
+    <value>Устройство не найдено. Нажмите «Добавить новое Bluetooth-устройство», чтобы добавить его.</value>
   </data>
   <data name="Language.Description" xml:space="preserve">
-    <value>Modifying the language application will automatically restart it</value>
+    <value>При изменении языка приложение будет автоматически перезапущено</value>
   </data>
   <data name="Language.Header" xml:space="preserve">
-    <value>Language</value>
+    <value>Язык</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
     <value>Super Bluetooth Speaker</value>
   </data>
   <data name="Menu_MediaLibrary.Content" xml:space="preserve">
-    <value>Media Library</value>
+    <value>Медиатека</value>
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
-    <value>Device</value>
+    <value>Устройство</value>
   </data>
   <data name="NavigationStyle.Header" xml:space="preserve">
-    <value>Navigation style</value>
+    <value>Стиль навигации</value>
   </data>
   <data name="NavigationStyle_SideBar" xml:space="preserve">
-    <value>sidebar</value>
+    <value>боковая панель</value>
   </data>
   <data name="NavigationStyle_Top" xml:space="preserve">
-    <value>top</value>
+    <value>сверху</value>
   </data>
   <data name="New_Device.Content" xml:space="preserve">
-    <value>Add new Bluetooth device</value>
+    <value>Добавить новое Bluetooth-устройство</value>
   </data>
   <data name="OpenFileAfterCecord.Text" xml:space="preserve">
-    <value>Open the file after recording is complete</value>
+    <value>Открыть файл после завершения записи</value>
   </data>
   <data name="RecordFilePrefix" xml:space="preserve">
     <value>Track_</value>
   </data>
   <data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Click on the subject to start/stop recording, and click on the arrow to select the format</value>
+    <value>Нажмите основную часть, чтобы начать/остановить запись, и стрелку — чтобы выбрать формат</value>
   </data>
   <data name="ReqBluetoothTip" xml:space="preserve">
-    <value>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</value>
+    <value>Скоро появится окно функции Bluetooth, и вы сможете подключить новые устройства</value>
   </data>
   <data name="RestartAlert" xml:space="preserve">
-    <value>This operation requires a restart of the application, and playback may be interrupted. Please confirm.</value>
+    <value>Эта операция требует перезапуска приложения, воспроизведение может быть прервано. Подтвердите.</value>
   </data>
   <data name="SettingsPageTitle.Text" xml:space="preserve">
-    <value>setting</value>
+    <value>Настройки</value>
   </data>
   <data name="MediaLibraryPageTitle.Text" xml:space="preserve">
-    <value>Media Library</value>
+    <value>Медиатека</value>
   </data>
   <data name="MenuItem_Play.Text" xml:space="preserve">
-    <value>Play</value>
+    <value>Воспроизвести</value>
   </data>
   <data name="MenuItem_FindInExplorer.Text" xml:space="preserve">
-    <value>Find in Explorer</value>
+    <value>Найти в проводнике</value>
   </data>
   <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
-    <value>Play with System</value>
+    <value>Воспроизвести системой</value>
   </data>
   <data name="RefreshCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Обновить</value>
   </data>
   <data name="GoUpCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Go back to the previous level</value>
+    <value>Вернуться на предыдущий уровень</value>
   </data>
   <data name="CurrentPath.PlaceholderText" xml:space="preserve">
-    <value>Input path ..</value>
+    <value>Введите путь...</value>
   </data>
   <data name="Menu_Changelog.Content" xml:space="preserve">
-    <value>Changelog</value>
+    <value>История изменений</value>
   </data>
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
-    <value>Changelog</value>
+    <value>История изменений</value>
   </data>
 </root>

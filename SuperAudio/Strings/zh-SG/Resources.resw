@@ -118,138 +118,141 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About.Text" xml:space="preserve">
-    <value>About</value>
+    <value>关于</value>
   </data>
   <data name="Appearance.Text" xml:space="preserve">
-    <value>Appearance &amp; behavior</value>
+    <value>外观和行为</value>
+    <comment>外观和行为</comment>
   </data>
   <data name="AppExit" xml:space="preserve">
-    <value>Quit</value>
+    <value>退出</value>
   </data>
   <data name="AppHide" xml:space="preserve">
-    <value>The window has been hidden. Click the tray icon or message to restore it</value>
+    <value>窗口已经隐藏点击托盘图标或消息恢复</value>
   </data>
   <data name="AppTheme.Description" xml:space="preserve">
-    <value>Select which app theme to display</value>
+    <value>选择要显示的应用主题</value>
   </data>
   <data name="AppTheme.Header" xml:space="preserve">
-    <value>App theme</value>
+    <value>应用主题</value>
   </data>
   <data name="AppTheme_Auto" xml:space="preserve">
-    <value>Use system setting</value>
+    <value>跟随系统主题</value>
   </data>
   <data name="AppTheme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>深色</value>
   </data>
   <data name="AppTheme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>浅色</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connected" xml:space="preserve">
-    <value>Connected</value>
+    <value>已连接</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>连接中...</value>
   </data>
   <data name="AudioPlaybackConnectionState_Disconnected" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>断开</value>
   </data>
   <data name="AudioPlaybackConnectionState_Error" xml:space="preserve">
-    <value>Connection error</value>
+    <value>连接出错</value>
   </data>
   <data name="Connect.Content" xml:space="preserve">
-    <value>Connect</value>
+    <value>连接</value>
   </data>
   <data name="ContentBtn_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
   </data>
   <data name="ContentBtn_No" xml:space="preserve">
-    <value>No</value>
+    <value>否</value>
   </data>
   <data name="ContentBtn_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>确定</value>
   </data>
   <data name="ContentBtn_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>是</value>
   </data>
   <data name="Device.Text" xml:space="preserve">
-    <value>Device</value>
+    <value>设备</value>
   </data>
   <data name="DisConnect.Content" xml:space="preserve">
-    <value>DisConnect</value>
+    <value>断开</value>
   </data>
   <data name="Home_Tip.Text" xml:space="preserve">
-    <value>Your device was not found. Click "Add New Bluetooth Device" to add one</value>
+    <value>没有找到你的设备，点击“添加新蓝牙设备”增加一个</value>
   </data>
   <data name="Language.Description" xml:space="preserve">
-    <value>Modifying the language application will automatically restart it</value>
+    <value>修改语言应用程序将自动重启</value>
   </data>
   <data name="Language.Header" xml:space="preserve">
-    <value>Language</value>
+    <value>语言</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
-    <value>Super Bluetooth Speaker</value>
+    <value>超级蓝牙音箱</value>
   </data>
   <data name="Menu_MediaLibrary.Content" xml:space="preserve">
-    <value>Media Library</value>
+    <value>媒体库</value>
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
-    <value>Device</value>
+    <value>设备</value>
   </data>
   <data name="NavigationStyle.Header" xml:space="preserve">
-    <value>Navigation style</value>
+    <value>导航样式</value>
   </data>
   <data name="NavigationStyle_SideBar" xml:space="preserve">
-    <value>sidebar</value>
+    <value>侧边栏</value>
   </data>
   <data name="NavigationStyle_Top" xml:space="preserve">
-    <value>top</value>
+    <value>顶部</value>
   </data>
   <data name="New_Device.Content" xml:space="preserve">
-    <value>Add new Bluetooth device</value>
+    <value>添加新蓝牙设备</value>
   </data>
   <data name="OpenFileAfterCecord.Text" xml:space="preserve">
-    <value>Open the file after recording is complete</value>
+    <value>录制完成后打开文件</value>
   </data>
   <data name="RecordFilePrefix" xml:space="preserve">
-    <value>Track_</value>
+    <value>录音_</value>
   </data>
   <data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Click on the subject to start/stop recording, and click on the arrow to select the format</value>
+    <value>点击主体开始/停止录制，点击箭头选择格式</value>
   </data>
   <data name="ReqBluetoothTip" xml:space="preserve">
-    <value>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</value>
+    <value>即将弹出蓝牙功能界面，您可以连接新设备</value>
+    <comment>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</comment>
   </data>
   <data name="RestartAlert" xml:space="preserve">
-    <value>This operation requires a restart of the application, and playback may be interrupted. Please confirm.</value>
+    <value>此操作需要重启应用程序，播放内容可能中断请确认。</value>
   </data>
   <data name="SettingsPageTitle.Text" xml:space="preserve">
-    <value>setting</value>
+    <value>设置</value>
   </data>
   <data name="MediaLibraryPageTitle.Text" xml:space="preserve">
-    <value>Media Library</value>
+    <value>媒体库</value>
   </data>
   <data name="MenuItem_Play.Text" xml:space="preserve">
-    <value>Play</value>
+    <value>播放</value>
   </data>
   <data name="MenuItem_FindInExplorer.Text" xml:space="preserve">
-    <value>Find in Explorer</value>
+    <value>在资源管理器中查找</value>
   </data>
   <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
-    <value>Play with System</value>
+    <value>系统播放</value>
   </data>
   <data name="RefreshCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Refresh</value>
+    <value>刷新</value>
   </data>
   <data name="GoUpCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Go back to the previous level</value>
+    <value>返回上一级</value>
   </data>
   <data name="CurrentPath.PlaceholderText" xml:space="preserve">
-    <value>Input path ..</value>
+    <value>输入路径...</value>
   </data>
   <data name="Menu_Changelog.Content" xml:space="preserve">
-    <value>Changelog</value>
+    <value>更新日志</value>
+    <comment>Menu_Changelog</comment>
   </data>
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
-    <value>Changelog</value>
+    <value>更新日志</value>
   </data>
 </root>

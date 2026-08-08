@@ -41,6 +41,36 @@ namespace SuperAudio.ViewModels
                 case "zh-TW":
                     LanageSelect = Languages.Where(d => Equals(d.Tag, "zh-TW")).First();
                     break;
+                case "zh-HK":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "zh-HK")).First();
+                    break;
+                case "zh-SG":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "zh-SG")).First();
+                    break;
+                case "ja-JP":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "ja-JP")).First();
+                    break;
+                case "ko-KR":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "ko-KR")).First();
+                    break;
+                case "fr-FR":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "fr-FR")).First();
+                    break;
+                case "de-DE":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "de-DE")).First();
+                    break;
+                case "es-ES":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "es-ES")).First();
+                    break;
+                case "it-IT":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "it-IT")).First();
+                    break;
+                case "pt-BR":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "pt-BR")).First();
+                    break;
+                case "ru-RU":
+                    LanageSelect = Languages.Where(d => Equals(d.Tag, "ru-RU")).First();
+                    break;
                 default:
                     LanageSelect = Languages.Where(d => Equals(d.Tag, "Auto")).First();
                     break;
@@ -126,8 +156,48 @@ namespace SuperAudio.ViewModels
                 Tag="zh-CN"
             },
             new ComboBoxItem(){
-                Content="繁體中文",
+                Content="简体中文（新加坡）",
+                Tag="zh-SG"
+            },
+            new ComboBoxItem(){
+                Content="繁體中文（台灣）",
                 Tag="zh-TW"
+            },
+            new ComboBoxItem(){
+                Content="繁體中文（香港）",
+                Tag="zh-HK"
+            },
+            new ComboBoxItem(){
+                Content="日本語",
+                Tag="ja-JP"
+            },
+            new ComboBoxItem(){
+                Content="한국어",
+                Tag="ko-KR"
+            },
+            new ComboBoxItem(){
+                Content="Français",
+                Tag="fr-FR"
+            },
+            new ComboBoxItem(){
+                Content="Deutsch",
+                Tag="de-DE"
+            },
+            new ComboBoxItem(){
+                Content="Español",
+                Tag="es-ES"
+            },
+            new ComboBoxItem(){
+                Content="Italiano",
+                Tag="it-IT"
+            },
+            new ComboBoxItem(){
+                Content="Português (Brasil)",
+                Tag="pt-BR"
+            },
+            new ComboBoxItem(){
+                Content="Русский",
+                Tag="ru-RU"
             }
         ];
         private ComboBoxItem? _lanageSelect = null;

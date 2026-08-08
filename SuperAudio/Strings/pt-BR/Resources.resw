@@ -118,138 +118,138 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About.Text" xml:space="preserve">
-    <value>About</value>
+    <value>Sobre</value>
   </data>
   <data name="Appearance.Text" xml:space="preserve">
-    <value>Appearance &amp; behavior</value>
+    <value>Aparência e comportamento</value>
   </data>
   <data name="AppExit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Sair</value>
   </data>
   <data name="AppHide" xml:space="preserve">
-    <value>The window has been hidden. Click the tray icon or message to restore it</value>
+    <value>A janela foi ocultada. Clique no ícone da bandeja ou na mensagem para restaurá-la.</value>
   </data>
   <data name="AppTheme.Description" xml:space="preserve">
-    <value>Select which app theme to display</value>
+    <value>Selecione qual tema do aplicativo exibir</value>
   </data>
   <data name="AppTheme.Header" xml:space="preserve">
-    <value>App theme</value>
+    <value>Tema do aplicativo</value>
   </data>
   <data name="AppTheme_Auto" xml:space="preserve">
-    <value>Use system setting</value>
+    <value>Usar a configuração do sistema</value>
   </data>
   <data name="AppTheme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>Escuro</value>
   </data>
   <data name="AppTheme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>Claro</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Conectado</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Conectando...</value>
   </data>
   <data name="AudioPlaybackConnectionState_Disconnected" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>Desconectado</value>
   </data>
   <data name="AudioPlaybackConnectionState_Error" xml:space="preserve">
-    <value>Connection error</value>
+    <value>Erro de conexão</value>
   </data>
   <data name="Connect.Content" xml:space="preserve">
-    <value>Connect</value>
+    <value>Conectar</value>
   </data>
   <data name="ContentBtn_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancelar</value>
   </data>
   <data name="ContentBtn_No" xml:space="preserve">
-    <value>No</value>
+    <value>Não</value>
   </data>
   <data name="ContentBtn_OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="ContentBtn_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Sim</value>
   </data>
   <data name="Device.Text" xml:space="preserve">
-    <value>Device</value>
+    <value>Dispositivo</value>
   </data>
   <data name="DisConnect.Content" xml:space="preserve">
-    <value>DisConnect</value>
+    <value>Desconectar</value>
   </data>
   <data name="Home_Tip.Text" xml:space="preserve">
-    <value>Your device was not found. Click "Add New Bluetooth Device" to add one</value>
+    <value>Seu dispositivo não foi encontrado. Clique em "Adicionar novo dispositivo Bluetooth" para adicionar um.</value>
   </data>
   <data name="Language.Description" xml:space="preserve">
-    <value>Modifying the language application will automatically restart it</value>
+    <value>Modificar o idioma reiniciará o aplicativo automaticamente</value>
   </data>
   <data name="Language.Header" xml:space="preserve">
-    <value>Language</value>
+    <value>Idioma</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
     <value>Super Bluetooth Speaker</value>
   </data>
   <data name="Menu_MediaLibrary.Content" xml:space="preserve">
-    <value>Media Library</value>
+    <value>Biblioteca de mídia</value>
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
-    <value>Device</value>
+    <value>Dispositivo</value>
   </data>
   <data name="NavigationStyle.Header" xml:space="preserve">
-    <value>Navigation style</value>
+    <value>Estilo de navegação</value>
   </data>
   <data name="NavigationStyle_SideBar" xml:space="preserve">
-    <value>sidebar</value>
+    <value>barra lateral</value>
   </data>
   <data name="NavigationStyle_Top" xml:space="preserve">
-    <value>top</value>
+    <value>superior</value>
   </data>
   <data name="New_Device.Content" xml:space="preserve">
-    <value>Add new Bluetooth device</value>
+    <value>Adicionar novo dispositivo Bluetooth</value>
   </data>
   <data name="OpenFileAfterCecord.Text" xml:space="preserve">
-    <value>Open the file after recording is complete</value>
+    <value>Abrir o arquivo após a conclusão da gravação</value>
   </data>
   <data name="RecordFilePrefix" xml:space="preserve">
     <value>Track_</value>
   </data>
   <data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Click on the subject to start/stop recording, and click on the arrow to select the format</value>
+    <value>Clique no botão principal para iniciar/parar a gravação e na seta para selecionar o formato</value>
   </data>
   <data name="ReqBluetoothTip" xml:space="preserve">
-    <value>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</value>
+    <value>A interface da função Bluetooth aparecerá em breve, permitindo conectar novos dispositivos</value>
   </data>
   <data name="RestartAlert" xml:space="preserve">
-    <value>This operation requires a restart of the application, and playback may be interrupted. Please confirm.</value>
+    <value>Esta operação requer a reinicialização do aplicativo e a reprodução pode ser interrompida. Por favor, confirme.</value>
   </data>
   <data name="SettingsPageTitle.Text" xml:space="preserve">
-    <value>setting</value>
+    <value>Configurações</value>
   </data>
   <data name="MediaLibraryPageTitle.Text" xml:space="preserve">
-    <value>Media Library</value>
+    <value>Biblioteca de mídia</value>
   </data>
   <data name="MenuItem_Play.Text" xml:space="preserve">
-    <value>Play</value>
+    <value>Reproduzir</value>
   </data>
   <data name="MenuItem_FindInExplorer.Text" xml:space="preserve">
-    <value>Find in Explorer</value>
+    <value>Localizar no Explorador</value>
   </data>
   <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
-    <value>Play with System</value>
+    <value>Reproduzir com o sistema</value>
   </data>
   <data name="RefreshCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Atualizar</value>
   </data>
   <data name="GoUpCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Go back to the previous level</value>
+    <value>Voltar ao nível anterior</value>
   </data>
   <data name="CurrentPath.PlaceholderText" xml:space="preserve">
-    <value>Input path ..</value>
+    <value>Inserir caminho...</value>
   </data>
   <data name="Menu_Changelog.Content" xml:space="preserve">
-    <value>Changelog</value>
+    <value>Registro de alterações</value>
   </data>
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
-    <value>Changelog</value>
+    <value>Registro de alterações</value>
   </data>
 </root>

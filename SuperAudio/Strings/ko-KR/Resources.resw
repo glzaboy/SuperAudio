@@ -118,138 +118,138 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About.Text" xml:space="preserve">
-    <value>About</value>
+    <value>정보</value>
   </data>
   <data name="Appearance.Text" xml:space="preserve">
-    <value>Appearance &amp; behavior</value>
+    <value>모양 및 동작</value>
   </data>
   <data name="AppExit" xml:space="preserve">
-    <value>Quit</value>
+    <value>종료</value>
   </data>
   <data name="AppHide" xml:space="preserve">
-    <value>The window has been hidden. Click the tray icon or message to restore it</value>
+    <value>창이 숨겨졌습니다. 트레이 아이콘이나 메시지를 클릭하여 복원하세요.</value>
   </data>
   <data name="AppTheme.Description" xml:space="preserve">
-    <value>Select which app theme to display</value>
+    <value>표시할 앱 테마를 선택하세요</value>
   </data>
   <data name="AppTheme.Header" xml:space="preserve">
-    <value>App theme</value>
+    <value>앱 테마</value>
   </data>
   <data name="AppTheme_Auto" xml:space="preserve">
-    <value>Use system setting</value>
+    <value>시스템 설정 사용</value>
   </data>
   <data name="AppTheme_Dark" xml:space="preserve">
-    <value>Dark</value>
+    <value>다크</value>
   </data>
   <data name="AppTheme_Light" xml:space="preserve">
-    <value>Light</value>
+    <value>라이트</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connected" xml:space="preserve">
-    <value>Connected</value>
+    <value>연결됨</value>
   </data>
   <data name="AudioPlaybackConnectionState_Connecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>연결 중...</value>
   </data>
   <data name="AudioPlaybackConnectionState_Disconnected" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>연결 끊김</value>
   </data>
   <data name="AudioPlaybackConnectionState_Error" xml:space="preserve">
-    <value>Connection error</value>
+    <value>연결 오류</value>
   </data>
   <data name="Connect.Content" xml:space="preserve">
-    <value>Connect</value>
+    <value>연결</value>
   </data>
   <data name="ContentBtn_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>취소</value>
   </data>
   <data name="ContentBtn_No" xml:space="preserve">
-    <value>No</value>
+    <value>아니요</value>
   </data>
   <data name="ContentBtn_OK" xml:space="preserve">
-    <value>OK</value>
+    <value>확인</value>
   </data>
   <data name="ContentBtn_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>예</value>
   </data>
   <data name="Device.Text" xml:space="preserve">
-    <value>Device</value>
+    <value>디바이스</value>
   </data>
   <data name="DisConnect.Content" xml:space="preserve">
-    <value>DisConnect</value>
+    <value>연결 해제</value>
   </data>
   <data name="Home_Tip.Text" xml:space="preserve">
-    <value>Your device was not found. Click "Add New Bluetooth Device" to add one</value>
+    <value>장치를 찾을 수 없습니다. "새 Bluetooth 장치 추가"를 클릭하여 추가하세요.</value>
   </data>
   <data name="Language.Description" xml:space="preserve">
-    <value>Modifying the language application will automatically restart it</value>
+    <value>언어를 변경하면 애플리케이션이 자동으로 다시 시작됩니다</value>
   </data>
   <data name="Language.Header" xml:space="preserve">
-    <value>Language</value>
+    <value>언어</value>
   </data>
   <data name="Main_Title" xml:space="preserve">
     <value>Super Bluetooth Speaker</value>
   </data>
   <data name="Menu_MediaLibrary.Content" xml:space="preserve">
-    <value>Media Library</value>
+    <value>미디어 라이브러리</value>
   </data>
   <data name="Menu_Home.Content" xml:space="preserve">
-    <value>Device</value>
+    <value>디바이스</value>
   </data>
   <data name="NavigationStyle.Header" xml:space="preserve">
-    <value>Navigation style</value>
+    <value>탐색 스타일</value>
   </data>
   <data name="NavigationStyle_SideBar" xml:space="preserve">
-    <value>sidebar</value>
+    <value>사이드바</value>
   </data>
   <data name="NavigationStyle_Top" xml:space="preserve">
-    <value>top</value>
+    <value>상단</value>
   </data>
   <data name="New_Device.Content" xml:space="preserve">
-    <value>Add new Bluetooth device</value>
+    <value>새 Bluetooth 장치 추가</value>
   </data>
   <data name="OpenFileAfterCecord.Text" xml:space="preserve">
-    <value>Open the file after recording is complete</value>
+    <value>녹음 완료 후 파일 열기</value>
   </data>
   <data name="RecordFilePrefix" xml:space="preserve">
     <value>Track_</value>
   </data>
   <data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Click on the subject to start/stop recording, and click on the arrow to select the format</value>
+    <value>본체를 클릭하여 녹음을 시작/중지하고, 화살표를 클릭하여 형식을 선택하세요</value>
   </data>
   <data name="ReqBluetoothTip" xml:space="preserve">
-    <value>The Bluetooth function interface will pop up soon, allowing you to connect to new devices</value>
+    <value>곧 Bluetooth 기능 화면이 나타나 새 장치에 연결할 수 있습니다</value>
   </data>
   <data name="RestartAlert" xml:space="preserve">
-    <value>This operation requires a restart of the application, and playback may be interrupted. Please confirm.</value>
+    <value>이 작업에는 애플리케이션 재시작이 필요하며 재생이 중단될 수 있습니다. 계속하시겠습니까?</value>
   </data>
   <data name="SettingsPageTitle.Text" xml:space="preserve">
-    <value>setting</value>
+    <value>설정</value>
   </data>
   <data name="MediaLibraryPageTitle.Text" xml:space="preserve">
-    <value>Media Library</value>
+    <value>미디어 라이브러리</value>
   </data>
   <data name="MenuItem_Play.Text" xml:space="preserve">
-    <value>Play</value>
+    <value>재생</value>
   </data>
   <data name="MenuItem_FindInExplorer.Text" xml:space="preserve">
-    <value>Find in Explorer</value>
+    <value>탐색기에서 찾기</value>
   </data>
   <data name="MenuItem_PlayWithSystemPlayer.Text" xml:space="preserve">
-    <value>Play with System</value>
+    <value>시스템으로 재생</value>
   </data>
   <data name="RefreshCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Refresh</value>
+    <value>새로 고침</value>
   </data>
   <data name="GoUpCommand.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Go back to the previous level</value>
+    <value>이전 단계로 이동</value>
   </data>
   <data name="CurrentPath.PlaceholderText" xml:space="preserve">
-    <value>Input path ..</value>
+    <value>경로 입력...</value>
   </data>
   <data name="Menu_Changelog.Content" xml:space="preserve">
-    <value>Changelog</value>
+    <value>변경 내역</value>
   </data>
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
-    <value>Changelog</value>
+    <value>변경 내역</value>
   </data>
 </root>

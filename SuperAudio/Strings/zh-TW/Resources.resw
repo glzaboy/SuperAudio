@@ -246,9 +246,6 @@
   <data name="CurrentPath.PlaceholderText" xml:space="preserve">
     <value>輸入路徑...</value>
   </data>
-  <data name="2" xml:space="preserve">
-    <value>輸入路徑...</value>
-  </data>
   <data name="Menu_Changelog.Content" xml:space="preserve">
     <value>更新日誌</value>
   </data>
