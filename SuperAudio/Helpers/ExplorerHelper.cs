@@ -20,7 +20,7 @@ namespace SuperAudio.Helpers
     /// <para><b>核心职责：</b></para>
     /// <list type="bullet">
     /// <item><description>将文件系统路径转换为 Shell PIDL（指向项标识符列表的指针）。</description></item>
-    /// <item><description>调用 <see cref="SHOpenFolderAndSelectItems"/> 打开资源管理器并选中目标。</description></item>
+    /// <item><description>调用 <see cref="PInvoke.SHOpenFolderAndSelectItems"/> 打开资源管理器并选中目标。</description></item>
     /// <item><description>自动管理非托管内存（PIDL）的分配与释放，避免内存泄漏。</description></item>
     /// </list>
     /// <para><b>使用示例：</b>请参考 <see cref="OpenFolderAndSelectFiles"/> 方法的文档。</para>
@@ -30,7 +30,7 @@ namespace SuperAudio.Helpers
     {
         /// <summary>
         /// 打开 Windows 资源管理器窗口，定位到指定的文件夹，并高亮选中其中的多个文件或子文件夹。
-        /// 此方法是对 Shell API <see cref="SHOpenFolderAndSelectItems"/> 的封装，简化了 PIDL 的创建与释放流程。
+        /// 此方法是对 Shell API <see cref="PInvoke.SHOpenFolderAndSelectItems"/> 的封装，简化了 PIDL 的创建与释放流程。
         /// </summary>
         /// <param name="folderPath">
         /// 要打开的文件夹的完整路径（如 <c>"C:\Users\Public\Documents"</c>）。
@@ -38,7 +38,7 @@ namespace SuperAudio.Helpers
         /// <b>约束：</b>
         /// <list type="bullet">
         /// <item><description>路径必须存在，否则抛出 <see cref="FileNotFoundException"/>。</description></item>
-        /// <item><description>支持长路径（需使用 <c>\\?\</c> 前缀），但本方法未特殊处理，由底层 <see cref="ILCreateFromPath"/> 决定。</description></item>
+        /// <item><description>支持长路径（需使用 <c>\\?\</c> 前缀），但本方法未特殊处理，由底层 <see cref="PInvoke.ILCreateFromPath"/> 决定。</description></item>
         /// <item><description>参数不能为 <c>null</c> 或空字符串，否则抛出 <see cref="ArgumentException"/>。</description></item>
         /// </list>
         /// </para>
@@ -75,7 +75,7 @@ namespace SuperAudio.Helpers
         /// <remarks>
         /// <para>
         /// <b>资源管理（关键）：</b>
-        /// 本方法使用 <c>try-finally</c> 模式保证所有通过 <see cref="ILCreateFromPath"/> 分配的 PIDL
+        /// 本方法使用 <c>try-finally</c> 模式保证所有通过 <see cref="PInvoke.ILCreateFromPath"/> 分配的 PIDL
         /// 都会被 <see cref="ILFree"/> 释放，无论操作成功与否。调用方无需关心 PIDL 的生存期。
         /// </para>
         /// <para>
