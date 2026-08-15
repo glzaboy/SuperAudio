@@ -17,11 +17,11 @@
             HorizontalAlignment="Center" x:Name="CoverBorder"
             Width="Auto"
             Height="Auto"
-            Margin="40">
+            Margin="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <MediaPlayerElement x:Name="PlayListPlayer" Grid.Row="0" Background="Red"
+        <MediaPlayerElement x:Name="PlayListPlayer" Grid.Row="0"
                 Visibility="Visible" 
                 AutoPlay="True"
                 Width="Auto"
@@ -29,7 +29,7 @@
                AreTransportControlsEnabled="True"
                 Source="{x:Bind ViewModel.PlaybackList}" >
             <MediaPlayerElement.TransportControls>
-                <MediaTransportControls IsNextTrackButtonVisible="True" IsZoomButtonVisible="False"
+                <MediaTransportControls IsNextTrackButtonVisible="True" IsZoomButtonVisible="True"
                             IsPreviousTrackButtonVisible="True" IsRepeatEnabled="True" IsRepeatButtonVisible="True" IsVolumeButtonVisible="True" IsPlaybackRateButtonVisible="True"/>
             </MediaPlayerElement.TransportControls>
         </MediaPlayerElement>
