@@ -30,15 +30,23 @@ namespace SuperAudio.ViewModels
 
         private readonly LoopbackRecorder _recorder = App.Host.Services.GetRequiredService<LoopbackRecorder>();
 
+        // 录音开始时确定的输出信息，供停止后打开文件使用（与 Start 传入 LoopbackRecorder 的一致）
+        private string? _recordingOutputPath;
+        private string? _recordingFormat;
+
         [RelayCommand]
         public async Task RecordAsync()
         {
             if (!IsRecording)
             {
-                // 开始录制
+                // 开始录制：先确定输出路径与格式，传给录音器，
+                // 这样即便程序在录音途中退出（只走到 Dispose），也能按此名字/格式兜底保存。
                 try
                 {
-                    await _recorder.StartLoopbackRecordingAsync();
+                    string fileName = $"{App.ResourceLoader.GetString("RecordFilePrefix")}{DateTime.Now:yyyyMMdd_HHmmss}";
+                    _recordingOutputPath = _recorder.GetMusicFilePath(fileName);
+                    _recordingFormat = SelectedFormat.ToLowerInvariant();
+                    await _recorder.StartLoopbackRecordingAsync(_recordingOutputPath, _recordingFormat);
                     IsRecording = true;
                     // 可选：显示通知
                 }
@@ -55,12 +63,10 @@ namespace SuperAudio.ViewModels
                 // 停止录制
                 try
                 {
-                    string musicPath = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-                    string fileName = $"{App.ResourceLoader.GetString("RecordFilePrefix")}{DateTime.Now:yyyyMMdd_HHmmss}";
-                    await _recorder.StopLoopbackRecordingAsync(_recorder.GetMusicFilePath(fileName), SelectedFormat.ToLowerInvariant());
-                    if (IsOpenFileAfterRecording)
+                    await _recorder.StopLoopbackRecordingAsync();
+                    if (IsOpenFileAfterRecording && _recordingOutputPath != null && _recordingFormat != null)
                     {
-                        OpenFileInExplorer(_recorder.GetMusicFilePath(fileName) + "." + SelectedFormat.ToLowerInvariant());
+                        OpenFileInExplorer(_recordingOutputPath + "." + _recordingFormat);
                     }
                     // 显示保存成功提示
                 }
