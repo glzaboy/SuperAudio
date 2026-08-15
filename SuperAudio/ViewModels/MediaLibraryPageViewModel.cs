@@ -59,13 +59,15 @@ namespace SuperAudio.ViewModels
                     FileItems.Add(new(subDir));
                 }
 
-                // 添加文件（可过滤音频类型，例如只显示 .mp3/.wav等）
+                // 仅显示媒体引擎支持的音视频文件，避免媒体库混入图片/文档导致播放失败。
+                // 支持的类型见 MediaFileTypeHelper（按扩展名过滤）。
+                var supported = MediaFileTypeHelper.GetMediaExtensions();
                 foreach (var file in dir.GetFiles())
                 {
-                    // 若只想显示音频文件，取消注释下面筛选条件
-                    // string ext = file.Extension.ToLower();
-                    // if (ext == ".mp3" || ext == ".wav" || ext == ".flac" || ext == ".aac")
-                    FileItems.Add(new(file));
+                    if (supported.Contains(file.Extension))
+                    {
+                        FileItems.Add(new(file));
+                    }
                 }
             }
             catch (Exception)
