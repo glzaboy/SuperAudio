@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Runtime.Versioning;
 using Windows.Devices.Enumeration;
 using Windows.Foundation;
@@ -10,7 +10,9 @@ namespace SuperAudio.Services
     [SupportedOSPlatform("Windows10.0.19041.0")]
     public sealed partial class PlayerService : IDisposable
     {
-        public Dictionary<string, PlayerInfoItem> Devices { get; set; } = [];
+        // 使用线程安全的字典：DeviceWatcher 的 Added/Removed 回调在后台线程触发，
+        // 与 UI 线程的枚举（HomePageViewModel 拷贝 Values）并发访问，普通 Dictionary 会抛 InvalidOperationException。
+        public ConcurrentDictionary<string, PlayerInfoItem> Devices { get; } = new();
         private DeviceWatcher? DeviceWatcher { get; set; }
         private bool Inited { get; set; } = false;
 
@@ -29,62 +31,44 @@ namespace SuperAudio.Services
         }
         private void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation args)
         {
-            if (!Devices.ContainsKey(args.Id))
+            if (Devices.TryAdd(args.Id, new PlayerInfoItem { DeviceInformation = args }))
             {
-                Devices.Add(args.Id, new PlayerInfoItem { DeviceInformation = args });
                 Added?.Invoke(sender, args);
             }
         }
 
 
 
+
         private void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate args)
         {
-            // Find the device for the given id and remove it from the list. 
-            if (Devices.TryGetValue(args.Id, out var playerInfoItem))
+            // 原子移除并清理，避免与并发的 Added / 枚举竞争
+            if (Devices.TryRemove(args.Id, out var playerInfoItem))
             {
-                if (playerInfoItem.PlaybackConnection != null)
-                {
-                    playerInfoItem.Dispose();
-                }
-                Devices.Remove(args.Id);
+                playerInfoItem?.Dispose();
                 Removed?.Invoke(sender, args);
             }
         }
         public void Dispose()
         {
-            foreach (var device in Devices)
+            // 遍历快照释放每个连接（Dispose 内部会自行加锁，不会修改 Devices 集合）
+            foreach (var item in Devices.Values)
             {
-                if (device.Value != null)
-                {
-
-                    device.Value.Dispose();
-                    Devices.Remove(device.Key);
-                }
+                item?.Dispose();
             }
-            // 在 PlayerService.Dispose 中
-            foreach (var key in new List<string>(Devices.Keys))
-            {
-                if (Devices.TryGetValue(key, out var item))
-                {
-                    item?.Dispose(); // 现在会正确清理
-                }
-                Devices.Remove(key);
-            }
+            Devices.Clear();
 
-
-            // 2. 停止并清理 DeviceWatcher
+            // 停止并清理 DeviceWatcher
             if (DeviceWatcher != null)
             {
                 DeviceWatcher.Added -= DeviceWatcher_Added;
                 DeviceWatcher.Removed -= DeviceWatcher_Removed;
-                // 检查 DeviceWatcher 是否正在运行或已启动，然后停止它
+                // 检查 DeviceWatcher 是否正在运行或已创建，然后停止它
                 if (DeviceWatcher.Status == DeviceWatcherStatus.Started ||
                     DeviceWatcher.Status == DeviceWatcherStatus.Created)
                 {
                     DeviceWatcher.Stop();
                 }
-                Devices.Clear();
             }
             Inited = false;
         }

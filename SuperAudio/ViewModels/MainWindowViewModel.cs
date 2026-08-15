@@ -62,15 +62,17 @@ namespace SuperAudio.ViewModels
                     {
                         OpenFileInExplorer(_recorder.GetMusicFilePath(fileName) + "." + SelectedFormat.ToLowerInvariant());
                     }
-                    IsRecording = false;
                     // 显示保存成功提示
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"启动录制失败: {ex.Message}");
-                    // 可以重新抛出或处理
-                    throw; // 或通知 UI
-                    // 处理错误
+                    Debug.WriteLine($"停止录制失败: {ex.Message}");
+                    // 异常仍向上抛出，由全局异常处理通知用户
+                }
+                finally
+                {
+                    // 无论成功或失败，都必须复位录制状态，避免 UI 永久卡在"录音中"
+                    IsRecording = false;
                 }
             }
         }
