@@ -252,4 +252,16 @@
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
     <value>更新履歴</value>
   </data>
+  <data name="MediaFilter_All.Text" xml:space="preserve">
+    <value>すべて</value>
+  </data>
+  <data name="MediaFilter_Audio.Text" xml:space="preserve">
+    <value>オーディオ</value>
+  </data>
+  <data name="MediaFilter_Video.Text" xml:space="preserve">
+    <value>ビデオ</value>
+  </data>
+  <data name="Play.Text" xml:space="preserve">
+    <value>再生</value>
+  </data>
 </root>

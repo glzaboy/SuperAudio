@@ -252,4 +252,16 @@
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
     <value>Registro modifiche</value>
   </data>
+  <data name="MediaFilter_All.Text" xml:space="preserve">
+    <value>Tutto</value>
+  </data>
+  <data name="MediaFilter_Audio.Text" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="MediaFilter_Video.Text" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="Play.Text" xml:space="preserve">
+    <value>Riproduci</value>
+  </data>
 </root>

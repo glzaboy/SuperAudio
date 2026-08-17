@@ -65,14 +65,17 @@
                                         <MenuFlyout>
                                         <RadioMenuFlyoutItem
                                             GroupName="Filter"
-                                            IsChecked="{x:Bind ViewModel.Filter,Mode=OneWay,Converter={StaticResource StringCompareToBooleanConverter},ConverterParameter=All}" Command="{x:Bind ViewModel.FilterSwichCommand}" CommandParameter="All">所有</RadioMenuFlyoutItem>
+                                            IsChecked="{x:Bind ViewModel.Filter,Mode=OneWay,Converter={StaticResource StringCompareToBooleanConverter},ConverterParameter=All}" Command="{x:Bind ViewModel.FilterSwichCommand}" CommandParameter="All"
+                                            x:Uid="MediaFilter_All"></RadioMenuFlyoutItem>
                                         <MenuFlyoutSeparator />
                                         <RadioMenuFlyoutItem 
                                             GroupName="Filter" 
-                                            IsChecked="{x:Bind ViewModel.Filter,Mode=OneWay,Converter={StaticResource StringCompareToBooleanConverter},ConverterParameter=Audio}" Command="{x:Bind ViewModel.FilterSwichCommand}" CommandParameter="Audio">音频</RadioMenuFlyoutItem>
+                                            IsChecked="{x:Bind ViewModel.Filter,Mode=OneWay,Converter={StaticResource StringCompareToBooleanConverter},ConverterParameter=Audio}" Command="{x:Bind ViewModel.FilterSwichCommand}" CommandParameter="Audio"
+                                            x:Uid="MediaFilter_Audio"></RadioMenuFlyoutItem>
                                         <RadioMenuFlyoutItem 
                                             GroupName="Filter"
-                                            IsChecked="{x:Bind ViewModel.Filter,Mode=OneWay,Converter={StaticResource StringCompareToBooleanConverter},ConverterParameter=Video}" Command="{x:Bind ViewModel.FilterSwichCommand}" CommandParameter="Video">视频</RadioMenuFlyoutItem>
+                                            IsChecked="{x:Bind ViewModel.Filter,Mode=OneWay,Converter={StaticResource StringCompareToBooleanConverter},ConverterParameter=Video}" Command="{x:Bind ViewModel.FilterSwichCommand}" CommandParameter="Video"
+                                            x:Uid="MediaFilter_Video"></RadioMenuFlyoutItem>
                                         </MenuFlyout>
                                     </SplitButton.Flyout>
                                 </SplitButton>

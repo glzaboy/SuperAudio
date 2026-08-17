@@ -252,4 +252,16 @@
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
     <value>변경 내역</value>
   </data>
+  <data name="MediaFilter_All.Text" xml:space="preserve">
+    <value>전체</value>
+  </data>
+  <data name="MediaFilter_Audio.Text" xml:space="preserve">
+    <value>오디오</value>
+  </data>
+  <data name="MediaFilter_Video.Text" xml:space="preserve">
+    <value>비디오</value>
+  </data>
+  <data name="Play.Text" xml:space="preserve">
+    <value>재생</value>
+  </data>
 </root>

@@ -252,4 +252,16 @@
   <data name="ChangelogPageTitle.Text" xml:space="preserve">
     <value>更新日誌</value>
   </data>
+  <data name="MediaFilter_All.Text" xml:space="preserve">
+    <value>所有</value>
+  </data>
+  <data name="MediaFilter_Audio.Text" xml:space="preserve">
+    <value>音訊</value>
+  </data>
+  <data name="MediaFilter_Video.Text" xml:space="preserve">
+    <value>影片</value>
+  </data>
+  <data name="Play.Text" xml:space="preserve">
+    <value>播放</value>
+  </data>
 </root>
