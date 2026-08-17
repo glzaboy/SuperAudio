@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using SuperAudio.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -30,8 +31,11 @@ namespace SuperAudio.ViewModels
     }
     public partial class MediaLibraryPageViewModel : ObservableObject
     {
+        private Collection<FileInfo> _allFileItems = new();
+        private Collection<FileItem> _allDirItems = new();
+
         [ObservableProperty]
-        public partial ObservableCollection<FileItem> FileItems { get; set; }
+        public partial ObservableCollection<FileItem> FileItems { get; set; } = [];
         [ObservableProperty]
         public partial ObservableCollection<FileItem> SelectedFileItems { get; set; } = [];
         [ObservableProperty]
@@ -50,29 +54,65 @@ namespace SuperAudio.ViewModels
                 if (!dir.Exists) return;
 
                 CurrentPath = path;
-
-                FileItems = [];
+                _allFileItems.Clear();
+                _allDirItems.Clear();
+                //FileItems = [];
 
                 // 添加子文件夹
                 foreach (var subDir in dir.GetDirectories())
                 {
-                    FileItems.Add(new(subDir));
+                    _allDirItems.Add(new(subDir));
+                    //FileItems.Add(new(subDir));
                 }
-
-                // 仅显示媒体引擎支持的音视频文件，避免媒体库混入图片/文档导致播放失败。
-                // 支持的类型见 MediaFileTypeHelper（按扩展名过滤）。
-                var supported = MediaFileTypeHelper.GetMediaExtensions();
                 foreach (var file in dir.GetFiles())
                 {
-                    if (supported.Contains(file.Extension))
-                    {
-                        FileItems.Add(new(file));
-                    }
+                    _allFileItems.Add(file);
                 }
+                ApplyFilter();
             }
             catch (Exception)
             { }
         }
+        #region Filter
+        [ObservableProperty]
+        public partial String Filter { get; set; } = "All";
+        [RelayCommand]
+        public void FilterSwich(object parameter)
+        {
+            if (parameter is string filter)
+            {
+                Filter = filter;
+                ApplyFilter();
+            }
+        }
+        private void ApplyFilter()
+        {
+            FileItems?.Clear();
+            _allDirItems.ToList().ForEach(x => FileItems?.Add(x));
+            HashSet<string> mediaExtensions = new();
+            switch (Filter)
+            {
+                case "Audio":
+                    mediaExtensions = [.. MediaFileTypeHelper.GetAudioExtensions()];
+                    break;
+                case "Video":
+                    mediaExtensions = [.. MediaFileTypeHelper.GetVideoExtensions()];
+                    break;
+                default:
+                    mediaExtensions = [.. MediaFileTypeHelper.GetMediaExtensions()];
+                    break;
+            }
+
+            foreach (FileInfo file in _allFileItems)
+            {
+                if (mediaExtensions.Contains(file.Extension))
+                {
+                    FileItems?.Add(new(file));
+                }
+            }
+
+        }
+        #endregion Filter
         [RelayCommand]
         public void GoUp(object parameter)
         {
@@ -84,18 +124,18 @@ namespace SuperAudio.ViewModels
             }
 
         }
-        [RelayCommand(CanExecute =nameof(CanOpenFileInExplorer))]
+        [RelayCommand(CanExecute = nameof(CanOpenFileInExplorer))]
         public void OpenFileInExplorer(object parameter)
         {
-            
-            ExplorerHelper.OpenFolderAndSelectFiles(CurrentPath, [..SelectedFileItems.Select(item => item.FullPath).ToList()]);
+
+            ExplorerHelper.OpenFolderAndSelectFiles(CurrentPath, [.. SelectedFileItems.Select(item => item.FullPath).ToList()]);
         }
 
         public bool CanOpenFileInExplorer()
         {
             return SelectedFileItems?.Count >= 1;
         }
-        [RelayCommand(CanExecute =(nameof(CanPlayWithSystemPlayer)))]
+        [RelayCommand(CanExecute = (nameof(CanPlayWithSystemPlayer)))]
         public void PlayWithSystemPlayer(object parameter)
         {
             if (SelectedFileItems == null || SelectedFileItems.Count == 0)

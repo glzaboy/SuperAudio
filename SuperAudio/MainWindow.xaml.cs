@@ -298,9 +298,31 @@ namespace SuperAudio
                 };
                 TrayIcon.ContextMenu += (s, e) =>
                 {
+
                     MenuFlyout menuFlyout = new();
-                    menuFlyout.Items.Add(new MenuFlyoutItem() { Text = App.ResourceLoader.GetString("AppExit"), Icon = new SymbolIcon(Symbol.Clear) });
-                    ((MenuFlyoutItem)menuFlyout.Items[0]).Click += (s, e) => this.Close();
+                    MenuFlyoutItem MenuItem_Home = new() { Text = App.ResourceLoader.GetString("Menu_Home/Content") };
+                    MenuItem_Home.Click += (s, e) =>
+                    {
+                        this.Navigate(typeof(HomePage));
+                    };
+                    menuFlyout.Items.Add(MenuItem_Home);
+                    MenuFlyoutItem MenuItem_MediaLibrary = new() { Text = App.ResourceLoader.GetString("Menu_MediaLibrary/Content") };
+                    MenuItem_MediaLibrary.Click += (s, e) =>
+                    {
+                        this.Navigate(typeof(MediaLibraryPage));
+                    };
+                    menuFlyout.Items.Add(MenuItem_MediaLibrary);
+                    MenuFlyoutItem MenuItem_ChangeLog = new() { Text = App.ResourceLoader.GetString("Menu_Changelog/Content"), Icon = new FontIcon() { Glyph = "&#xF739;" } };
+                    MenuItem_ChangeLog.Click += (s, e) =>
+                    {
+                        this.Navigate(typeof(ChangelogPage));
+                    };
+                    menuFlyout.Items.Add(MenuItem_ChangeLog);
+                    menuFlyout.Items.Add(new MenuFlyoutSeparator());
+                    var MenuItem_Exit = new MenuFlyoutItem() { Text = App.ResourceLoader.GetString("AppExit"), Icon = new SymbolIcon(Symbol.Clear) };
+                    MenuItem_Exit.Click += (s, e) => { Close(); };
+                    menuFlyout.Items.Add(MenuItem_Exit);
+
                     e.Flyout = menuFlyout;
                 };
 

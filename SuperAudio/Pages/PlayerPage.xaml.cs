@@ -25,19 +25,19 @@ public sealed partial class PlayerPage : Page
         ViewModel = App.Host.Services.GetRequiredService<PlayerPageViewModel>();
     }
     // 在目标页面中
-   /* protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-        base.OnNavigatedTo(e);
-        if (e.Parameter is FileItem fileItem && e.NavigationMode == NavigationMode.Forward)
-        {
-            // 根据 filePath 加载 FileItem 或直接使用路径
-            LoadData(fileItem);
+    /* protected override void OnNavigatedTo(NavigationEventArgs e)
+     {
+         base.OnNavigatedTo(e);
+         if (e.Parameter is FileItem fileItem && e.NavigationMode == NavigationMode.Forward)
+         {
+             // 根据 filePath 加载 FileItem 或直接使用路径
+             LoadData(fileItem);
 
-        }
-    }*/
+         }
+     }*/
     public void LoadData(List<FileItem> item)
     {
-        ViewModel.PlayListItems = [..item];
+        ViewModel.PlayListItems = [.. item];
         StartConnectedAnimation(item[0]);
         ViewModel.PlayWithInternalPlayerCommand.Execute(item);
     }
