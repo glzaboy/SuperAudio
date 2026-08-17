@@ -41,7 +41,7 @@
       EntryPoint="$targetentrypoint$">
       <uap3:VisualElements
         DisplayName="超级蓝牙音箱"
-        Description="蓝牙音频控制工具，连接蓝牙音箱播放音乐、调节音效"
+        Description="蓝牙音频接收工具：将手机等设备的音频通过蓝牙传输到电脑播放，并支持系统音频录制"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"

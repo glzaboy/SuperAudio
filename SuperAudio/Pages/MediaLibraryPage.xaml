@@ -28,7 +28,6 @@
         <Grid Grid.Row="1" MaxWidth="1064">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <!-- 工具栏 -->
                 <RowDefinition Height="*"/>
                 <!-- 文件列表 -->
@@ -37,8 +36,8 @@
             <!-- 工具栏：返回上级 + 地址栏 -->
             <!-- 工具栏：使用 StackPanel 包裹，更灵活 -->
                 <!-- 把 CommandBar 的样式改得更紧凑 -->
-                <CommandBar Background="Transparent" x:Name="MyCommandBar"
-                            Padding="0" HorizontalContentAlignment="Stretch" Grid.Row="0">
+            <CommandBar Background="Transparent" x:Name="MyCommandBar"
+                        Padding="0" HorizontalContentAlignment="Stretch" Grid.Row="0">
                 <CommandBar.Content>
                     <Grid  Width="{Binding ElementName=MyCommandBar, Path=ActualWidth}">
                             <Grid.ColumnDefinitions>
@@ -50,15 +49,15 @@
                             <StackPanel Grid.Column="0" Orientation="Horizontal">
                                 <AppBarButton Icon="Home" Command="{x:Bind ViewModel.GoHomeCommand}" LabelPosition="Collapsed"/>
                                 <AppBarButton
-                                          Icon="Up" 
-                                          Command="{x:Bind ViewModel.GoUpCommand}"
-                                          x:Uid="GoUpCommand"
+                                            Icon="Up" 
+                                            Command="{x:Bind ViewModel.GoUpCommand}"
+                                            x:Uid="GoUpCommand"
                                           
-                                          LabelPosition="Collapsed"
-                                           />
+                                            LabelPosition="Collapsed"
+                                            />
                                 <AppBarButton Icon="Refresh" 
-                                          Command="{x:Bind ViewModel.RefreshCommand}"
-                                          x:Uid="RefreshCommand" LabelPosition="Collapsed"/>
+                                            Command="{x:Bind ViewModel.RefreshCommand}"
+                                            x:Uid="RefreshCommand" LabelPosition="Collapsed"/>
                                 <SplitButton>
                                     <FontIcon Glyph="&#xE71C;"></FontIcon>
                                     <SplitButton.Flyout>
@@ -81,21 +80,21 @@
                                 </SplitButton>
                             </StackPanel>
                             <!-- 地址栏文本框，填充剩余宽度，直接设置外观样式 -->
-                            <TextBox Grid.Column="1"
-                                         x:Name="AddressBar"
-                                         Text="{x:Bind ViewModel.CurrentPath, Mode=TwoWay}"
-                                         MinWidth="250"
-                                         VerticalAlignment="Center"
-                                         KeyDown="OnAddressBarKeyDown"
-                                         x:Uid="CurrentPath"
-                                         PlaceholderText="输入路径..."
+                        <TextBox Grid.Column="1"
+                                            x:Name="AddressBar"
+                                            Text="{x:Bind ViewModel.CurrentPath, Mode=TwoWay}"
+                                            MinWidth="250"
+                                            VerticalAlignment="Center"
+                                            KeyDown="OnAddressBarKeyDown"
+                                            x:Uid="CurrentPath"
+                                            PlaceholderText="输入路径..."
                                          
-                                         FontSize="14" />
-                        </Grid>
-                    </CommandBar.Content>
-                </CommandBar>
-                <TextBlock Text="{x:Bind ViewModel.Filter,Mode=OneWay}" Grid.Row="1"/>
-            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                                            FontSize="14" />
+                    </Grid>
+                </CommandBar.Content>
+            </CommandBar>
+                
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <!-- 文件/文件夹列表 -->
                 <ListView x:Name="FileListView" 
                   Grid.Row="1"
@@ -120,17 +119,17 @@
                                 </Grid.ColumnDefinitions>
                                 <!-- 图标 -->
                                 <SymbolIcon Symbol="{x:Bind Icon}"  x:Name="ItemIcon"
-        Margin="0,0,12,0" 
-        VerticalAlignment="Center"/>
+                                    Margin="0,0,12,0" 
+                                    VerticalAlignment="Center"/>
                                 <!-- 名称 -->
                                 <TextBlock Grid.Column="1" 
-       Text="{x:Bind DisplayName}" 
-       VerticalAlignment="Center"/>
+                                   Text="{x:Bind DisplayName}" 
+                                   VerticalAlignment="Center"/>
                                 <!-- 修改日期（可选） -->
                                 <TextBlock Grid.Column="2" 
-       Text="{x:Bind DateModified}" 
-       Opacity="0.6" 
-       Margin="12,0,0,0"/>
+                                   Text="{x:Bind DateModified}" 
+                                   Opacity="0.6" 
+                                   Margin="12,0,0,0"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
