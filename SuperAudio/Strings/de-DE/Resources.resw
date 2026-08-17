@@ -260,8 +260,4 @@
   </data>
   <data name="MediaFilter_Video.Text" xml:space="preserve">
     <value>Video</value>
-  </data>
-  <data name="Play.Text" xml:space="preserve">
-    <value>Wiedergabe</value>
-  </data>
-</root>
+  </data></root>

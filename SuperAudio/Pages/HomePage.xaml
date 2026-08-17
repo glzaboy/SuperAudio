@@ -56,7 +56,6 @@
                     <TextBlock x:Uid="Home_Tip"></TextBlock>
 
                     <Button x:Uid="New_Device" Command="{Binding OpenBluetoothSettingCommand}"/>
-                    <TextBlock x:Uid="Play"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
