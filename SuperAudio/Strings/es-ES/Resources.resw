@@ -209,11 +209,7 @@
   </data>
   <data name="OpenFileAfterCecord.Text" xml:space="preserve">
     <value>Abrir el archivo cuando termine la grabación</value>
-  </data>
-  <data name="RecordFilePrefix" xml:space="preserve">
-    <value>Track_</value>
-  </data>
-  <data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
+  </data><data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Haga clic en el botón principal para iniciar/detener la grabación y en la flecha para seleccionar el formato</value>
   </data>
   <data name="ReqBluetoothTip" xml:space="preserve">

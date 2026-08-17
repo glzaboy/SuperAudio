@@ -209,11 +209,7 @@
   </data>
   <data name="OpenFileAfterCecord.Text" xml:space="preserve">
     <value>녹음 완료 후 파일 열기</value>
-  </data>
-  <data name="RecordFilePrefix" xml:space="preserve">
-    <value>Track_</value>
-  </data>
-  <data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
+  </data><data name="RecordSplitButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>본체를 클릭하여 녹음을 시작/중지하고, 화살표를 클릭하여 형식을 선택하세요</value>
   </data>
   <data name="ReqBluetoothTip" xml:space="preserve">

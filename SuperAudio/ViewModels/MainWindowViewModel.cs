@@ -43,7 +43,7 @@ namespace SuperAudio.ViewModels
                 // 这样即便程序在录音途中退出（只走到 Dispose），也能按此名字/格式兜底保存。
                 try
                 {
-                    string fileName = $"{App.ResourceLoader.GetString("RecordFilePrefix")}{DateTime.Now:yyyyMMdd_HHmmss}";
+                    string fileName = $"Track_{DateTime.Now:yyyyMMdd_HHmmss}";
                     _recordingOutputPath = _recorder.GetMusicFilePath(fileName);
                     _recordingFormat = SelectedFormat.ToLowerInvariant();
                     await _recorder.StartLoopbackRecordingAsync(_recordingOutputPath, _recordingFormat);
