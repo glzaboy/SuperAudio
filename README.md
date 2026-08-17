@@ -2,15 +2,29 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
-**Super Bluetooth Speaker** — turn your PC into a Bluetooth speaker and a lightweight audio hub.
+**Super Bluetooth Speaker** — turn your PC into a Bluetooth speaker that receives audio from your phone and records system sound.
 
 [![Get it from Microsoft](https://get.microsoft.com/images/en-us%20dark.svg)](https://get.microsoft.com/installer/download/9ngsn37k2gcc?referrer=appbadge)
 
 ## Introduction
 
-SuperAudio is a lightweight Windows desktop app that turns your computer into a **Bluetooth speaker (audio sink)**, so phones and tablets can stream music or any audio to your PC's speakers or headphones over Bluetooth. On top of that, it bundles **system audio recording (loopback)**, a **local media library**, and a **built-in player** — an all-in-one audio companion.
+SuperAudio is a lightweight Windows desktop app that turns your PC into a **Bluetooth speaker (audio sink)**: music or any audio from your phone, tablet, or other device streams straight to your PC's speakers or headphones over Bluetooth. On top of that, SuperAudio bundles **system audio recording (loopback)**, a **local media library**, and a **built-in player** — an all-in-one audio companion.
 
 Click the badge above to install SuperAudio from the Microsoft Store.
+
+## Screenshots
+
+### Main interface (device management / Bluetooth receiving)
+
+![Main interface](ScreenShot/App-EN.png)
+
+### Media library
+
+![Media library](ScreenShot/媒体库-EN.png)
+
+### Player
+
+![Player](ScreenShot/播放.png)
 
 ## Features
 

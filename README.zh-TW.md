@@ -2,15 +2,29 @@
 
 [English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
-**超級藍牙音箱** —— 把你的電腦變成藍牙音箱與輕量音訊管家。
+**超級藍牙音箱** —— 把電腦變成藍牙音箱，接收手機等裝置的音訊，並錄製系統聲音。
 
 [![取得 SuperAudio](https://get.microsoft.com/images/zh-tw%20dark.svg)](https://get.microsoft.com/installer/download/9ngsn37k2gcc?referrer=appbadge)
 
 ## 專案簡介
 
-SuperAudio 是一款輕量級 Windows 桌面應用，把你的電腦變成一台**藍牙音箱（音訊接收端）**，讓手機、平板透過藍牙把音樂或任意音訊串流推送到電腦的喇叭或耳機播放。在此之上，它還整合了**系統音訊錄製（Loopback）**、**本機媒體庫**與**內建播放器**，是一款全方位音訊助手。
+SuperAudio 是一款輕量級 Windows 桌面應用，讓你的電腦變身為一台**藍牙音箱（音訊接收端）**：手機、平板等裝置的音樂或任意音訊，都能透過藍牙直接推送到電腦的喇叭或耳機播放。在此基礎上，SuperAudio 還整合了**系統音訊錄製（Loopback）**、**本機媒體庫**與**內建播放器**，是一站式音訊助手。
 
 點擊上方徽章，即可從 Microsoft Store 下載安裝 SuperAudio。
+
+## 介面截圖
+
+### 主介面（裝置管理 / 藍牙接收）
+
+![主介面](ScreenShot/App-TW.png)
+
+### 媒體庫
+
+![媒體庫](ScreenShot/媒体库-TW.png)
+
+### 播放
+
+![播放](ScreenShot/播放.png)
 
 ## 功能特性
 
