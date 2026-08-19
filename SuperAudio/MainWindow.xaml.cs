@@ -312,7 +312,7 @@ namespace SuperAudio
                         this.Navigate(typeof(MediaLibraryPage));
                     };
                     menuFlyout.Items.Add(MenuItem_MediaLibrary);
-                    MenuFlyoutItem MenuItem_ChangeLog = new() { Text = App.ResourceLoader.GetString("Menu_Changelog/Content"), Icon = new FontIcon() { Glyph = "&#xF739;" } };
+                    MenuFlyoutItem MenuItem_ChangeLog = new() { Text = App.ResourceLoader.GetString("Menu_Changelog/Content") };
                     MenuItem_ChangeLog.Click += (s, e) =>
                     {
                         this.Navigate(typeof(ChangelogPage));

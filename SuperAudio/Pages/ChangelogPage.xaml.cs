@@ -22,6 +22,15 @@ namespace SuperAudio.Pages
         { get; set; } = [
                 new VersionItem
                 {
+                    VersionDisplay = "1.0.5",
+                    Date = "2026-08-18",
+                    Features =
+                    [
+                        "优化媒体库，增加音频视频过滤，调整视频播放界面，托盘部分增加更多操作项目，增加更多语言包"
+                    ]
+                },
+                new VersionItem
+                {
                     VersionDisplay = "1.0.4",
                     Date = "2026-08-06",
                     Features =
